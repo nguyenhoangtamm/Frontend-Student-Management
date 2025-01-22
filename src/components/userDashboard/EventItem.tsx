@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 // Define the type for Event props
@@ -20,9 +21,9 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
       </div>
       <div className="text-right">
       <p className="mb-0 text-success">{event.status}</p>
-      <a href="#" className="text-decoration-underline text-primary">
+      <Link href="#" className="text-decoration-underline text-primary">
         Chi tiết
-      </a>
+      </Link>
       </div>
     </div>
   );

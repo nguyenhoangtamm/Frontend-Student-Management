@@ -17,7 +17,7 @@ return (
                 <span className="navbar-toggler-icon"></span>
             </button>
             
-            <Link href="/" className="navbar-brand fw-bold fs-4 mb-3 me-auto m-2 collapse navbar-collapse">
+            <Link href="/dashboard" className="navbar-brand fw-bold fs-4 mb-3 me-auto m-2 collapse navbar-collapse">
                 Trang chủ
             </Link>
 
