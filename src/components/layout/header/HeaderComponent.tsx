@@ -6,6 +6,8 @@ import Navbar from "react-bootstrap/Navbar";
 import NotificationIcon from "./NotificationIcon";
 import UserProfile from "./UserProfile";
 import Image from "next/image";
+import Link from "next/link";
+import logo from "@icons/logo.png";
 
 const Header: React.FC = () => {
   return (
@@ -13,8 +15,10 @@ const Header: React.FC = () => {
       <Container className="d-flex justify-content-between">
         <Navbar.Brand className="fw-bold fs-4">
           {" "}
-          <Image src="/path/to/logo.png" alt="Logo" width={50} height={50} />
-          Student Management
+          <Link href="/dashboard">
+            <Image src={logo} alt="Logo" width={50} height={50} />
+            Student Management
+          </Link>
         </Navbar.Brand>
         <div className="d-flex align-items-center">
           <NotificationIcon />
