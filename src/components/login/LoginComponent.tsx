@@ -1,13 +1,16 @@
 // components/LoginComponent.tsx
-import React from 'react';
-import Image from 'next/image';
-import defaultbg from '@bg/defaultbg.png';
+import React from "react";
+import Image from "next/image";
+import defaultbg from "@bg/defaultbg.png";
 
 const LoginComponent: React.FC = () => {
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center position-relative">
       <Image src={defaultbg} alt="background" layout="fill" objectFit="cover" />
-      <div className="card bg-dark text-white p-4" style={{ maxWidth: '400px', opacity: 0.9, zIndex: 1 }}>
+      <div
+        className="card bg-dark text-white p-4"
+        style={{ maxWidth: "400px", opacity: 0.9, zIndex: 1 }}
+      >
         <div className="text-center mb-4">
           <Image
             src="/logo.png" // Đường dẫn logo

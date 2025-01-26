@@ -27,37 +27,45 @@ export default function HomePage({
 }: {
   params: Promise<{ userid: string }>;
 }) {
-  const [userid, setId] = useState<string | null>(null);
+  // const [userid, setId] = useState<string | null>(null);
 
-  useEffect(() => {
-    params.then((resolvedParams) => {
-      setId(resolvedParams.userid);
-    });
-  }, [params]);
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // useEffect(() => {
+  //   params.then((resolvedParams) => {
+  //     setId(resolvedParams.userid);
+  //   });
+  // }, [params]);
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-  const { data, error } = useSWR(
-    userid ? `http://localhost:8000/api/students/${userid}` : null,
-    fetcher
-  );
+  // const { data, error } = useSWR(
+  //   userid ? `http://localhost:8000/api/students/${userid}` : null,
+  //   fetcher
+  // );
 
-  if (!data) return <div>Loading...</div>;
-  if (error) return <div>Error loading data</div>;
-  console.log("data");
-  const formData = data.data;
-  console.log(formData);
+  // if (!data) return <div>Loading...</div>;
+  // if (error) return <div>Error loading data</div>;
+  // console.log("data");
+  // const formData = data.data;
+  // console.log(formData);
+  // const dataSend = {
+  //   student_code: formData.student_code,
+  //   full_name: formData.full_name,
+  //   gender: formData.gender,
+  //   email: formData.email,
+  //   date_of_birth: formData.date_of_birth,
+  //   birthplace: formData.birthplace,
+  //   department: formData.department
+
+  // }
   const dataSend = {
-    student_code: formData.student_code,
-    full_name: formData.full_name,
-    gender: formData.gender,
-    email: formData.email,
-    date_of_birth: formData.date_of_birth,
-    birthplace: formData.birthplace,
-    department: formData.department
-
-  }
-  console.log("dataSend");
-  console.log(dataSend);
+    student_code: "123456",
+    full_name: "John Doe",
+    gender: "Male",
+    email: "johndoe@example.com",
+    date_of_birth: "2000-01-01",
+    birthplace: "New York",
+    department: "Computer Science"
+  };
+ 
 
   return (
     <>

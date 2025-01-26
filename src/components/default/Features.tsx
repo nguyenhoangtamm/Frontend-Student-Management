@@ -1,5 +1,8 @@
 // components/Features.tsx
-import React from 'react';
+import React from "react";
+import mapsearch from "@images/default/mapsearch.png";
+import Image from "next/image";
+import Link from "next/link";
 
 const Features: React.FC = () => {
   return (
@@ -7,16 +10,34 @@ const Features: React.FC = () => {
       <h2>OUR SYSTEM HELPS YOU "ACHIEVE MORE" WHILE LIVING OFF-CAMPUS!</h2>
       <p>Set milestones. Reach them. Enjoy the rewards you’ve earned!</p>
       <div className="d-flex justify-content-center gap-3">
-        {Array(4).fill(null).map((_, i) => (
-          <div key={i} className="card" style={{ width: '10rem' }}>
-            <img src="/map-icon.png" className="card-img-top" alt="Map Search" />
-            <div className="card-body">
-              <h5 className="card-title">MAP SEARCH</h5>
-            </div>
+        <div className="card" style={{ width: "17rem" }}>
+          <Image src={mapsearch} alt="Map Search" width={250} height={250} />
+          <div className="card-body">
+            <h5 className="card-title">MAP SEARCH</h5>
           </div>
-        ))}
+        </div>
+        <div className="card" style={{ width: "17rem" }}>
+          <Image src={mapsearch} alt="Map Search" width={250} height={250} />
+          <div className="card-body">
+            <h5 className="card-title">MAP SEARCH</h5>
+          </div>
+        </div>
+        <div className="card" style={{ width: "17rem" }}>
+          <Image src={mapsearch} alt="Map Search" width={250} height={250} />
+          <div className="card-body">
+            <h5 className="card-title">MAP SEARCH</h5>
+          </div>
+        </div>
+        <div className="card" style={{ width: "17rem" }}>
+          <Image src={mapsearch} alt="Map Search" width={250} height={250} />
+          <div className="card-body">
+            <h5 className="card-title">MAP SEARCH</h5>
+          </div>
+        </div>
       </div>
-      <button className="btn btn-warning mt-3">Sign Up Now</button>
+      <Link className="btn btn-warning m-3" href="/login">
+          Login Now
+        </Link>
     </section>
   );
 };

@@ -17,7 +17,7 @@ const UserProfile: React.FC = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/profile">Hồ sơ</Dropdown.Item>
+        <Dropdown.Item href="/profile">Hồ sơ</Dropdown.Item>
         <Dropdown.Item href="#/logout">Đăng xuất</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

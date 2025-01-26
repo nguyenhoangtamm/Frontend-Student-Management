@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import Link from "next/link";
 interface UserInfoProps {
   student_code: string;
   full_name: string;
@@ -60,9 +61,9 @@ const UserInfoComponent: React.FC<{ data: UserInfoProps }> = ({ data }) => {
           Khoa: <span className="fw-bold">{data.department}</span>
         </p>
         <div className="text-center mt-3">
-          <Button variant="light" size="sm" className="fw-bold text-primary">
+            <Link href="/profile" className="btn btn-light btn-sm fw-bold text-primary">
             Xem chi tiết
-          </Button>
+            </Link>
         </div>
       </Card.Body>
     </Card>
