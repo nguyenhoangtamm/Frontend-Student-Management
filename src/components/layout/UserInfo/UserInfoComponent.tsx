@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Link from "next/link";
@@ -13,12 +13,16 @@ interface UserInfoProps {
   department: string;
 }
 
-const UserInfoComponent: React.FC<{ data: UserInfoProps }> = ({ data }) => {
+const UserInfoComponent: React.FC<{
+  data: UserInfoProps;
+  className?: string;
+}> = ({ data, className }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <Card
       style={{
@@ -26,10 +30,10 @@ const UserInfoComponent: React.FC<{ data: UserInfoProps }> = ({ data }) => {
         backgroundColor: "#0d47a1",
         color: "white",
         borderRadius: "8px",
+        marginLeft: "1rem",
       }}
-      className="p-3"
+      className={`p-3 ${className} `}
     >
-    
       <div className={`text-center `}>
         <div
           className="rounded-circle bg-white text-primary d-flex justify-content-center align-items-center mx-auto mb-3"
@@ -61,9 +65,12 @@ const UserInfoComponent: React.FC<{ data: UserInfoProps }> = ({ data }) => {
           Khoa: <span className="fw-bold">{data.department}</span>
         </p>
         <div className="text-center mt-3">
-            <Link href="/profile" className="btn btn-light btn-sm fw-bold text-primary">
+          <Link
+            href="/profile"
+            className="btn btn-light btn-sm fw-bold text-primary"
+          >
             Xem chi tiết
-            </Link>
+          </Link>
         </div>
       </Card.Body>
     </Card>

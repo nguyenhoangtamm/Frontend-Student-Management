@@ -17,9 +17,11 @@ export default function DashBoardLayout({
   return (
     <>
       <HeaderComponent />
-      <main className="container mt-4 d-flex flex-row justify-content-between">
-        <SidebarComponent />
-        {children}
+      <main className="mt-4 d-flex flex-column flex-md-row" >
+      <SidebarComponent className="col-12 col-md-2 mb-4 mb-md-0" />
+      <div className="container col-12 col-md-10">
+        <div className="container">{children}</div>
+      </div>
       </main>
     </>
   );

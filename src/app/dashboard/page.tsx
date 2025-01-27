@@ -27,35 +27,6 @@ export default function HomePage({
 }: {
   params: Promise<{ userid: string }>;
 }) {
-  // const [userid, setId] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   params.then((resolvedParams) => {
-  //     setId(resolvedParams.userid);
-  //   });
-  // }, [params]);
-  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-  // const { data, error } = useSWR(
-  //   userid ? `http://localhost:8000/api/students/${userid}` : null,
-  //   fetcher
-  // );
-
-  // if (!data) return <div>Loading...</div>;
-  // if (error) return <div>Error loading data</div>;
-  // console.log("data");
-  // const formData = data.data;
-  // console.log(formData);
-  // const dataSend = {
-  //   student_code: formData.student_code,
-  //   full_name: formData.full_name,
-  //   gender: formData.gender,
-  //   email: formData.email,
-  //   date_of_birth: formData.date_of_birth,
-  //   birthplace: formData.birthplace,
-  //   department: formData.department
-
-  // }
   const dataSend = {
     student_code: "123456",
     full_name: "John Doe",
@@ -63,29 +34,20 @@ export default function HomePage({
     email: "johndoe@example.com",
     date_of_birth: "2000-01-01",
     birthplace: "New York",
-    department: "Computer Science"
+    department: "Computer Science",
   };
- 
 
   return (
-    <>
-      <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <HostelInfo />
-          <Notifications />
+    <div style={{ display: "flex", flexWrap: "wrap", padding: "20px", fontFamily: "Arial, sans-serif" }}>
+      <div style={{ flex: "1 1 70%", minWidth: "300px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+          <HostelInfo  />
+          <Notifications  />
         </div>
         <EventList />
         <RegulationsComponent />
       </div>
-      <UserInfoComponent
-        data={dataSend}
-        
-      />
-
-    </>
+      <UserInfoComponent data={dataSend} className="col-12 col-md-2 mb-4 mb-md-0" />
+    </div>
   );
-  
 }
-
-
-

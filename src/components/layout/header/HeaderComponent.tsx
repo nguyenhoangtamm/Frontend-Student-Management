@@ -9,9 +9,9 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@icons/logo.png";
 
-const Header: React.FC = () => {
+const Header: React.FC<{ className?: string }> = ( {className}) => {
   return (
-    <Navbar bg="light" expand="lg" className="border-bottom">
+    <Navbar bg="light" expand="lg" className={` ${className} border-bottom`}>
       <Container className="d-flex justify-content-between">
         <Navbar.Brand className="fw-bold fs-4">
           {" "}
