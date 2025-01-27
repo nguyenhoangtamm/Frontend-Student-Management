@@ -1,8 +1,6 @@
-import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import EventModal from "../modals/EventModal";
-import { tree } from "next/dist/build/templates/app-page";
 
 // Define the type for Event props
 export interface Event {
@@ -20,19 +18,19 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
   return (
     <div className="d-flex justify-content-between py-2 border-bottom">
       <div>
-      <p className="mb-0">{event.title}</p>
-      <small>{event.date}</small>
+        <p className="mb-0">{event.title}</p>
+        <small>{event.date}</small>
       </div>
       <div className="text-right">
-      <p className="mb-0 text-success">{event.status}</p>
-      <Button onClick={()=>setOpen(true)} className="text-decoration-underline text-primary">
-        Chi tiết
-      </Button>
+        <p className="mb-0 text-success">{event.status}</p>
+        <Button
+          onClick={() => setOpen(true)}
+          className="text-decoration-underline text-primary"
+        >
+          Chi tiết
+        </Button>
       </div>
-      <EventModal
-        isOpen={isOpen}
-        setOpen={setOpen}
-      />
+      <EventModal isOpen={isOpen} setOpen={setOpen} />
     </div>
   );
 };

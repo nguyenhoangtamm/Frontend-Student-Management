@@ -1,12 +1,11 @@
 "use client";
 import UserInfoComponent from "@/components/layout/UserInfo/UserInfoComponent";
-import StaticExample from "@/components/modals/EventModal";
 import EventList from "@/components/userDashboard/EventList";
 import HostelInfo from "@/components/userDashboard/HostelInfo";
 import Notifications from "@/components/userDashboard/Notifications";
 import RegulationsComponent from "@/components/userDashboard/RegulationsComponent";
-import React, { useEffect, useState } from "react";
-import useSWR from "swr";
+// import React, { useEffect, useState } from "react";
+// import useSWR from "swr";
 // const HomePage: React.FC = () => {
 //   return (
 //     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
@@ -23,11 +22,7 @@ import useSWR from "swr";
 
 // export default HomePage;
 
-export default function HomePage({
-  params,
-}: {
-  params: Promise<{ userid: string }>;
-}) {
+export default function HomePage() {
   const dataSend = {
     student_code: "123456",
     full_name: "John Doe",
