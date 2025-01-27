@@ -1,5 +1,6 @@
 "use client";
 import UserInfoComponent from "@/components/layout/UserInfo/UserInfoComponent";
+import StaticExample from "@/components/modals/EventModal";
 import EventList from "@/components/userDashboard/EventList";
 import HostelInfo from "@/components/userDashboard/HostelInfo";
 import Notifications from "@/components/userDashboard/Notifications";
@@ -48,6 +49,7 @@ export default function HomePage({
         <RegulationsComponent />
       </div>
       <UserInfoComponent data={dataSend} className="col-12 col-md-2 mb-4 mb-md-0" />
+      
     </div>
   );
 }
