@@ -1,28 +1,39 @@
-'use client'
+"use client";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import MapComponent from "./Mapcomponent";
+import { OriginHousing } from "@/interface/housingInterface";
+
+export type HousingLocation = Omit<OriginHousing, "id" | "owner">;
 
 interface LocationProps {
-    isOpen: boolean;
-    setOpen: (s: boolean) => void;
-    // lati: number;
-    // longi: number;
-    }   
+  isOpen: boolean;
+  setOpen: (s: boolean) => void;
+  housingLocation: HousingLocation;
+
+}
 
 export default function MapModal(props: LocationProps) {
-  const { isOpen, setOpen} = props;
+  const { isOpen, setOpen } = props;
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   return (
-    <Modal show={isOpen} onHide={handleClose} centered backdrop="static" size="xl">
+    <Modal
+      show={isOpen}
+      onHide={handleClose}
+      centered
+      backdrop="static"
+      size="xl"
+    >
       <Modal.Header closeButton>
         <Modal.Title>OpenStreetMap</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-     <MapComponent/>
+        <MapComponent
+        location={props.housingLocation}
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

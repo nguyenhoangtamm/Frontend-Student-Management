@@ -11,6 +11,8 @@ const HousingPage = () => {
       price: "$1000",
       image: "house1.jpg",
       description: "A beautiful house in the city center.",
+      lat: 40.7128,
+      lon: -74.006,
     },
     {
       name: "House 2",
@@ -18,6 +20,8 @@ const HousingPage = () => {
       price: "$1200",
       image: "house2.jpg",
       description: "A cozy house with a big garden.",
+      lat: 34.0522,
+      lon: -118.2437,
     },
     {
       name: "House 3",
@@ -25,6 +29,8 @@ const HousingPage = () => {
       price: "$900",
       image: "house3.jpg",
       description: "A modern house with a pool.",
+      lat: 41.8781,
+      lon: -87.6298,
     },
     {
       name: "House 4",
@@ -32,6 +38,8 @@ const HousingPage = () => {
       price: "$1100",
       image: "house4.jpg",
       description: "A spacious house with a garage.",
+      lat: 29.7604,
+      lon: -95.3698,
     },
     {
       name: "House 5",
@@ -39,9 +47,11 @@ const HousingPage = () => {
       price: "$950",
       image: "house5.jpg",
       description: "A charming house with a nice view.",
+      lat: 33.4484,
+      lon: -112.074,
     },
   ];
-  const rightDataSend=[
+  const rightDataSend = [
     {
       name: "The Prince Residence",
     },
@@ -50,8 +60,7 @@ const HousingPage = () => {
     },
     {
       name: "The Estella",
-    }
-
+    },
   ];
   return (
     <div className="container mt-4">

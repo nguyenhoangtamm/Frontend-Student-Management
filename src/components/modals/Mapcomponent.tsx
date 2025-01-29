@@ -1,15 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { OriginHousing } from '@/interface/housingInterface';
 
-const MapComponent: React.FC = () => {
+
+export type HousingLocation = Omit<OriginHousing, "id" | "owner">;
+
+const MapComponent: React.FC<{ location: HousingLocation }> = ({ location }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<L.Map | null>(null);
 
   useEffect(() => {
     if (mapRef.current && !mapInstance.current) {
       // Khởi tạo bản đồ
-      mapInstance.current = L.map(mapRef.current).setView([10.3675, 105.4235], 13); // Tọa độ và mức zoom
+      mapInstance.current = L.map(mapRef.current).setView([location.lat, location.lon], 13); // Tọa độ và mức zoom
 
       // Thêm lớp bản đồ từ OpenStreetMap
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -17,19 +21,10 @@ const MapComponent: React.FC = () => {
         attribution: '© OpenStreetMap contributors'
       }).addTo(mapInstance.current);
 
-      // Danh sách các tọa độ nhà trọ
-      const hostels = [
-        { lat: 10.3675, lon: 105.4235, name: 'Nhà trọ A', address: 'Địa chỉ A', price: '1 triệu/tháng', description: 'Nhà trọ sạch sẽ, an ninh tốt.' },
-        { lat: 10.3700, lon: 105.4250, name: 'Nhà trọ B', address: 'Địa chỉ B', price: '1.2 triệu/tháng', description: 'Nhà trọ gần trường học, tiện lợi.' },
-        { lat: 10.3725, lon: 105.4275, name: 'Nhà trọ C', address: 'Địa chỉ C', price: '1.5 triệu/tháng', description: 'Nhà trọ có chỗ để xe rộng rãi.' }
-      ];
-
-      // Thêm các marker vào bản đồ
-      hostels.forEach(hostel => {
-        L.marker([hostel.lat, hostel.lon]).addTo(mapInstance.current!)
-          .bindPopup(`<b>${hostel.name}</b><br>Địa chỉ: ${hostel.address}<br>Giá: ${hostel.price}<br>Mô tả: ${hostel.description}`)
-          .openPopup();
-      });
+      // Thêm marker vào bản đồ
+      L.marker([location.lat, location.lon]).addTo(mapInstance.current)
+        .bindPopup(`<b>${location.name}</b><br>Địa chỉ: ${location.address}<br>Giá: ${location.price}<br>Mô tả: ${location.description}`)
+        .openPopup();
 
       function getLocation() {
         if (navigator.geolocation) {
@@ -66,7 +61,7 @@ const MapComponent: React.FC = () => {
       // Gán hàm getLocation vào window để có thể gọi từ button
       (window as Window & typeof globalThis & { getLocation: () => void }).getLocation = getLocation;
     }
-  }, []);
+  }, [location]);
 
   return (
     <div>

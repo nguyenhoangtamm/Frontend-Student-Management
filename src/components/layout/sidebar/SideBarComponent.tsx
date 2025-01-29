@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import classNames from "classnames";
+import { Button } from "react-bootstrap";
+import { MenuIcon } from "lucide-react";
 
 const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +44,7 @@ const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href="/search" className="nav-link">
+                <Link href="/housing" className="nav-link">
                   Tìm Nhà trọ
                 </Link>
               </li>
@@ -57,7 +59,7 @@ const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href="/logout" className="nav-link">
+                <Link href="/" className="nav-link">
                   Đăng xuất
                 </Link>
               </li>
@@ -65,20 +67,19 @@ const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
           </div>
         </div>
       </nav>
-      <button
-        className="position-fixed"
+      <Button
+        className="position-fixed d-flex justify-content-center align-items-center"
         type="button"
         onClick={toggleNavbar}
         style={{
           top: 100,
           left: isOpen ? 260 : 10,
-          height: "30px",
-          width: "30px",
+         
           zIndex: 1000,
         }}
       >
-        <span className="navbar-toggler-icon"></span>
-      </button>
+        <MenuIcon />
+      </Button>
     </>
   );
 };

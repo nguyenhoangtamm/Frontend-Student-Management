@@ -1,6 +1,6 @@
 "ues client";
 import React from "react";
-import mapsearch from "@images/default/mapsearch.png";
+import mapsearch from "@images/dashboard/housing.jpg";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,7 +24,7 @@ const HostelInfo: React.FC = () => {
             </p>
           </div>
           <div className="d-flex flex-column align-items-center">
-            <Image src={mapsearch} alt="Map Search" width={50} height={50} />
+            <Image src={mapsearch} alt="Map Search" width={100} height={100} />
             <Link href="#">Chi tiết</Link>
           </div>
         </div>

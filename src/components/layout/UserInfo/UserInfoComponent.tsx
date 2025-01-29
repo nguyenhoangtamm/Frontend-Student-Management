@@ -1,8 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Link from "next/link";
+import Avatar from "@images/dashboard/avatar.png"
+import Image from "next/image";
 interface UserInfoProps {
   student_code: string;
   full_name: string;
@@ -39,7 +41,7 @@ const UserInfoComponent: React.FC<{
           className="rounded-circle bg-white text-primary d-flex justify-content-center align-items-center mx-auto mb-3"
           style={{ width: "72px", height: "72px", fontSize: "36px" }}
         >
-          <i className="bi bi-person" />
+          <Image src={Avatar} alt="User" width={50} height={50} />
         </div>
         <h5 className="fw-bold">{data.full_name}</h5>
         <div className="d-flex justify-content-center align-items-center">

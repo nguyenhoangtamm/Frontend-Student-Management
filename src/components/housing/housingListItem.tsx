@@ -1,13 +1,9 @@
 import React from "react";
 import HousingItem from "./housingItem";
+import { OriginHousing } from "@/interface/housingInterface";
 
-interface Housing {
-  name: string;
-  address: string;
-  price: string;
-  image: string;
-  description: string;
-}
+export type Housing = Omit<OriginHousing, "id" | "owner">;
+
 
 export default function HousingListItem({ housing }: { housing: Housing[] }) {
   return (
