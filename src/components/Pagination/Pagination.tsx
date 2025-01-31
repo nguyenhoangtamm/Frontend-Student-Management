@@ -1,41 +1,40 @@
-import React from 'react';
+import React from "react";
+import { Pagination } from "react-bootstrap";
 
-interface Housing {
-  name: string;
-  address: string;
-  price: string;
-  image: string;
-  description: string;
-  lat: number;
-  lon: number;
-}
-
-interface HousingListItemProps {
-  housing: Housing[];
+interface PaginationProps {
   currentPage: number;
-  propertiesPerPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
-const HousingListItem: React.FC<HousingListItemProps> = ({ housing, currentPage, propertiesPerPage }) => {
-  // Tính toán các chỉ số để phân trang
-  const indexOfLastProperty = currentPage * propertiesPerPage;
-  const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-  const currentProperties = housing.slice(indexOfFirstProperty, indexOfLastProperty);
+export default function HousingPagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1);
+    }
+  };
 
   return (
-    <div className="col-md-8">
-      <ul className="list-group mb-4">
-        {currentProperties.map((property, index) => (
-          <li key={index} className="list-group-item">
-            <h5>{property.name}</h5>
-            <p>{property.address}</p>
-            <p>{property.price}</p>
-            <p>{property.description}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Pagination>
+      <Pagination.First onClick={() => onPageChange(1)} disabled={currentPage === 1} />
+      <Pagination.Prev onClick={handlePrevious} disabled={currentPage === 1} />
+      {Array.from({ length: totalPages }, (_, index) => (
+      <Pagination.Item
+        key={index + 1}
+        active={index + 1 === currentPage}
+        onClick={() => onPageChange(index + 1)}
+      >
+        {index + 1}
+      </Pagination.Item>
+      ))}
+      <Pagination.Next onClick={handleNext} disabled={currentPage === totalPages} />
+      <Pagination.Last onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages} />
+    </Pagination>
   );
-};
-
-export default HousingListItem;
+}

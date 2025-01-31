@@ -25,7 +25,7 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
         <p className="mb-0 text-success">{event.status}</p>
         <Button
           onClick={() => setOpen(true)}
-          className="text-decoration-underline text-primary"
+          className="btn-sm"
         >
           Chi tiết
         </Button>
