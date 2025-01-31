@@ -2,10 +2,12 @@
 import React from "react";
 import HousingListItem from "@/components/housing/housingListItem";
 import RightListItem from "@/components/housing/rightListItem";
+import PropertyFilter from "@/components/housing/PropertyFilter";
 
 const HousingPage = () => {
   const dataSend = [
     {
+      id: 1,
       name: "House 1",
       address: "123 Main St",
       price: "$1000",
@@ -15,6 +17,7 @@ const HousingPage = () => {
       lon: -74.006,
     },
     {
+      id: 2,
       name: "House 2",
       address: "456 Elm St",
       price: "$1200",
@@ -24,6 +27,7 @@ const HousingPage = () => {
       lon: -118.2437,
     },
     {
+      id: 3,
       name: "House 3",
       address: "789 Oak St",
       price: "$900",
@@ -33,6 +37,7 @@ const HousingPage = () => {
       lon: -87.6298,
     },
     {
+      id: 4,
       name: "House 4",
       address: "101 Pine St",
       price: "$1100",
@@ -42,6 +47,7 @@ const HousingPage = () => {
       lon: -95.3698,
     },
     {
+      id: 5,
       name: "House 5",
       address: "202 Maple St",
       price: "$950",
@@ -63,10 +69,13 @@ const HousingPage = () => {
     },
   ];
   return (
-    <div className="container mt-4">
-      <div className="row">
-        <HousingListItem housing={dataSend} />
-        <RightListItem housing={rightDataSend} />
+    <div>
+      <PropertyFilter />
+      <div className="container mt-4">
+        <div className="row">
+          <HousingListItem housing={dataSend} />
+          <RightListItem housing={rightDataSend} />
+        </div>
       </div>
     </div>
   );

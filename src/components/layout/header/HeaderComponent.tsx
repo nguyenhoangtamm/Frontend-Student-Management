@@ -15,7 +15,7 @@ const Header: React.FC<{ className?: string }> = ( {className}) => {
       <Container className="d-flex justify-content-between">
         <Navbar.Brand className="fw-bold fs-4">
           {" "}
-          <Link href="/dashboard">
+          <Link href="/dashboard" style={{ textDecoration: 'none' }} >
             <Image src={logo} alt="Logo" width={50} height={50} />
             Student Management
           </Link>

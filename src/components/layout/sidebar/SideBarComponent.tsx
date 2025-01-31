@@ -74,7 +74,7 @@ const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
         style={{
           top: 100,
           left: isOpen ? 260 : 10,
-         
+
           zIndex: 1000,
         }}
       >
