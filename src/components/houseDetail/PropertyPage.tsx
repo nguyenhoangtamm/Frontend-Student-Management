@@ -1,28 +1,28 @@
+"use client";
 import React from "react";
 import ListingHeader from "@/components/houseDetail/ListingHeader";
 import ListingGallery from "@/components/houseDetail/ListingGallery";
 import ListingDescription from "@/components/houseDetail/ListingDescription";
 import AgentContact from "@/components/houseDetail/AgentContact";
 import RequestForm from "@/components/houseDetail/RequestForm";
-import { OriginHousing } from "@/interface/housingInterface";
 import ReviewSection from "./ReviewSection";
+import { useDomainarie } from "@/services/hooks/useDomainarie";
 
-export type Housing = Omit<OriginHousing, "id" | "owner">;
-const PropertyPage: React.FC<{ house: Housing }> = ({ house }) => {
-  const images = [
-    '/housing.jpg',
-    
-  ];
+const       PropertyPage: React.FC<{ houseId: number }> = ({ houseId }) => {
+  const { data: house, isLoading, error } = useDomainarie(houseId);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Lỗi: {error.message}</p>;
+  console.log(house);
 
   return (
     <div className="container mt-4 text-dark">
-      <ListingHeader 
-        title= {house.name}
-        price= {house.price}
-      />
+      <ListingHeader title={house?.name} price={house.price} />
       <div className="row mt-3">
         <div className="col-md-8">
-          <ListingGallery images={images} />
+          <ListingGallery
+            images={Array.isArray(house.image) ? house.image : []}
+          />
           <ListingDescription description={house.description} />
         </div>
 
@@ -31,7 +31,7 @@ const PropertyPage: React.FC<{ house: Housing }> = ({ house }) => {
           <RequestForm housingLocation={house} />
         </div>
       </div>
-      <ReviewSection  />
+      <ReviewSection />
     </div>
   );
 };

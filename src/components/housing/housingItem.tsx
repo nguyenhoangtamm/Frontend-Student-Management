@@ -12,6 +12,9 @@ export type Housing = Omit<OriginHousing, "owner">;
 export default function HousingItem(housing: { housing: Housing }) {
   const { id, name, address, price, description } = housing.housing;
   const [isOpen, setOpen] = React.useState(false);
+ 
+  
+  
   return (
     <div className="card mb-4 d-flex flex-row">
       <Image

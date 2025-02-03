@@ -6,7 +6,7 @@ import { OriginHousing } from "@/interface/housingInterface";
 
 export type HousingLocation = Omit<OriginHousing, "id" | "owner">;
 
-export default function RequestForm({housingLocation}: {housingLocation: HousingLocation}) {
+export default function RequestForm({housingLocation}: {housingLocation: OriginHousing}) {
   const [isOpen, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);

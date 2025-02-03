@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import classNames from "classnames";
 import { Button } from "react-bootstrap";
 import { MenuIcon } from "lucide-react";
+import style from "@styles/sidebar.module.css";
 
-const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
+const SidebarComponent: React.FC<{ classNameExtra?: string }> = ({
+  classNameExtra,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleNavbar = () => {
@@ -16,11 +18,9 @@ const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <>
       <nav
-        className={classNames(
-          className,
-          "navbar navbar-expand-lg navbar-light bg-light align-items-start position-fixed",
-          { show: isOpen, "d-none": !isOpen }
-        )}
+        className={`${style.sidebar} ${
+          isOpen ? style.show : style.hidden
+        } navbar navbar-expand-lg navbar-light bg-light align-items-start position-fixed ${classNameExtra}`}
         style={{
           top: 100,
           left: 10,
@@ -74,7 +74,7 @@ const SidebarComponent: React.FC<{ className?: string }> = ({ className }) => {
         style={{
           top: 100,
           left: isOpen ? 260 : 10,
-
+          transition: "ease 0.7s",
           zIndex: 1000,
         }}
       >

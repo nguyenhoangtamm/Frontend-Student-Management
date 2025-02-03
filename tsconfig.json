@@ -23,6 +23,8 @@
       "@bg/*": ["./src/assets/images/backgrounds/*"],
       "@icons/*": ["./src/assets/icons/*"],
       "@images/*": ["./src/assets/images/*"],
+      "@styles/*": ["./src/assets/styles/*"],
+
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

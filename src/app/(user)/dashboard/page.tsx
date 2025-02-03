@@ -4,23 +4,6 @@ import EventList from "@/components/userDashboard/EventList";
 import HostelInfo from "@/components/userDashboard/HostelInfo";
 import Notifications from "@/components/userDashboard/Notifications";
 import RegulationsComponent from "@/components/userDashboard/RegulationsComponent";
-// import React, { useEffect, useState } from "react";
-// import useSWR from "swr";
-// const HomePage: React.FC = () => {
-//   return (
-//     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-//       <div style={{ display: "flex", justifyContent: "space-between" }}>
-//         <HostelInfo />
-//         <Notifications />
-//       </div>
-//       <EventList />
-//       <RegulationsComponent />
-
-//     </div>
-//   );
-// };
-
-// export default HomePage;
 
 export default function HomePage() {
   const dataSend = {

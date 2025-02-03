@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import defaultbg from "@bg/defaultbg.png";
+import { Button } from "react-bootstrap";
 
 const LoginComponent: React.FC = () => {
   return (
@@ -61,9 +62,9 @@ const LoginComponent: React.FC = () => {
           </div>
 
           {/* Nút đăng nhập */}
-          <button type="submit" className="btn btn-primary w-100">
+          <Button type="submit" className="btn btn-primary w-100">
             Login
-          </button>
+          </Button>
         </form>
       </div>
     </div>

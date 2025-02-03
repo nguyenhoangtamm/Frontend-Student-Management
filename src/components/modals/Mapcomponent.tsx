@@ -23,14 +23,14 @@ const MapComponent: React.FC<{ location: HousingLocation }> = ({ location }) => 
   useEffect(() => {
     if (!L || !mapRef.current || mapInstance.current) return;
 
-    mapInstance.current = L.map(mapRef.current).setView([location.lat, location.lon], 13);
+    mapInstance.current = L.map(mapRef.current).setView([location.lat, location.long], 13);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: "© OpenStreetMap contributors",
     }).addTo(mapInstance.current);
 
-    L.marker([location.lat, location.lon])
+    L.marker([location.lat, location.long])
       .addTo(mapInstance.current)
       .bindPopup(`<b>${location.name}</b><br>Địa chỉ: ${location.address}`)
       .openPopup();
