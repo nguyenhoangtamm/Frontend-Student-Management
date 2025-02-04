@@ -26,7 +26,6 @@ export default function DefaultLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>{children}</Providers>{" "}
-        {/* Bọc toàn bộ ứng dụng trong Providers */}
       </body>
     </html>
   );

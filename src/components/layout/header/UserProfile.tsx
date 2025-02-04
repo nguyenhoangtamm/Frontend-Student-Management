@@ -11,13 +11,14 @@ const UserProfile: React.FC = () => {
           className="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center"
           style={{ width: '32px', height: '32px', fontWeight: 'bold' }}
         >
-          N
+          T
         </div>
         <span className="ms-2 text-secondary">Nguyễn Hoàng Tam</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
         <Dropdown.Item href="/profile">Hồ sơ</Dropdown.Item>
+        <Dropdown.Item href="/settings">Đổi mật khẩu</Dropdown.Item>
         <Dropdown.Item href="#/logout">Đăng xuất</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
