@@ -26,12 +26,12 @@ export default function OffCampusInfo({
         <>
           <div className="m-1 col-md-3" style={{ padding: "10px" }}>
             <h3 className="fw-bold">
-              <span className="font-weight-normal">Trọ nhà</span>
+              <span className="font-weight-normal">{offCampus.name}</span>
             </h3>
             <div className="d-flex justify-content-between">
               <div>
                 <p>
-                  Phòng: <strong>234</strong>
+                  Phòng: <strong>{offCampus.room}</strong>
                 </p>
                 <p>
                   Trạng thái:{" "}

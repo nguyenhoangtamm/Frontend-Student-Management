@@ -1,5 +1,7 @@
 export interface offCampus {
     id?: string; // ID nhà trọ (nếu có)
+    name: string; // Tên nhà trọ
+    room?: string; // Phòng
     address: string;
     district: string;
     city: string;

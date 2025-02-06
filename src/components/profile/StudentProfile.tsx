@@ -3,9 +3,7 @@ import ProfileDetails from "./ProfileDetails";
 import OffCampusInfo from "./OffCampusInfo";
 import { Student } from "@/interface/studentInterface";
 
-
-export default function StudentProfile({ data }: {data: Student}) {
-
+export default function StudentProfile({ data }: { data: Student }) {
   return (
     <div className="container mt-4">
       <div className="card p-3">
@@ -18,11 +16,9 @@ export default function StudentProfile({ data }: {data: Student}) {
           </div>
         </div>
         <div className="row">
-          
           <OffCampusInfo offCampus={data.offCampus} />
         </div>
       </div>
     </div>
   );
-};
-
+}
