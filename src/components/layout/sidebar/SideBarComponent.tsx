@@ -13,7 +13,6 @@ import type { GetProp, MenuProps } from "antd";
 import { Home, MenuIcon } from "lucide-react";
 import Link from "antd/es/typography/Link";
 
-
 type MenuTheme = GetProp<MenuProps, "theme">;
 
 type MenuItem = GetProp<MenuProps, "items">[number];
@@ -33,7 +32,7 @@ const items: MenuItem[] = [
   {
     key: "1",
     icon: <InfoCircleOutlined />,
-    label: <Link href="/info">Xem Thông Tin</Link>,
+    label: <Link href="/profile">Xem Thông Tin</Link>,
   },
   {
     key: "2",
@@ -75,15 +74,15 @@ const SideBarComponent: React.FC = () => {
   return (
     <>
       <nav
-        className={`${style.sidebar} ${
-          isOpen ? style.show : style.hidden
-        } navbar navbar-expand-lg navbar-light bg-light align-items-start position-fixed d-flex flex-column `}
+        className={` navbar navbar-expand-lg navbar-light bg-light align-items-start position-fixed d-flex flex-column `}
         style={{
           top: 100,
-          left: 10,
-          height: "50vh",
+          left: isOpen ? 10 : -260,
+          height: "40vh",
           width: "250px",
           zIndex: 1000,
+          transition: "ease 0.7s",
+          
         }}
       >
         <Divider type="vertical" />
@@ -92,6 +91,7 @@ const SideBarComponent: React.FC = () => {
           onChange={changeTheme}
           checkedChildren="Dark"
           unCheckedChildren="Light"
+          
         />
 
         <Menu
@@ -100,7 +100,8 @@ const SideBarComponent: React.FC = () => {
           defaultOpenKeys={["sub1"]}
           theme={theme}
           items={items}
-        />
+        >
+          </Menu>
       </nav>
       <Button
         className="position-fixed d-flex justify-content-center align-items-center"

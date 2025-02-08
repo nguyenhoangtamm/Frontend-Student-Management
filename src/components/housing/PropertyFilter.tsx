@@ -1,10 +1,11 @@
-'use client'
+"use client";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
 import DropdownFilter from "../featureComponent/Dropdown";
 import { Button } from "react-bootstrap";
+import SearchHouse from "./SearchHouse";
 
-const PropertyFilter: React.FC = () => {
+export default function PropertyFilter() {
   return (
     <div className="d-flex align-items-center gap-2 bg-white p-3 rounded shadow-sm border">
       {/* Dropdowns with Options */}
@@ -17,29 +18,28 @@ const PropertyFilter: React.FC = () => {
         label="Property type"
         options={["Apartment", "Condo", "House", "Villa"]}
       />
-      <DropdownFilter label="Any price" options={["< $500", "$500 - $1000", "$1000+"]} />
+      <DropdownFilter
+        label="Any price"
+        options={["< $500", "$500 - $1000", "$1000+"]}
+      />
       <DropdownFilter
         label="Features (0)"
         options={["Balcony", "Gym", "Swimming Pool", "Parking"]}
       />
-      <DropdownFilter label="More (0)" options={["Pet Friendly", "Furnished", "New Build"]} />
+      <DropdownFilter
+        label="More (0)"
+        options={["Pet Friendly", "Furnished", "New Build"]}
+      />
 
       {/* Search Box */}
-      <div className="input-group" style={{ maxWidth: "350px" }}>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search by location, station, condo name..."
-        />
+      <div className="input-group d-flex" style={{ maxWidth: "350px" }}>
+        <SearchHouse />
         <Button className="input-group-text">
           <FaSearch />
         </Button>
       </div>
 
       {/* Save & Reset Buttons */}
-      
     </div>
   );
-};
-
-export default PropertyFilter;
+}

@@ -18,7 +18,26 @@ export default function Profile() {
     campus: "Cơ sở 1",
     educationType: "Chính Quy",
     course: "Khóa 2022",
-    offCampus:undefined,
+    offCampus:{
+      id: "123",
+      name: "Nhà trọ A",
+      room: "234",
+      address: "123 Đường Nguyễn Văn A",
+      district: "Phường 3",
+      city: "TP. Cao Lãnh",
+      landlord: "Nguyễn Văn B",
+      landlordPhone: "0912345678",
+      status: "pending",
+      contractStart: "01/01/2023",
+      contractEnd: "31/12/2023",
+      lastUpdated: "01/10/2023",
+      price: "2,000,000",
+      electricityPrice: "3,500",
+      waterPrice: "15,000",
+      serviceFee: "100,000",
+      wifiFee: "200,000",
+    }
+      
   };
   return (
     <div>

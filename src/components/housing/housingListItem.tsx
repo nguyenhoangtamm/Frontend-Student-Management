@@ -3,10 +3,17 @@ import React, { useState } from "react";
 import HousingItem from "./housingItem";
 import { OriginHousing } from "@/interface/housingInterface";
 import HousingPagination from "../Pagination/Pagination";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
 
 export type Housing = Omit<OriginHousing, "owner">;
 
+
 export default function HousingListItem({ housing }: { housing: Housing[] }) {
+  const searchHouse = useSelector((state: RootState) => state.house.selectedHouse);
+  if (searchHouse) {
+    housing = housing.filter((item) => item.id.toString() === searchHouse.id.toString());
+  }
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
