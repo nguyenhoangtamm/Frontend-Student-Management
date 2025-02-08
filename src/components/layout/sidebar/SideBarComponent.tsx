@@ -1,18 +1,75 @@
 "use client";
-
 import React, { useState } from "react";
-import Link from "next/link";
-import { Button } from "react-bootstrap";
-import { MenuIcon } from "lucide-react";
 import style from "@styles/sidebar.module.css";
 
-const SidebarComponent: React.FC<{ classNameExtra?: string }> = ({
-  classNameExtra,
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
+import {
+  AppstoreOutlined,
+  CalendarOutlined,
+  InfoCircleOutlined,
+  LinkOutlined,
+} from "@ant-design/icons";
+import { Button, Divider, Menu, Switch } from "antd";
+import type { GetProp, MenuProps } from "antd";
+import { Home, MenuIcon } from "lucide-react";
+import Link from "antd/es/typography/Link";
 
+
+type MenuTheme = GetProp<MenuProps, "theme">;
+
+type MenuItem = GetProp<MenuProps, "items">[number];
+const items: MenuItem[] = [
+  {
+    key: "0",
+    icon: <Home />,
+    label: (
+      <Link
+        href="/dashboard"
+        className="navbar-brand fw-bold fs-4 mb-3 me-auto m-2"
+      >
+        Trang chủ
+      </Link>
+    ),
+  },
+  {
+    key: "1",
+    icon: <InfoCircleOutlined />,
+    label: <Link href="/info">Xem Thông Tin</Link>,
+  },
+  {
+    key: "2",
+    icon: <CalendarOutlined />,
+    label: <Link href="/housing">Tìm Nhà trọ</Link>,
+  },
+  {
+    key: "3",
+    icon: <CalendarOutlined />,
+    label: <Link href="/declare">Khai báo Ngoại trú</Link>,
+  },
+  {
+    key: "4",
+    icon: <AppstoreOutlined />,
+    label: "Luật pháp và quy định",
+    children: [
+      { key: "5", label: <Link href="/regulations">Quy định pháp luật</Link> },
+      { key: "6", label: <Link href="/regulations">Quy định nhà trường</Link> },
+    ],
+  },
+  {
+    key: "7",
+    icon: <LinkOutlined />,
+    label: <Link href="/">Đăng xuất</Link>,
+  },
+];
+
+const SideBarComponent: React.FC = () => {
+  const [theme, setTheme] = useState<MenuTheme>("light");
+  const [isOpen, setIsOpen] = useState(false);
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const changeTheme = (value: boolean) => {
+    setTheme(value ? "dark" : "light");
   };
 
   return (
@@ -20,7 +77,7 @@ const SidebarComponent: React.FC<{ classNameExtra?: string }> = ({
       <nav
         className={`${style.sidebar} ${
           isOpen ? style.show : style.hidden
-        } navbar navbar-expand-lg navbar-light bg-light align-items-start position-fixed ${classNameExtra}`}
+        } navbar navbar-expand-lg navbar-light bg-light align-items-start position-fixed d-flex flex-column `}
         style={{
           top: 100,
           left: 10,
@@ -29,47 +86,24 @@ const SidebarComponent: React.FC<{ classNameExtra?: string }> = ({
           zIndex: 1000,
         }}
       >
-        <div className="container-fluid flex-column">
-          <Link
-            href="/dashboard"
-            className="navbar-brand fw-bold fs-4 mb-3 me-auto m-2"
-          >
-            Trang chủ
-          </Link>
-          <div className="collapse navbar-collapse">
-            <ul className="navbar-nav flex-column">
-              <li className="nav-item">
-                <Link href="/info" className="nav-link">
-                  Xem Thông Tin
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link href="/housing" className="nav-link">
-                  Tìm Nhà trọ
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link href="/declare" className="nav-link">
-                  Khai báo Ngoại trú
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link href="/regulations" className="nav-link">
-                  Luật pháp và quy định
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link href="/" className="nav-link">
-                  Đăng xuất
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <Divider type="vertical" />
+        <Switch
+          checked={theme === "dark"}
+          onChange={changeTheme}
+          checkedChildren="Dark"
+          unCheckedChildren="Light"
+        />
+
+        <Menu
+          style={{ width: 256 }}
+          defaultSelectedKeys={["1"]}
+          defaultOpenKeys={["sub1"]}
+          theme={theme}
+          items={items}
+        />
       </nav>
       <Button
         className="position-fixed d-flex justify-content-center align-items-center"
-        type="button"
         onClick={toggleNavbar}
         style={{
           top: 100,
@@ -84,4 +118,4 @@ const SidebarComponent: React.FC<{ classNameExtra?: string }> = ({
   );
 };
 
-export default SidebarComponent;
+export default SideBarComponent;

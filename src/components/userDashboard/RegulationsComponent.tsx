@@ -10,22 +10,26 @@ const RegulationsComponent: React.FC = () => {
       <h1>Quy định</h1>
       <div className="row">
         <div className="col-md-6">
-          <div
-            className="card d-flex justify-content-center align-items-center"
-            style={{ marginBottom: "10px", padding: "10px" }}
-          >
-            <Image src={govlaw} alt="Map Search" width={200} height={200} />
-            <Link href="#">Quy định của nhà nước</Link>
-          </div>
+          <Link href="#">
+            <div
+              className="card d-flex justify-content-center align-items-center"
+              style={{ marginBottom: "10px", padding: "10px" }}
+            >
+              <Image src={govlaw} alt="Map Search" width={200} height={200} />
+              Quy định của nhà nước
+            </div>
+          </Link>
         </div>
         <div className="col-md-6">
-          <div
-            className="card d-flex justify-content-center align-items-center"
-            style={{ marginBottom: "10px", padding: "10px" }}
-          >
-            <Image src={univlaw} alt="Map Search" width={200} height={200} />
-            <Link href="#">Quy định của nhà trường</Link>
-          </div>
+          <Link href="#">
+            <div
+              className="card d-flex justify-content-center align-items-center"
+              style={{ marginBottom: "10px", padding: "10px" }}
+            >
+              <Image src={univlaw} alt="Map Search" width={200} height={200} />
+              Quy định của nhà trường
+            </div>
+          </Link>
         </div>
       </div>
     </div>
