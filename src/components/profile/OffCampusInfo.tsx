@@ -11,11 +11,8 @@ export default function OffCampusInfo({
   const router = useRouter();
 
   const handleEdit = () => {
-    if (offCampus) {
       router.push(`/edit-off-campus?`);
-    } else {
-      router.push("/add-new-off-campus"); // Chuyển hướng đến trang thêm nhà trọ mới
-    }
+    
   };
 
   return (
