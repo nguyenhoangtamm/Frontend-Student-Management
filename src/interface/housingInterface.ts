@@ -6,7 +6,7 @@ export interface OriginHousing {
   address: string;
   owner_name: string;
   phone_number: string;
-  price: string;
+  price: number;
   image: string;
   description: string;
   lat: number;

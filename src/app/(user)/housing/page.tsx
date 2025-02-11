@@ -5,8 +5,12 @@ import RightListItem from "@/components/housing/rightListItem";
 import PropertyFilter from "@/components/housing/PropertyFilter";
 import { useDomainarie } from "@/services/hooks/useDomainarie";
 
+
 const HousingPage = () => {
   const { data: dataSend, isLoading, error } = useDomainarie();
+
+    // Handler function to receive filtered content from FilterComponent
+   
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Lỗi: {error.message}</p>;

@@ -9,6 +9,19 @@ import { RootState } from "@/lib/store";
 export type Housing = Omit<OriginHousing, "owner">;
 
 export default function HousingListItem({ housing }: { housing: Housing[] }) {
+  const filterHouse = useSelector((state: RootState) => state.filHouse);
+  if (filterHouse.price === "l-h") {
+    housing = housing.sort((a, b) => a.price - b.price);
+  }
+  if (filterHouse.price === "h-l") {
+    housing = housing.sort((a, b) => b.price - a.price);
+  }
+  if (filterHouse.newest === "newest") {
+    housing = housing.sort((a, b) => b.id - a.id);
+  }
+  if (filterHouse.newest === "oldest") {
+    housing = housing.sort((a, b) => a.id - b.id);
+  }
   const searchHouse = useSelector(
     (state: RootState) => state.house.selectedHouse
   );

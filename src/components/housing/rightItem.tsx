@@ -12,18 +12,21 @@ export default function RightItem(housing: { housing: Housing }) {
   return (
     <div className="media mb-3 d-flex align-items-center">
       <Image
-      width={50}
-      height={50}
-      src={mapsearch}
-      className="mr-3"
-      alt="Condo Image"
+        width={50}
+        height={50}
+        src={mapsearch}
+        className="mr-3"
+        alt="Condo Image"
       />
       <div className="media-body">
-      <Link href="#" passHref className="text-primary" style={{ textDecoration: 'none' }}>
-        
+        <Link
+          href="#"
+          passHref
+          className="text-primary"
+          style={{ textDecoration: "none" }}
+        >
           {name}
-      
-      </Link>
+        </Link>
       </div>
     </div>
   );

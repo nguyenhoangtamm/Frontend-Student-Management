@@ -9,7 +9,7 @@ export default function RightListItem(housing: { housing: PoupularHousing[] }) {
     <div className="col-md-4">
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Nổi tiếng nhất</h5>
+          <h5 className="card-title">Đề xuất</h5>
           {housing.housing.map((item, index) => (
             <RightItem key={index} housing={item} />
           ))}

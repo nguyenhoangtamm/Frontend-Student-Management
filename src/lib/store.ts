@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import houseSlice from './slices/houseSlice'
+import FillterHouseSlice from './slices/filterHouseSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      house: houseSlice // Thêm reducer vào store
-
-
+      house: houseSlice, // Thêm reducer vào store
+      filHouse: FillterHouseSlice,
     }
   })
 }
