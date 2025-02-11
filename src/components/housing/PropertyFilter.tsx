@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { FaSearch } from "react-icons/fa";
 import DropdownFilter from "../featureComponent/Dropdown";
-import { Button } from "react-bootstrap";
 import SearchHouse from "./SearchHouse";
 
 export default function PropertyFilter() {
@@ -34,9 +32,7 @@ export default function PropertyFilter() {
       {/* Search Box */}
       <div className="input-group d-flex" style={{ maxWidth: "350px" }}>
         <SearchHouse />
-        <Button className="input-group-text">
-          <FaSearch />
-        </Button>
+       
       </div>
 
       {/* Save & Reset Buttons */}

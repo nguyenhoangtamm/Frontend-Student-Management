@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // Định nghĩa kiểu dữ liệu cho nhà trọ
 interface HouseState {
   selectedHouse: {
-    id: string;
-    name: string;
+    id: string|undefined;
+    name: string|undefined;
   } | null;
 }
 
@@ -18,11 +18,11 @@ const houseSlice = createSlice({
   initialState,
   reducers: {
     // Hành động để cập nhật nhà trọ đã chọn
-    setSelectedHouse: (state, action: PayloadAction<{ id: string; name: string }>) => {
+    setSelectedHouse: (state, action: PayloadAction<{ id: string|undefined; name: string|undefined }|null>) => {
       state.selectedHouse = action.payload;
     },
   },
 });
 
 export const { setSelectedHouse } = houseSlice.actions;
-export default houseSlice;
+export default houseSlice.reducer;

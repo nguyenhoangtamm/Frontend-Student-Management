@@ -4,7 +4,7 @@ import houseSlice from './slices/houseSlice'
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      house: houseSlice.reducer // Thêm reducer vào store
+      house: houseSlice // Thêm reducer vào store
 
 
     }
