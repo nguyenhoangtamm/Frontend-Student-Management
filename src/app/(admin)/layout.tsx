@@ -1,8 +1,8 @@
 "use client";
-import "@/app/globals.css";
-import SideBarComponent from "@/components/admin/layout/SideBarComponent";
-import HeaderComponent from "@/components/layout/header/HeaderComponent";
-import "bootstrap/dist/css/bootstrap.min.css";
+import HeaderComponent from "@/components/admin/layout/Navbar";
+
+import Sidebar from "@/components/admin/layout/Sidebar";
+
 
 export default function DashBoardLayout({
   children,
@@ -12,12 +12,10 @@ export default function DashBoardLayout({
   return (
     <>
       <HeaderComponent />
-      <main className="mt-4 d-flex flex-column flex-md-row">
-        <SideBarComponent />
-        <div className="container col-12 col-md-10">
-          <div className="container">{children}</div>
-        </div>
-      </main>
+      <div className="flex">
+        <Sidebar />
+        <main className="flex-1 p-6">{children}</main>
+      </div>
     </>
   );
 }
