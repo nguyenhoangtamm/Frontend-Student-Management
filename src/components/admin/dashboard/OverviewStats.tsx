@@ -9,14 +9,13 @@ const OverviewStats: React.FC<OverviewStatsProps> = ({ totalStudents, totalHoste
   return (
     <div className="bg-pink-50 p-6 rounded-lg flex justify-between items-center">
       <div>
-        <h2 className="text-gray-700 font-semibold text-lg">Overview</h2>
         <p className="text-gray-700 font-semibold text-md mt-2">
-          Tổng số sinh viên ngoại trú: <span className="font-bold">{totalStudents}</span>
+          Tổng số sinh viên ngoại trú: <span className="font-bold text-xl">{totalStudents}</span>
         </p>
       </div>
       <div>
         <p className="text-gray-700 font-semibold text-md">
-          Tổng số Nhà trọ: <span className="font-bold">{totalHostels}</span>
+          Tổng số Nhà trọ: <span className="font-bold text-xl">{totalHostels}</span>
         </p>
       </div>
       <div>
