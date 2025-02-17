@@ -14,7 +14,6 @@ export default function page() {
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
         <StudentTable />
       
-        <ViewMoreButton />
       </div>
     </div>
   );

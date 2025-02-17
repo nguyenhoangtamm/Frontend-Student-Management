@@ -1,6 +1,6 @@
 "use client";
 import HeaderComponent from "@/components/admin/layout/Navbar";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "@/components/admin/layout/Sidebar";
 
 
