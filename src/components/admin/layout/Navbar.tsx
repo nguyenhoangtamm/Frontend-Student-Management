@@ -5,7 +5,7 @@ import { FaSearch, FaBell, FaUserCircle } from "react-icons/fa";
 const Navbar = () => {
   return (
     <div className="flex justify-between items-center bg-white shadow-md px-6 py-3">
-      <h2 className="text-xl font-bold mb-4">CoinBase</h2>
+      <h2 className="text-xl font-bold mb-4">StudentManagement</h2>
 
       <div className="flex items-center space-x-2 border rounded-full px-4 py-2 w-1/3">
         <FaSearch className="text-gray-500" />

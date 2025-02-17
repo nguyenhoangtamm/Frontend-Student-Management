@@ -35,7 +35,7 @@ const FeedbackTable = () => {
           ))}
         </tbody>
       </table>
-      <button className="mt-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded">View More</button>
+      <button className="mt-4 bg-admin-theme text-white px-4 py-2 rounded">View More</button>
     </div>
   );
 };

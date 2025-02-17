@@ -1,4 +1,6 @@
 import React from "react";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa6";
 
 const StudentTable = () => {
   const students = [
@@ -34,8 +36,8 @@ const StudentTable = () => {
         </tbody>
       </table>
       <div className="flex justify-end mt-4">
-        <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white p-2 rounded-full shadow-md">
-          ➜
+        <button className="bg-admin-theme text-white p-2 rounded-full shadow-md">
+          <FaArrowRight size={30}/>
         </button>
       </div>
     </div>

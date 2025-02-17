@@ -11,55 +11,54 @@ import {
 import { BiLogOut } from "react-icons/bi";
 import { redirect } from "next/navigation";
 
-
 const sidebarItems = [
   {
     icon: <FaEye />,
     title: "Overview",
     badge: undefined,
-    link: "/admindashboard",
+    link: "/admin",
   },
   {
     icon: <FaUserGraduate />,
     title: "Student",
     badge: 19,
-    link: "/admindashboard/student",
+    link: "/admin/student",
   },
   {
     icon: <FaBuilding />,
     title: "Dormitory",
     badge: undefined,
-    link: "/adminDashboard/dormitory",
+    link: "/admin/dormitory",
   },
   {
     icon: <FaChartBar />,
     title: "Thống Kê & Báo cáo",
     badge: 10,
-    link: "/adminDashboard/statistic",
+    link: "/admin/statistic",
   },
   {
     icon: <FaExclamationTriangle />,
     title: "Báo cáo vi phạm",
     badge: undefined,
-    link: "/adminDashboard/report",
+    link: "/admin/report",
   },
   {
     icon: <FaClipboardCheck />,
     title: "Đăng ký kiểm duyệt",
     badge: undefined,
-    link: "/adminDashboard/approval",
+    link: "/admin/approval",
   },
   {
     icon: <FaBell />,
     title: "Thông báo",
     badge: undefined,
-    link: "/adminDashboard/notification",
+    link: "/admin/notification",
   },
 ];
 
 const Sidebar = () => {
   const [active, setActive] = React.useState(0);
-  const handleClick = (index: number,link:string) => {
+  const handleClick = (index: number, link: string) => {
     setActive(index);
     redirect(link);
   };
@@ -75,10 +74,10 @@ const Sidebar = () => {
             badge={item.badge}
             classname={
               active === index
-                ? "flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white cursor-pointer"
+                ? "flex items-center gap-3 p-3 rounded-lg bg-admin-theme text-white cursor-pointer"
                 : ""
             }
-            changeMenu={() => handleClick(index,item.link)}
+            changeMenu={() => handleClick(index, item.link)}
           />
         ))}
       </nav>
@@ -112,20 +111,20 @@ const MenuItem: React.FC<MenuItemProps> = ({
   return (
     <div
       className={
-      classname
-        ? classname
-        : "flex items-center gap-3 p-3 rounded-lg text-gray-600 cursor-pointer hover:bg-gray-100 transform transition-transform duration-200 hover:scale-105"
+        classname
+          ? classname
+          : "flex items-center gap-3 p-3 rounded-lg text-gray-600 cursor-pointer hover:bg-gray-100 transform transition-transform duration-200 hover:scale-105"
       }
       onClick={changeMenu}
     >
       <div className="flex items-center gap-3">
-      {icon}
-      <span>{title}</span>
+        {icon}
+        <span>{title}</span>
       </div>
       {badge && (
-      <span className="bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-        {badge}
-      </span>
+        <span className="bg-admin-notification text-white text-xs font-bold px-2 py-1 rounded-full">
+          {badge}
+        </span>
       )}
     </div>
   );

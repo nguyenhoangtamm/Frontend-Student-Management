@@ -11,6 +11,11 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "admin-notification": "rgba(0, 0, 255, 0.8)",
+      },
+      backgroundImage: {
+        "admin-theme": "linear-gradient(to right,rgb(51, 85, 234),rgb(72, 184, 236))",
+        
       },
     },
   },
