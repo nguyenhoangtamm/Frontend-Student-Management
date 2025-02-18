@@ -1,14 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, Tag, BarChart3, DollarSign, Filter } from "lucide-react";
+import {
+  Filter,
+  IdCard,
+  User,
+  School,
+  CheckCircle,
+  BookOpen,
+} from "lucide-react";
 import { Button } from "antd";
 
 const filters = [
-  { id: "name", label: "Tên", icon: Calendar },
-  { id: "tag", label: "Tag", icon: Tag },
-  { id: "status", label: "Status", icon: BarChart3 },
-  { id: "amount", label: "Amount", icon: DollarSign },
+  { id: "student_id", label: "Mã sinh viên", icon: IdCard },
+  { id: "name", label: "Họ và tên", icon: User },
+  { id: "class", label: "Lớp", icon: School },
+  { id: "major", label: "Ngành học", icon: BookOpen },
+  { id: "status", label: "Trạng thái", icon: CheckCircle },
 ];
 
 export default function FilterStudent() {
@@ -28,7 +36,7 @@ export default function FilterStudent() {
 
       {/* Bộ lọc */}
       {isOpen && (
-        <div className="absolute mt-2 w-48 bg-white shadow-lg rounded-xl p-4 z-10">
+        <div className="absolute mt-2 w-80 bg-white shadow-lg rounded-xl p-4 z-10">
           <h3 className="text-gray-700 font-semibold mb-3">Add Filter</h3>
           <div className="grid grid-cols-2 gap-3">
             {filters.map(({ id, label, icon: Icon }) => (

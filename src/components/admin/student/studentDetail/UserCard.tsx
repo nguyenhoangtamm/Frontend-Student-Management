@@ -23,10 +23,10 @@ const UserCard: React.FC<UserCardProps> = ({ name, email, imageUrl }) => {
       {/* Buttons */}
       <div className="mt-4 flex gap-3">
         <button className="bg-red-500 text-white px-4 py-2 rounded-full font-semibold shadow-md hover:bg-red-600">
-          Down
+          Block User
         </button>
         <button className="bg-purple-600 text-white px-4 py-2 rounded-full font-semibold shadow-md hover:bg-purple-700">
-          Block User
+          Send Email
         </button>
       </div>
     </div>

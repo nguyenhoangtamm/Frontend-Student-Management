@@ -1,10 +1,11 @@
 "use client";
 import { Button } from "antd";
 
-import { Edit, MoreVertical, Trash2 } from "lucide-react";
+import { MoreVertical, Trash2 } from "lucide-react";
 import Image from "next/image";
 import DeleteStudent from "../modals/DeleteStudent";
 import React from "react";
+import { MdEdit } from "react-icons/md";
 
 type StudentStatus = "Active" | "Pending" | "Down";
 
@@ -171,14 +172,13 @@ const StudentTable: React.FC = () => {
     setOpenDelete(true);
     console.log("delete");
   };
-  const handleSelectAll=()=>{
-    if(check){
+  const handleSelectAll = () => {
+    if (check) {
       setCheck(false);
-    }
-    else{
+    } else {
       setCheck(true);
     }
-  }
+  };
   return (
     <>
       <div className="overflow-x-auto">
@@ -222,7 +222,7 @@ const StudentTable: React.FC = () => {
                     style={{ border: "none" }}
                     href={"student/" + student.id}
                   >
-                    <Edit size={16} />
+                    <MdEdit size={16} />
                   </Button>
                   <Button style={{ border: "none" }} onClick={handleDelete}>
                     <Trash2 size={16} />

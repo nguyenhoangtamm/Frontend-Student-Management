@@ -9,7 +9,7 @@ import {
   FaBell,
 } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 const sidebarItems = [
   {
@@ -58,7 +58,7 @@ const sidebarItems = [
 
 const Sidebar = () => {
   const [active, setActive] = React.useState(0);
-  const currentPath = window.location.pathname;
+  const currentPath = usePathname();
 
   React.useEffect(() => {
     const activeIndex = sidebarItems.findIndex(
