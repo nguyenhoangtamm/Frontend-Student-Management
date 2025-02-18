@@ -1,14 +1,15 @@
 import { FaSearch } from "react-icons/fa";
-import FilterStudent from "./FilterStudent";
+import FilterDormitory from "./FilterDormitory";
+
 
 const SearchBar: React.FC = () => {
   return (
     <div className="flex items-center space-x-2 border rounded-full px-4 py-2 w-1/3 justify-end">
-      <FilterStudent />
+      <FilterDormitory />
 
       <input
         type="text"
-        placeholder="Search students..."
+        placeholder="Search Dormitorys..."
         className="w-full outline-none"
       />
       <FaSearch className="text-gray-500" />

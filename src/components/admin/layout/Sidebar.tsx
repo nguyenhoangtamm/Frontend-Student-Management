@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import {
   FaEye,
@@ -62,7 +63,9 @@ const Sidebar = () => {
 
   React.useEffect(() => {
     const activeIndex = sidebarItems.findIndex(
-      (item) => item.link === currentPath
+      (item) =>
+        item.link === currentPath ||
+        (currentPath.includes(item.link) && item.link !== "/admin")
     );
     if (activeIndex !== -1) {
       setActive(activeIndex);
@@ -73,31 +76,26 @@ const Sidebar = () => {
     redirect(link);
   };
   return (
-    <div className="w-64  bg-white shadow-lg p-5 flex flex-col border-r border-gray-200">
-      {/* Menu Items */}
-      <nav className="mt-5 space-y-3">
-        {sidebarItems.map((item, index) => (
-          <MenuItem
-            key={index}
-            icon={item.icon}
-            title={item.title}
-            badge={item.badge}
-            classname={
-              active === index
-                ? "flex items-center gap-3 p-3 rounded-lg bg-admin-theme text-white cursor-pointer "
-                : ""
-            }
-            changeMenu={() => handleClick(index, item.link)}
-          />
-        ))}
-        <div className="mt-auto flex items-center gap-3 p-3 text-gray-600 cursor-pointer hover:text-red-500">
-          <BiLogOut />
-          <span>Logout</span>
-        </div>
-      </nav>
-
-      {/* Logout */}
-    </div>
+    <nav className="mt-5 space-y-3">
+      {sidebarItems.map((item, index) => (
+        <MenuItem
+          key={index}
+          icon={item.icon}
+          title={item.title}
+          badge={item.badge}
+          classname={
+            active === index
+              ? "flex items-center gap-3 p-3 rounded-lg bg-admin-theme text-white cursor-pointer "
+              : ""
+          }
+          changeMenu={() => handleClick(index, item.link)}
+        />
+      ))}
+      <div className="mt-auto flex items-center gap-3 p-3 text-gray-600 cursor-pointer hover:text-red-500">
+        <BiLogOut />
+        <span>Logout</span>
+      </div>
+    </nav>
   );
 };
 
@@ -121,20 +119,20 @@ const MenuItem: React.FC<MenuItemProps> = ({
   return (
     <div
       className={
-      classname
-      ? classname
-        : "flex items-center gap-3 p-3 rounded-lg text-gray-600 cursor-pointer hover:bg-gray-100 transform transition-transform duration-200 hover:scale-105 bg-gray-50"
+        classname
+          ? classname
+          : "flex items-center gap-3 p-3 rounded-lg text-gray-600 cursor-pointer hover:bg-gray-100 transform transition-transform duration-200 hover:scale-105 bg-gray-50"
       }
       onClick={changeMenu}
     >
       <div className="flex items-center gap-3">
-      {icon}
-      <span>{title}</span>
+        {icon}
+        <span>{title}</span>
       </div>
       {badge && (
-      <span className="bg-admin-notification text-white text-xs font-bold px-2 py-1 rounded-full">
-        {badge}
-      </span>
+        <span className="bg-admin-notification text-white text-xs font-bold px-2 py-1 rounded-full">
+          {badge}
+        </span>
       )}
     </div>
   );

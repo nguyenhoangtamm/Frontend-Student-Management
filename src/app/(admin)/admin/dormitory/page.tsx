@@ -1,7 +1,20 @@
-import React from 'react'
+import DormitoryTable from "@/components/admin/dormitory/DormitoryTable";
+import AddDormitory from "@/components/admin/dormitory/modals/AddDormitory";
+import SearchBar from "@/components/admin/dormitory/SearchBar";
+import React from "react";
 
 export default function page() {
   return (
-    <div>Dormitory page</div>
-  )
+    <div className="flex flex-col gap-6">
+      <h1 className="text-2xl font-bold">Student Management: Dormitorys</h1>
+      <div className="flex justify-between items-center">
+        <AddDormitory />
+
+        <SearchBar />
+      </div>
+      <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+        <DormitoryTable />
+      </div>
+    </div>
+  );
 }

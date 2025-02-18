@@ -3,7 +3,7 @@ import { Button } from "antd";
 
 import { MoreVertical, Trash2 } from "lucide-react";
 import Image from "next/image";
-import DeleteStudent from "../modals/DeleteStudent";
+import DeleteStudent from "./modals/DeleteStudent";
 import React from "react";
 import { MdEdit } from "react-icons/md";
 

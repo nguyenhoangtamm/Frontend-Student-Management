@@ -1,4 +1,4 @@
-import AddStudent from "@/components/admin/modals/AddStudent";
+import AddStudent from "@/components/admin/student/modals/AddStudent";
 import SearchBar from "@/components/admin/student/SearchBar";
 import StudentTable from "@/components/admin/student/StudentTable";
 import React from "react";
