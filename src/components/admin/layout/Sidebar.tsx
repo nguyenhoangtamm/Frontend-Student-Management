@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { redirect, usePathname } from "next/navigation";
+import Link from "next/link";
 
 const sidebarItems = [
   {
@@ -91,10 +92,10 @@ const Sidebar = () => {
           changeMenu={() => handleClick(index, item.link)}
         />
       ))}
-      <div className="mt-auto flex items-center gap-3 p-3 text-gray-600 cursor-pointer hover:text-red-500">
+      <Link href={"/login"} className="mt-auto flex items-center gap-3 p-3 text-gray-600 cursor-pointer hover:text-red-500 no-underline">
         <BiLogOut />
         <span>Logout</span>
-      </div>
+      </Link>
     </nav>
   );
 };

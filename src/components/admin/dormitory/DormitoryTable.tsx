@@ -131,7 +131,7 @@ const DormitoryTable: React.FC = () => {
   return (
     <>
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <table className="w-full text-center border-collapse">
           <thead>
             <tr className="text-gray-600">
               <th className="p-3" onClick={handleSelectAll}>
@@ -148,17 +148,17 @@ const DormitoryTable: React.FC = () => {
           <tbody>
             {dormitoryData.map((dormitory) => (
               <tr key={dormitory.id} className="border-t">
-                <td className="p-3">
+                <td className="p-3 text-center justify-center">
                   <input type="checkbox" />
                 </td>
-                <td className="p-3">{dormitory.id}</td>
-                <td className="p-3 flex items-center gap-3">
+                <td className="p-3 text-center justify-center">{dormitory.id}</td>
+                <td className="p-3 text-center justify-center flex items-center gap-3">
                   {/* <Image src={dormitory.avatar} alt="avatar" className="w-8 h-8 rounded-full" /> */}
                   {dormitory.name}
                 </td>
-                <td className="p-3">{dormitory.owner}</td>
-                <td className="p-3">{dormitory.address}</td>
-                <td className="p-3">
+                <td className="p-3 text-center justify-center">{dormitory.owner}</td>
+                <td className="p-3 text-center justify-center">{dormitory.address}</td>
+                <td className="p-3 text-center justify-center">
                   <span
                     className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full ${
                       statusColors[dormitory.status]
@@ -167,7 +167,7 @@ const DormitoryTable: React.FC = () => {
                     {dormitory.status}
                   </span>
                 </td>
-                <td className="p-3 flex gap-2">
+                <td className="p-3 text-center justify-center flex gap-2">
                   <Button
                     style={{ border: "none" }}
                     href={"dormitory/" + dormitory.id}

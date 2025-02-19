@@ -35,6 +35,7 @@ const Student = () => {
           imageUrl="/image.png"
         />
         </div>
+        <br />
         <StudentFormInfo title="Owner Information" info={OwnerData} />
         <StudentFormInfo title="Education Information" info={educationData} />
       </div>

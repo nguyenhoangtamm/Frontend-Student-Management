@@ -182,7 +182,7 @@ const StudentTable: React.FC = () => {
   return (
     <>
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <table className="w-full text-center border-collapse">
           <thead>
             <tr className="text-gray-600">
               <th className="p-3" onClick={handleSelectAll}>
@@ -199,16 +199,16 @@ const StudentTable: React.FC = () => {
           <tbody>
             {studentData.map((student) => (
               <tr key={student.id} className="border-t">
-                <td className="p-3">
+                <td className="p-3 text-center justify-center">
                   <input type="checkbox" checked={check} />
                 </td>
-                <td className="p-3">{student.mssv}</td>
-                <td className="p-3 flex items-center gap-3">
+                <td className="p-3 text-center justify-center">{student.mssv}</td>
+                <td className="p-3 text-center justify-center flex items-center gap-3">
                   {/* <Image src={student.avatar} alt="avatar" className="w-8 h-8 rounded-full" /> */}
                   {student.name}
                 </td>
-                <td className="p-3">{student.class}</td>
-                <td className="p-3">
+                <td className="p-3 text-center justify-center">{student.class}</td>
+                <td className="p-3 text-center justify-center">
                   <span
                     className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full ${
                       statusColors[student.status]
@@ -217,7 +217,7 @@ const StudentTable: React.FC = () => {
                     {student.status}
                   </span>
                 </td>
-                <td className="p-3 flex gap-2">
+                <td className="p-3 text-center justify-center flex gap-2">
                   <Button
                     style={{ border: "none" }}
                     href={"student/" + student.id}
