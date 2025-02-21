@@ -5,7 +5,7 @@ interface EventModalProps {
   isOpen: boolean;
   setOpen: (s: boolean) => void;
 }
-export default function DeleteStudent(props: EventModalProps) {
+export default function DeleteModal(props: EventModalProps) {
   const { isOpen, setOpen } = props;
 
   const handleOk = () => {
@@ -17,7 +17,7 @@ export default function DeleteStudent(props: EventModalProps) {
   };
   return (
     <Modal
-      title="Bạn có chắc chắn muốn xóa sinh viên?"
+      title="Bạn có chắc chắn muốn xóa?"
       open={isOpen}
       onOk={handleOk}
       onCancel={handleCancel}

@@ -3,7 +3,7 @@ import { Button } from "antd";
 
 import { MoreVertical, Trash2 } from "lucide-react";
 import Image from "next/image";
-import DeleteStudent from "./modals/DeleteStudent";
+import DeleteModal from "../modals/DeleteModal"; // Đổi tên thành DeleteNotification
 import React from "react";
 import { MdEdit } from "react-icons/md";
 
@@ -202,12 +202,16 @@ const StudentTable: React.FC = () => {
                 <td className="p-3 text-center justify-center">
                   <input type="checkbox" checked={check} />
                 </td>
-                <td className="p-3 text-center justify-center">{student.mssv}</td>
+                <td className="p-3 text-center justify-center">
+                  {student.mssv}
+                </td>
                 <td className="p-3 text-center justify-center flex items-center gap-3">
                   {/* <Image src={student.avatar} alt="avatar" className="w-8 h-8 rounded-full" /> */}
                   {student.name}
                 </td>
-                <td className="p-3 text-center justify-center">{student.class}</td>
+                <td className="p-3 text-center justify-center">
+                  {student.class}
+                </td>
                 <td className="p-3 text-center justify-center">
                   <span
                     className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full ${
@@ -237,7 +241,7 @@ const StudentTable: React.FC = () => {
         </table>
       </div>
       <p className="p-3 text-gray-600">{conuntStudents} students</p>
-      <DeleteStudent isOpen={isOpenDelete} setOpen={setOpenDelete} />
+      <DeleteModal isOpen={isOpenDelete} setOpen={setOpenDelete} />
       <div className="mt-4 flex justify-center">
         <Button
           type="primary"

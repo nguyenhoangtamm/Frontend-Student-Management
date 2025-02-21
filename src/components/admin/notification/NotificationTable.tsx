@@ -5,7 +5,7 @@ import { MoreVertical, Trash2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { MdEdit } from "react-icons/md";
-import DeleteNotification from "./modals/DeleteModal"; // Đổi tên thành DeleteNotification
+import DeleteModal from "../modals/DeleteModal"; // Đổi tên thành DeleteModal
 // Định nghĩa lại kiểu dữ liệu cho trạng thái thông báo
 interface Notification {
   id: number;
@@ -171,7 +171,7 @@ const NotificationTable: React.FC = () => {
         </table>
       </div>
       <p className="p-3 text-gray-600">{countNotifications} Thông báo</p>
-      <DeleteNotification isOpen={isOpenDelete} setOpen={setOpenDelete} />
+      <DeleteModal isOpen={isOpenDelete} setOpen={setOpenDelete} />
       <div className="mt-4 flex justify-center">
         <Button
           type="primary"

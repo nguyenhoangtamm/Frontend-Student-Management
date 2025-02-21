@@ -1,11 +1,12 @@
 "use client";
-import { Button } from "antd";
+import { Button } from "@/components/ui/button";
 
 import { MoreVertical, Trash2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { MdEdit } from "react-icons/md";
-import DeleteDormitory from "./modals/DeleteDormitory";
+import DeleteModal from "../modals/DeleteModal";
+import Link from "next/link";
 
 type DormitoryStatus = "Active" | "Pending" | "Down";
 const countDormitories = 10080;
@@ -151,13 +152,19 @@ const DormitoryTable: React.FC = () => {
                 <td className="p-3 text-center justify-center">
                   <input type="checkbox" />
                 </td>
-                <td className="p-3 text-center justify-center">{dormitory.id}</td>
+                <td className="p-3 text-center justify-center">
+                  {dormitory.id}
+                </td>
                 <td className="p-3 text-center justify-center flex items-center gap-3">
                   {/* <Image src={dormitory.avatar} alt="avatar" className="w-8 h-8 rounded-full" /> */}
                   {dormitory.name}
                 </td>
-                <td className="p-3 text-center justify-center">{dormitory.owner}</td>
-                <td className="p-3 text-center justify-center">{dormitory.address}</td>
+                <td className="p-3 text-center justify-center">
+                  {dormitory.owner}
+                </td>
+                <td className="p-3 text-center justify-center">
+                  {dormitory.address}
+                </td>
                 <td className="p-3 text-center justify-center">
                   <span
                     className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full ${
@@ -168,16 +175,23 @@ const DormitoryTable: React.FC = () => {
                   </span>
                 </td>
                 <td className="p-3 text-center justify-center flex gap-2">
+                  <Link href={"dormitory/" + dormitory.id}>
+                    <Button
+                      variant="ghost"
+                      style={{ border: "none" }}
+                      color="gray"
+                    >
+                      <MdEdit size={16} color="black" />
+                    </Button>
+                  </Link>
                   <Button
+                    variant="ghost"
                     style={{ border: "none" }}
-                    href={"dormitory/" + dormitory.id}
+                    onClick={handleDelete}
                   >
-                    <MdEdit size={16} />
-                  </Button>
-                  <Button style={{ border: "none" }} onClick={handleDelete}>
                     <Trash2 size={16} />
                   </Button>
-                  <Button style={{ border: "none" }}>
+                  <Button variant="ghost" style={{ border: "none" }}>
                     <MoreVertical size={16} />
                   </Button>
                 </td>
@@ -187,10 +201,9 @@ const DormitoryTable: React.FC = () => {
         </table>
       </div>
       <p className="p-3 text-gray-600">{countDormitories} Dormitorys</p>
-      <DeleteDormitory isOpen={isOpenDelete} setOpen={setOpenDelete} />
+      <DeleteModal isOpen={isOpenDelete} setOpen={setOpenDelete} />
       <div className="mt-4 flex justify-center">
         <Button
-          type="primary"
           onClick={handleViewMore}
           className="rounded-full bg-admin-theme text-white"
         >

@@ -1,5 +1,5 @@
 "use client";
-import { Users, LineChart, RotateCcw, HotelIcon, Check } from "lucide-react";
+import { Users, HotelIcon, Check } from "lucide-react";
 import { IoMdClose } from "react-icons/io";
 
 const stats = [
