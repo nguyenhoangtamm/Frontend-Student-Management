@@ -2,6 +2,7 @@
 
 import { offCampus } from "@/interface/offCampusInterface";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 export default function OffCampusInfo({
   offCampus,
@@ -151,9 +152,9 @@ export default function OffCampusInfo({
         <div>Chưa khai báo thông tin ngoại trú</div>
       )}
       <div className="text-center mt-3">
-        <button className="btn btn-primary" onClick={handleEdit}>
+        <Button  onClick={handleEdit}>
           {offCampus ? "Chỉnh sửa" : "Khai báo nhà trọ mới"}
-        </button>
+        </Button>
       </div>
     </div>
   );

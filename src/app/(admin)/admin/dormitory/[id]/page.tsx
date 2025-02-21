@@ -1,4 +1,4 @@
-import Student from "@/components/admin/dormitory/dormitoryDetail/Student";
+import Student from "@/components/admin/dormitory/dormitoryDetail/Dormitory";
 import React from "react";
 
 export default function page() {

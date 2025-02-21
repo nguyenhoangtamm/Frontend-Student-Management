@@ -12,7 +12,7 @@ interface EducationInfoProps {
   title: string;
   info: InfoItem[];
 }
-export default function StudentFormInfo({ title, info }: EducationInfoProps) {
+export default function DormitoryFormInfo({ title, info }: EducationInfoProps) {
   const [isEditing, setIsEditing] = React.useState(false);
   const handleEdit = () => {
     if (isEditing) {

@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import InputSelector from "./InputSelector";
 import { useDomainarie } from "@/services/hooks/useDomainarie";
-import { Button, InputGroup } from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
 import { DatePicker, Select, Space } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { Button } from "@/components/ui/button";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
@@ -97,12 +98,7 @@ export default function ProfileEdit({ data }: { data: offCampus }) {
           <InputSelector onChange={handleSelect} />
           <div className="col-md-12 mt-3">
             <InputGroup>
-              <Button
-                variant="outline-primary"
-                onClick={() => handleCustomInput()}
-              >
-                Khác
-              </Button>
+              <Button onClick={() => handleCustomInput()}>Khác</Button>
               {showInput && (
                 <input
                   type="text"

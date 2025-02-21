@@ -8,7 +8,7 @@ import RequestForm from "@/components/houseDetail/RequestForm";
 import ReviewSection from "./ReviewSection";
 import { useDomainarie } from "@/services/hooks/useDomainarie";
 
-const       PropertyPage: React.FC<{ houseId: number }> = ({ houseId }) => {
+const PropertyPage: React.FC<{ houseId: number }> = ({ houseId }) => {
   const { data: house, isLoading, error } = useDomainarie(houseId);
 
   if (isLoading) return <p>Loading...</p>;

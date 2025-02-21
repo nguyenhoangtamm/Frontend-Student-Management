@@ -5,7 +5,7 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { setSelectedHouse } from "@/lib/slices/houseSlice";
-import { Button } from "react-bootstrap";
+import { Button } from "../ui/button";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 
@@ -91,7 +91,7 @@ export default function SearchHouse() {
         maxResults={5}
       />
       <Button
-        className="input-group-text"
+        className="input-group-text text-white bg-primary"
         onClick={() => handleInputChange(inputValue)}
       >
         <FaSearch />

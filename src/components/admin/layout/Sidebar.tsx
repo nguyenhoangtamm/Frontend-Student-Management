@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import {
   FaEye,
@@ -59,19 +59,18 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
-  const [active, setActive] = React.useState(0);
   const currentPath = usePathname();
 
-  React.useEffect(() => {
-    const activeIndex = sidebarItems.findIndex(
+  // Xác định mục active ngay từ đầu để tránh bị nhảy về 0
+  const getInitialActiveIndex = () => {
+    return sidebarItems.findIndex(
       (item) =>
         item.link === currentPath ||
         (currentPath.includes(item.link) && item.link !== "/admin")
     );
-    if (activeIndex !== -1) {
-      setActive(activeIndex);
-    }
-  }, [currentPath]);
+  };
+  const [active, setActive] = React.useState(getInitialActiveIndex());
+
   const handleClick = (index: number, link: string) => {
     setActive(index);
     redirect(link);
@@ -92,7 +91,10 @@ const Sidebar = () => {
           changeMenu={() => handleClick(index, item.link)}
         />
       ))}
-      <Link href={"/login"} className="mt-auto flex items-center gap-3 p-3 text-gray-600 cursor-pointer hover:text-red-500 no-underline">
+      <Link
+        href={"/login"}
+        className="mt-auto flex items-center gap-3 p-3 text-gray-600 cursor-pointer hover:text-red-500 no-underline"
+      >
         <BiLogOut />
         <span>Logout</span>
       </Link>

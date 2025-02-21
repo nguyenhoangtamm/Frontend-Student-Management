@@ -4,7 +4,7 @@ import React from "react";
 import mapsearch from "@images/dashboard/housing.jpg";
 import Link from "next/link";
 import RatingComponent from "../featureComponent/RatingComponent";
-import { Button } from "react-bootstrap";
+import { Button } from "../ui/button";
 import MapModal from "../modals/MapModal";
 import { OriginHousing } from "@/interface/housingInterface";
 export type Housing = Omit<OriginHousing, "owner">;
@@ -12,9 +12,7 @@ export type Housing = Omit<OriginHousing, "owner">;
 export default function HousingItem(housing: { housing: Housing }) {
   const { id, name, address, price, description } = housing.housing;
   const [isOpen, setOpen] = React.useState(false);
- 
-  
-  
+
   return (
     <div className="card mb-4 d-flex flex-row">
       <Image
@@ -39,12 +37,7 @@ export default function HousingItem(housing: { housing: Housing }) {
         </div>
         <div className="d-flex flex-column align-items-center m-4">
           <RatingComponent />
-          <Button
-            className="btn btn-primary mt-2"
-            onClick={() => setOpen(true)}
-          >
-            View on Map
-          </Button>
+          <Button onClick={() => setOpen(true)}>View on Map</Button>
         </div>
       </div>
       <MapModal

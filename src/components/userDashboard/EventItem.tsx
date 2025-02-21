@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
 import EventModal from "../modals/EventModal";
+import { Button } from "../ui/button";
 
 // Define the type for Event props
 export interface Event {
@@ -25,7 +25,7 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
         <p className="mb-0 text-success">{event.status}</p>
         <Button
           onClick={() => setOpen(true)}
-          className="btn-sm"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white"
         >
           Chi tiết
         </Button>

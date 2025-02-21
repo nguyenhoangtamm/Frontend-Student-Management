@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button } from "../ui/button";
 import MapModal from "../modals/MapModal";
 import { OriginHousing } from "@/interface/housingInterface";
 
@@ -18,7 +18,7 @@ export default function RequestForm({housingLocation}: {housingLocation: OriginH
       <input type="email" className="form-control my-2" placeholder="Email *" />
       <input type="tel" className="form-control my-2" placeholder="Phone number *" />
       <textarea className="form-control my-2" placeholder="Message"></textarea> */}
-      <Button className="btn btn-primary w-100"
+      <Button className="w-100"
       onClick={()=>{handleOpen()}}
       >View map</Button>
       <MapModal

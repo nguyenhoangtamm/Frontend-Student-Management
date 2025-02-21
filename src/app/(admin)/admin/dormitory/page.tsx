@@ -1,6 +1,6 @@
 import DormitoryTable from "@/components/admin/dormitory/DormitoryTable";
 import AddDormitory from "@/components/admin/dormitory/modals/AddDormitory";
-import SearchBar from "@/components/admin/dormitory/SearchBar";
+import SearchBar from "@/components/admin/ui/SearchBar";
 import React from "react";
 
 export default function page() {
@@ -10,7 +10,7 @@ export default function page() {
       <div className="flex justify-between items-center">
         <AddDormitory />
 
-        <SearchBar />
+        <SearchBar name="Dormitory" />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
         <DormitoryTable />

@@ -30,11 +30,11 @@ const HousingPage = () => {
   return (
     <div>
       <PropertyFilter />
-      <div className="container mt-4">
-        <div className="row">
-          <HousingListItem housing={Array.isArray(dataSend) ? dataSend : []} />
-          <RightListItem housing={rightDataSend} />
-        </div>
+      <div className="mt-4 container mx-auto">
+      <div className="flex flex-wrap">
+        <HousingListItem housing={Array.isArray(dataSend) ? dataSend : []} />
+        <RightListItem housing={rightDataSend} />
+      </div>
       </div>
     </div>
   );

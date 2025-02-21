@@ -1,6 +1,6 @@
 import AddNotification from "@/components/admin/notification/modals/AddModal";
 import NotificationTable from "@/components/admin/notification/NotificationTable";
-import SearchBar from "@/components/admin/notification/SearchBar";
+import SearchBar from "@/components/admin/ui/SearchBar";
 import React from "react";
 
 export default function page() {
@@ -10,7 +10,7 @@ export default function page() {
       <div className="flex justify-between items-center">
         <AddNotification />
 
-        <SearchBar />
+        <SearchBar name="Notification" />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
         <NotificationTable />

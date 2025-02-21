@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { UserPlus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button, Modal } from "antd";
 
 export default function AddStudent() {
@@ -11,10 +11,12 @@ export default function AddStudent() {
     <>
       <Button
         type="primary"
-        className="bg-admin-theme text-white px-6 py-2 rounded-full flex items-center gap-2 shadow-lg hover:opacity-90"
+        className="bg-admin-theme text-white p-4 rounded-full flex items-center justify-center shadow-lg hover:opacity-90"
         onClick={() => setOpen(true)}
+        
       >
-        <UserPlus size={20} /> Add Student
+        <Plus size={20} />
+        Add Student
       </Button>
 
       <Modal

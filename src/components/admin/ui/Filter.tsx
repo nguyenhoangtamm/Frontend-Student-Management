@@ -1,25 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Filter,
-  IdCard,
-  User,
-  School,
-  CheckCircle,
-  BookOpen,
-} from "lucide-react";
+import { Filter, LucideIcon } from "lucide-react";
 import { Button } from "antd";
 
-const filters = [
-  { id: "dormitory_id", label: "Mã nhà trọ", icon: IdCard },
-  { id: "name", label: "Tên nhà trọ", icon: User },
-  { id: "location", label: "Địa chỉ", icon: School },
-  { id: "type", label: "Loại phòng", icon: BookOpen },
-  { id: "status", label: "Trạng thái", icon: CheckCircle },
-];
+interface Filter {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+}
 
-export default function FilterDormitory() {
+interface FilterProps {
+  filter: Filter[];
+}
+
+export default function FilterNotification({ filter }: FilterProps) {
   const [selectedFilter, setSelectedFilter] = useState<string | null>("date");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,7 +34,7 @@ export default function FilterDormitory() {
         <div className="absolute mt-2 w-80 bg-white shadow-lg rounded-xl p-4 z-10">
           <h3 className="text-gray-700 font-semibold mb-3">Add Filter</h3>
           <div className="grid grid-cols-2 gap-3">
-            {filters.map(({ id, label, icon: Icon }) => (
+            {filter.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => setSelectedFilter(id)}

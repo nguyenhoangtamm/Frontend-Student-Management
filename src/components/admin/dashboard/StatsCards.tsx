@@ -1,5 +1,6 @@
 "use client";
-import { Users, Package, LineChart, RotateCcw } from "lucide-react";
+import { Users, LineChart, RotateCcw, HotelIcon, Check } from "lucide-react";
+import { IoMdClose } from "react-icons/io";
 
 const stats = [
   {
@@ -14,16 +15,16 @@ const stats = [
   {
     title: "Total Dormitories",
     value: "10,293",
-    icon: <Package className="text-yellow-500" size={32} />,
+    icon: <HotelIcon className="text-yellow-500" size={32} />,
     percentage: "1.3% Up from past week",
     trend: "up",
     bgColor: "bg-yellow-100",
     textColor: "text-green-600",
   },
   {
-    title: "Total Comfirmed",
+    title: "Total Confirmed",
     value: "1,040",
-    icon: <LineChart className="text-green-500" size={32} />,
+    icon: <Check className="text-green-500" size={32} />,
     percentage: "0.5% Down from yesterday",
     trend: "down",
     bgColor: "bg-green-100",
@@ -33,7 +34,7 @@ const stats = [
   {
     title: "Total Uncomfirmed",
     value: "1,040",
-    icon: <RotateCcw className="text-red-500" size={32} />,
+    icon: <IoMdClose className="text-red-500" size={32} />,
     percentage: "0.5% Down from yesterday",
     trend: "down",
     bgColor: "bg-red-100",

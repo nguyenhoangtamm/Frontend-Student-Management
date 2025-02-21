@@ -17,31 +17,18 @@ export default function HomePage() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <div style={{ flex: "1 1 70%", minWidth: "300px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-          }}
-        >
+    <div className="flex flex-wrap p-5 font-sans">
+      <div className="flex-1 min-w-[300px] md:flex-[1_1_70%]">
+        <div className="flex justify-between flex-wrap">
           <HostelInfo />
           <Notifications />
-        </div>
+        </div> 
         <EventList />
         <RegulationsComponent />
       </div>
       <UserInfoComponent
         data={dataSend}
-        className="col-12 col-md-2 mb-4 mb-md-0"
+        className="w-full md:w-1/5 mb-4 md:mb-0"
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import StudentFormInfo from "./StudentFormInfo";
+import DormitoryFormInfo from "./DormitoryFormInfo";
 import UserCard from "./UserCard";
 
 const OwnerData = [
@@ -22,7 +22,7 @@ const educationData = [
   { label: "Khóa học", value: "Khóa 2022", link: "#" },
 ];
 
-const Student = () => {
+const Dormitory = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold">Student Management: Dormitory</h1>
@@ -30,15 +30,15 @@ const Student = () => {
         <div className="flex justify-center">
           <UserCard
             name="Ramon Ridwan"
-            email="Ramonridwan@protonmail.com"
-            imageUrl="/image.png"
+            phoneNumber="01234987"
+            imageUrl="/housing.jpg"
           />
         </div>
         <br />
-        <StudentFormInfo title="Dormitory Information" info={OwnerData} />
+        <DormitoryFormInfo title="Dormitory Information" info={OwnerData} />
       </div>
     </div>
   );
 };
 
-export default Student;
+export default Dormitory;

@@ -7,91 +7,87 @@ import React from "react";
 import { MdEdit } from "react-icons/md";
 import DeleteNotification from "./modals/DeleteModal"; // Đổi tên thành DeleteNotification
 // Định nghĩa lại kiểu dữ liệu cho trạng thái thông báo
-const countNotifications = 10080;
-const notifications: {
+interface Notification {
   id: number;
   title: string;
   content: string;
   date: string;
   views: number;
-}[] = [
+}
+const countNotifications = 10080;
+const notifications: Notification[] = [
   {
     id: 1,
     title: "Thông báo A",
     content: "Nội dung thông báo A",
-    date: "Nguyễn Văn A",
+    date: "2024-02-19",
     views: 123,
   },
   {
     id: 2,
     title: "Thông báo B",
     content: "Nội dung thông báo B",
-    date: "Trần Thị B",
+    date: "2024-02-18",
     views: 456,
   },
   {
     id: 3,
     title: "Thông báo C",
     content: "Nội dung thông báo C",
-    date: "Lê Văn C",
+    date: "2024-02-17",
     views: 123,
   },
   {
     id: 4,
     title: "Thông báo D",
     content: "Nội dung thông báo D",
-    date: "Phạm Thị D",
+    date: "2024-02-16",
     views: 789,
   },
   {
     id: 5,
     title: "Thông báo E",
     content: "Nội dung thông báo E",
-    date: "Hoàng Văn E",
+    date: "2024-02-15",
     views: 123,
   },
 ];
-const extraNotifications: {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-  views: number;
-}[] = [
+
+const extraNotifications: Notification[] = [
   ...notifications,
   {
     id: 6,
     title: "Thông báo F",
     content: "Nội dung thông báo F",
-    date: "Nguyễn Thị F",
+    date: "2024-02-14",
     views: 123,
   },
   {
     id: 7,
     title: "Thông báo G",
     content: "Nội dung thông báo G",
-    date: "Đặng Văn G",
+    date: "2024-02-13",
     views: 789,
   },
   {
     id: 8,
     title: "Thông báo H",
     content: "Nội dung thông báo H",
-    date: "Bùi Thị H",
+    date: "2024-02-12",
     views: 456,
   },
   {
     id: 9,
     title: "Thông báo I",
     content: "Nội dung thông báo I",
-    date: "Đỗ Văn I",
+    date: "2024-02-11",
     views: 123,
   },
   {
     id: 10,
     title: "Thông báo J",
     content: "Nội dung thông báo J",
-    date: "Vũ Thị J",
+    date: "2024-02-10",
     views: 456,
   },
 ];
@@ -147,13 +143,13 @@ const NotificationTable: React.FC = () => {
                   {notification.title}
                 </td>
                 <td className="p-3 text-center justify-center">
-                  {notification.date}
-                </td>
-                <td className="p-3 text-center justify-center">
                   {notification.content}
                 </td>
                 <td className="p-3 text-center justify-center">
                   {notification.views}
+                </td>
+                <td className="p-3 text-center justify-center">
+                  {notification.date}
                 </td>
                 <td className="p-3 flex gap-2 text-center justify-center">
                   <Button

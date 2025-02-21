@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import  {Modal}  from "react-bootstrap";
 import MapComponent from "./Mapcomponent";
 import { OriginHousing } from "@/interface/housingInterface";
+import { Button } from "../ui/button";
 
 export type HousingLocation = Omit<OriginHousing, "id" | "owner">;
 

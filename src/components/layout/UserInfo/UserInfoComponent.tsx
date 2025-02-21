@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Link from "next/link";
 import Image from "next/image";
 import Avatar from "@images/dashboard/avatar.png";
 import { FaUser } from "react-icons/fa6";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface UserInfoProps {
   student_code: string;
@@ -61,7 +61,7 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
           </div>
         </div>
         <hr className="border-light" />
-        <Card.Body className="px-2">
+        <CardContent className="px-2">
           <p>
             MSSV: <span className="fw-bold">{data.student_code}</span>
           </p>
@@ -85,7 +85,7 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
               Xem chi tiết
             </Link>
           </div>
-        </Card.Body>
+        </CardContent>
       </Card>
 
       {/* Nút điều khiển toggle */}

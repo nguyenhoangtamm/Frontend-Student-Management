@@ -1,7 +1,8 @@
 import { setFilterHouse } from "@/lib/slices/filterHouseSlice";
 import { RootState } from "@/lib/store";
 import React, { useState } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 
 interface DropdownFilterProps {
@@ -58,18 +59,20 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
   };
 
   return (
-    <DropdownButton
-      id="dropdown-basic-button"
-      title={selected}
-      variant="light"
-      style={{ width: widthFilter }}
-    >
-      {options.map((option, index) => (
-        <Dropdown.Item key={index} onClick={() => handleChange(option)}>
-          {option}
-        </Dropdown.Item>
-      ))}
-    </DropdownButton>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" style={{ width: widthFilter }}>
+          {selected}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-[var(--width)]" style={{ "width": widthFilter }}>
+        {options.map((option, index) => (
+          <DropdownMenuItem key={index} onClick={() => handleChange(option)} >
+            {option}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
