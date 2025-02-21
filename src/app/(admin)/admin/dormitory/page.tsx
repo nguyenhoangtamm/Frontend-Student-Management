@@ -1,7 +1,17 @@
+"use client";
+
 import AddModal from "@/components/admin/modals/AddModal";
 import SearchBar from "@/components/admin/ui/SearchBar";
 import DataTable from "@/components/admin/ui/table/Table";
 import React from "react";
+import {
+  IdCard,
+  User,
+  School,
+  CheckCircle,
+  BookOpen,
+  LucideIcon,
+} from "lucide-react";
 
 const datas = [
   {
@@ -46,6 +56,21 @@ const dataColumns = [
   { key: "address", label: "Address" },
   { key: "status", label: "Status" },
 ];
+interface IFilter {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  option: string[];
+
+}
+const filters: IFilter[] = [
+  { id: "1", label: "Mã nhà trọ", icon: IdCard, option: ["1", "2", "3", "4", "5"] },
+  { id: "2", label: "Tên nhà trọ", icon: User, option: ["Ký túc xá A", "Nhà trọ B", "Ký túc xá C", "Nhà trọ D", "Ký túc xá E"] },
+  { id: "3", label: "Địa chỉ", icon: School, option: ["123 Đường ABC, TP. HCM", "456 Đường XYZ, TP. HCM", "789 Đường DEF, TP. HCM", "101 Đường GHI, TP. HCM", "202 Đường JKL, TP. HCM"] },
+  { id: "4", label: "Loại phòng", icon: BookOpen, option: ["A", "B", "C", "D", "E"] },
+  { id: "5", label: "Trạng thái", icon: CheckCircle, option: ["Active", "Pending", "Down"] },
+];
+
 export default function page() {
   return (
     <div className="flex flex-col gap-6">
@@ -53,7 +78,7 @@ export default function page() {
       <div className="flex justify-between items-center">
         <AddModal />
 
-        <SearchBar name="Dormitory" />
+        <SearchBar name="Dormitory" filters={filters} />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
         <DataTable data={datas} columns={dataColumns} />

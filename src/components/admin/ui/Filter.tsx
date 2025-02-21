@@ -8,6 +8,7 @@ interface Filter {
   id: string;
   label: string;
   icon: LucideIcon;
+  option: string[];
 }
 
 interface FilterProps {
@@ -15,9 +16,16 @@ interface FilterProps {
 }
 
 export default function FilterNotification({ filter }: FilterProps) {
-  const [selectedFilter, setSelectedFilter] = useState<string | null>("date");
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(
+    filter[0].id
+  );
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [isOpenOption, setIsOpenOption] = useState(false);
+  const handleSelectFilter = (id: string) => {
+    setSelectedFilter(id);
+    setSelectedOption(null);
+  }
   return (
     <div className="relative">
       {/* Nút mở bộ lọc */}
@@ -34,22 +42,43 @@ export default function FilterNotification({ filter }: FilterProps) {
         <div className="absolute mt-2 w-80 bg-white shadow-lg rounded-xl p-4 z-10">
           <h3 className="text-gray-700 font-semibold mb-3">Add Filter</h3>
           <div className="grid grid-cols-2 gap-3">
-            {filter.map(({ id, label, icon: Icon }) => (
-              <button
-                key={id}
-                onClick={() => setSelectedFilter(id)}
-                className={`
-                  flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 transition-all
-                  ${
+            {filter.map(({ id, label, icon: Icon, option }) => (
+              <div key={id} className="relative">
+                <button
+                  onClick={() => {
+                    handleSelectFilter(id);
+                    setIsOpenOption(!isOpenOption);
+                  }}
+                  className={`flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 transition-all ${
                     selectedFilter === id
                       ? "bg-purple-100 border-purple-500 text-purple-600"
                       : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                  }
-                `}
-              >
-                <Icon size={20} />
-                <span className="mt-1 text-sm font-medium">{label}</span>
-              </button>
+                  }`}
+                >
+                  <Icon size={20} />
+                  <span className="mt-1 text-sm font-medium">{label}</span>
+                  {selectedFilter === id && selectedOption ? (
+                    <span className="mt-1 text-sm font-medium">
+                      {selectedOption}
+                    </span>
+                  ) : null}
+                </button>
+                {selectedFilter === id && isOpenOption && (
+                  <div className="absolute mt-2 w-40 bg-white shadow-lg rounded-xl p-2 z-10">
+                    <ul>
+                      {option.map((item) => (
+                        <li
+                          key={item}
+                          className="p-2 text-sm font-medium"
+                          onClick={() => setSelectedOption(item)}
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>

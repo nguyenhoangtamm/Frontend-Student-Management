@@ -1,7 +1,16 @@
+"use client";
 import AddModal from "@/components/admin/modals/AddModal";
 import SearchBar from "@/components/admin/ui/SearchBar";
 import DataTable from "@/components/admin/ui/table/Table";
 import React from "react";
+import {
+  IdCard,
+  User,
+  School,
+  CheckCircle,
+  BookOpen,
+  LucideIcon,
+} from "lucide-react";
 
 const datas = [
   {
@@ -39,21 +48,38 @@ const datas = [
     date: "2024-02-15",
     views: 123,
   },
-]
+];
+
 const dataColumns = [
   { key: "title", label: "Title" },
   { key: "content", label: "Content" },
   { key: "date", label: "Date" },
   { key: "views", label: "Views" },
-]
+];
+interface IFilter {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+}
+const filters: IFilter[] = [
+  { id: "dormitory_id", label: "Mã nhà trọ", icon: IdCard },
+  { id: "name", label: "Tên nhà trọ", icon: User },
+  { id: "location", label: "Địa chỉ", icon: School },
+  { id: "type", label: "Loại phòng", icon: BookOpen },
+  { id: "status", label: "Trạng thái", icon: CheckCircle },
+];
+
 export default function page() {
+  console.log(filters);
+
+
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">Student Management: Dormitorys</h1>
+      <h1 className="text-2xl font-bold">Student Management: Notification</h1>
       <div className="flex justify-between items-center">
         <AddModal />
 
-        <SearchBar name="Notification" />
+        <SearchBar name="Notification" filters={filters} />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
         <DataTable data={datas} columns={dataColumns} />

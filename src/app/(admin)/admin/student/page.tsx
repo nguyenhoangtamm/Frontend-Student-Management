@@ -1,8 +1,17 @@
+"use client";
+
 import AddModal from "@/components/admin/modals/AddModal";
-import StudentTable from "@/components/admin/student/StudentTable";
 import SearchBar from "@/components/admin/ui/SearchBar";
 import DataTable from "@/components/admin/ui/table/Table";
 import React from "react";
+import {
+  IdCard,
+  User,
+  School,
+  CheckCircle,
+  BookOpen,
+  LucideIcon,
+} from "lucide-react";
 
 const students = [
   {
@@ -94,13 +103,26 @@ const studentColumns = [
   { key: "status", label: "Trạng thái" },
   {key: "avatar", label: "Avatar"}
 ];
+interface IFilter {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+}
+const filters: IFilter[] = [
+  { id: "dormitory_id", label: "Mã nhà trọ", icon: IdCard },
+  { id: "name", label: "Tên nhà trọ", icon: User },
+  { id: "location", label: "Địa chỉ", icon: School },
+  { id: "type", label: "Loại phòng", icon: BookOpen },
+  { id: "status", label: "Trạng thái", icon: CheckCircle },
+];
+
 export default function page() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold">Student Management: Students</h1>
       <div className="flex justify-between items-center">
         <AddModal />
-        <SearchBar name="Student" />
+        <SearchBar name="Student" filters={filters} />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
         <DataTable data={students} columns={studentColumns} />

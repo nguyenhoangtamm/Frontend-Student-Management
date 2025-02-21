@@ -21,7 +21,6 @@ interface TableProps {
 }
 
 export default function DataTable({ data, columns }: TableProps) {
-  console.log(columns);
   const [selectedRows, setSelectedRows] = React.useState<number[]>([]);
   const [isOpenDelete, setOpenDelete] = React.useState(false);
   const [viewButton, setViewButton] = React.useState("View More");
