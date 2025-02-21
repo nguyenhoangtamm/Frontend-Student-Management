@@ -14,7 +14,7 @@ export default function AddModal() {
         className="bg-admin-theme text-white px-6 py-2 rounded-full flex items-center gap-2 shadow-lg hover:opacity-90"
         onClick={() => setOpen(true)}
       >
-        <Plus size={20} /> Add Dormitory
+        <Plus size={20} /> Add
       </Button>
 
       <Modal

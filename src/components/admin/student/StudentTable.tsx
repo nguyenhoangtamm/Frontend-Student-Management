@@ -153,43 +153,57 @@ const statusColors = {
   Pending: "bg-purple-500",
   Down: "bg-red-500",
 };
-
 const StudentTable: React.FC = () => {
   const [isOpenDelete, setOpenDelete] = React.useState(false);
   const [studentData, setStudentData] = React.useState(students);
   const [viewButton, setViewButton] = React.useState("View More");
-  const [check, setCheck] = React.useState(false);
+  const [selectedStudents, setSelectedStudents] = React.useState<number[]>([]);
+
   const handleViewMore = () => {
     if (viewButton === "View More") {
       setStudentData(extraStudents);
       setViewButton("View Less");
-      return;
+    } else {
+      setStudentData(students);
+      setViewButton("View More");
     }
-    setStudentData(students);
-    setViewButton("View More");
   };
+
   const handleDelete = () => {
     setOpenDelete(true);
     console.log("delete");
   };
+
+  // Chọn/Bỏ chọn tất cả sinh viên
   const handleSelectAll = () => {
-    if (check) {
-      setCheck(false);
+    if (selectedStudents.length === studentData.length) {
+      setSelectedStudents([]); // Bỏ chọn tất cả
     } else {
-      setCheck(true);
+      setSelectedStudents(studentData.map((s) => s.id)); // Chọn tất cả
     }
   };
+
+  // Chọn/Bỏ chọn một sinh viên
+  const handleSelectStudent = (id: number) => {
+    setSelectedStudents((prev) =>
+      prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
+    );
+  };
+
   return (
     <>
       <div className="overflow-x-auto">
         <table className="w-full text-center border-collapse">
           <thead>
             <tr className="text-gray-600">
-              <th className="p-3" onClick={handleSelectAll}>
-                <input type="checkbox" />
+              <th className="p-3">
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  checked={selectedStudents.length === studentData.length}
+                />
               </th>
               <th className="p-3">MSSV</th>
-
               <th className="p-3">Họ Tên</th>
               <th className="p-3">Lớp</th>
               <th className="p-3">Account Status</th>
@@ -199,20 +213,19 @@ const StudentTable: React.FC = () => {
           <tbody>
             {studentData.map((student) => (
               <tr key={student.id} className="border-t">
-                <td className="p-3 text-center justify-center">
-                  <input type="checkbox" checked={check} />
+                <td className="p-3 text-center">
+                  <input
+                    type="checkbox"
+                    checked={selectedStudents.includes(student.id)}
+                    onChange={() => handleSelectStudent(student.id)}
+                  />
                 </td>
-                <td className="p-3 text-center justify-center">
-                  {student.mssv}
-                </td>
-                <td className="p-3 text-center justify-center flex items-center gap-3">
-                  {/* <Image src={student.avatar} alt="avatar" className="w-8 h-8 rounded-full" /> */}
+                <td className="p-3 text-center">{student.mssv}</td>
+                <td className="p-3 text-center flex items-center gap-3">
                   {student.name}
                 </td>
-                <td className="p-3 text-center justify-center">
-                  {student.class}
-                </td>
-                <td className="p-3 text-center justify-center">
+                <td className="p-3 text-center">{student.class}</td>
+                <td className="p-3 text-center">
                   <span
                     className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full ${
                       statusColors[student.status]
@@ -221,11 +234,8 @@ const StudentTable: React.FC = () => {
                     {student.status}
                   </span>
                 </td>
-                <td className="p-3 text-center justify-center flex gap-2">
-                  <Button
-                    style={{ border: "none" }}
-                    href={"student/" + student.id}
-                  >
+                <td className="p-3 text-center flex gap-2">
+                  <Button style={{ border: "none" }} href={"student/" + student.id}>
                     <MdEdit size={16} />
                   </Button>
                   <Button style={{ border: "none" }} onClick={handleDelete}>
@@ -243,16 +253,13 @@ const StudentTable: React.FC = () => {
       <p className="p-3 text-gray-600">{conuntStudents} students</p>
       <DeleteModal isOpen={isOpenDelete} setOpen={setOpenDelete} />
       <div className="mt-4 flex justify-center">
-        <Button
-          type="primary"
-          onClick={handleViewMore}
-          className="rounded-full bg-admin-theme text-white"
-        >
+        <Button type="primary" onClick={handleViewMore} className="rounded-full bg-admin-theme text-white">
           {viewButton}
         </Button>
       </div>
     </>
   );
 };
+
 
 export default StudentTable;

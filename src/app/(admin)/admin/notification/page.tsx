@@ -1,8 +1,51 @@
 import AddModal from "@/components/admin/modals/AddModal";
-import NotificationTable from "@/components/admin/notification/NotificationTable";
 import SearchBar from "@/components/admin/ui/SearchBar";
+import DataTable from "@/components/admin/ui/table/Table";
 import React from "react";
 
+const datas = [
+  {
+    id: 1,
+    title: "Thông báo A",
+    content: "Nội dung thông báo A",
+    date: "2024-02-19",
+    views: 123,
+  },
+  {
+    id: 2,
+    title: "Thông báo B",
+    content: "Nội dung thông báo B",
+    date: "2024-02-18",
+    views: 456,
+  },
+  {
+    id: 3,
+    title: "Thông báo C",
+    content: "Nội dung thông báo C",
+    date: "2024-02-17",
+    views: 123,
+  },
+  {
+    id: 4,
+    title: "Thông báo D",
+    content: "Nội dung thông báo D",
+    date: "2024-02-16",
+    views: 789,
+  },
+  {
+    id: 5,
+    title: "Thông báo E",
+    content: "Nội dung thông báo E",
+    date: "2024-02-15",
+    views: 123,
+  },
+]
+const dataColumns = [
+  { key: "title", label: "Title" },
+  { key: "content", label: "Content" },
+  { key: "date", label: "Date" },
+  { key: "views", label: "Views" },
+]
 export default function page() {
   return (
     <div className="flex flex-col gap-6">
@@ -13,7 +56,7 @@ export default function page() {
         <SearchBar name="Notification" />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-        <NotificationTable />
+        <DataTable data={datas} columns={dataColumns} />
       </div>
     </div>
   );

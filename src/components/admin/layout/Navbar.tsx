@@ -1,7 +1,12 @@
 // components/Navbar.tsx
+import { useState } from "react";
 import { FaSearch, FaBell, FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
+  const [search, setSearch] = useState("");
+  const handleSearch=(e:any)=>{
+    setSearch(e.target.value)
+  }
   return (
     <div className="flex justify-between items-center bg-white shadow-md px-6 py-3">
       <h2 className="text-xl font-bold mb-4 bg-admin-theme  text-white ">
@@ -14,6 +19,8 @@ const Navbar = () => {
           type="text"
           placeholder="Search..."
           className="w-full outline-none"
+          value={search}
+          onChange={handleSearch}
         />
       </div>
       <div className="flex items-center space-x-4">
