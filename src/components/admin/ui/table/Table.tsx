@@ -63,7 +63,7 @@ export default function DataTable({ data, columns }: TableProps) {
   };
   return (
     <>
-      <Table className="w-full   text-center border-collapse" scroll={true}>
+      <Table className="w-full   text-center border-collapse">
         <TableHeader>
           <TableRow className="text-gray-600 ">
             {/* Cột checkbox - Cố định bên trái */}

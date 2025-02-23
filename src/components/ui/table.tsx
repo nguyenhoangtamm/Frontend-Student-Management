@@ -2,16 +2,12 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
-  scroll?: boolean;
-}
 
-const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ className, scroll, ...props }, ref) => (
+const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
+  ({ className, ...props }, ref) => (
     <div
       className={cn(
-      "relative w-full",
-      scroll && "overflow-x-auto"
+      "relative w-full overflow-x-auto"
       )}
     >
       <table

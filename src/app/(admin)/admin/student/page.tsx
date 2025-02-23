@@ -3,15 +3,11 @@
 import AddModal from "@/components/admin/modals/AddModal";
 import SearchBar from "@/components/admin/ui/SearchBar";
 import DataTable from "@/components/admin/ui/table/Table";
+
 import React from "react";
-import {
-  IdCard,
-  User,
-  School,
-  CheckCircle,
-  BookOpen,
-  LucideIcon,
-} from "lucide-react";
+import { IdCard, User, School, CheckCircle, LucideIcon } from "lucide-react";
+import StatsCards from "@/components/admin/ui/Stats";
+import { StatProps } from "@/interface/statProps";
 
 const students = [
   {
@@ -152,10 +148,66 @@ const filters: IFilter[] = [
     option: ["Active", "Pending", "Down"],
   },
 ];
+
+const stats: StatProps[] = [
+  {
+    name: "Total Students",
+    label: ["Ngoại trú", "Nội trú", "Ở nhà", "Chưa khai báo"],
+    labelNote: "Total",
+    dataChart: [123, 140, 234, 50],
+    backgroundColor: [
+      "rgba(255, 99, 132, 0.6)",
+      "rgba(54, 162, 235, 0.6)",
+      "rgba(255, 206, 86, 0.6)",
+      "rgba(75, 192, 192, 0.6)",
+    ],
+    borderColor: [
+      "rgba(255, 99, 132, 1)",
+      "rgba(54, 162, 235, 1)",
+      "rgba(255, 206, 86, 1)",
+      "rgba(75, 192, 192, 1)",
+    ],
+    borderWidth: 1,
+    position: "bottom",
+  },
+  {
+    name: "Total Dormitories",
+    label: ["Dormitories"],
+    labelNote: "Total",
+    dataChart: [1040, 1040],
+    backgroundColor: ["rgba(255, 206, 86, 0.6)", "rgba(75, 192, 192, 0.6)"],
+    borderColor: ["rgba(255, 206, 86, 1)", "rgba(75, 192, 192, 1)"],
+    borderWidth: 1,
+    position: "bottom",
+  },
+  {
+    name: "Total Confirmed",
+    label: ["Confirmed"],
+    labelNote: "Total",
+    dataChart: [1040, 1040],
+    backgroundColor: ["rgba(75, 192, 192, 0.6)", "rgba(153, 102, 255, 0.6)"],
+    borderColor: ["rgba(75, 192, 192, 1)", "rgba(153, 102, 255, 1)"],
+    borderWidth: 1,
+    position: "bottom",
+  },
+  {
+    name: "Total Unconfirmed",
+    label: ["Unconfirmed"],
+    labelNote: "Total",
+    dataChart: [1040, 1040],
+    backgroundColor: ["rgba(255, 159, 64, 0.6)", "rgba(54, 162, 235, 0.6)"],
+    borderColor: ["rgba(255, 159, 64, 1)", "rgba(54, 162, 235, 1)"],
+    borderWidth: 1,
+    position: "bottom",
+  },
+];
 export default function page() {
   return (
     <div className="flex flex-col gap-6 container ">
       <h1 className="text-2xl font-bold">Student Management: Students</h1>
+      <StatsCards stats={stats} />
+      <hr />
+      <h4 className="text-gray-600">Students data</h4>
       <div className="flex   justify-between items-center">
         <AddModal />
         <SearchBar name="Student" filters={filters} />

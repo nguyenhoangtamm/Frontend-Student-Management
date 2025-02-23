@@ -39,7 +39,7 @@ export default function FilterNotification({ filter }: FilterProps) {
 
       {/* Bộ lọc */}
       {isOpen && (
-        <div className="absolute mt-2 w-80 bg-white shadow-lg rounded-xl p-4 z-10">
+        <div className="absolute mt-2 w-80 bg-white shadow-lg rounded-xl p-4 z-50">
           <h3 className="text-gray-700 font-semibold mb-3">Add Filter</h3>
           <div className="grid grid-cols-2 gap-3">
             {filter.map(({ id, label, icon: Icon, option }) => (
