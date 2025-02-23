@@ -5,7 +5,6 @@ import DataTable from "@/components/admin/ui/table/Table";
 import React from "react";
 import {
   IdCard,
-  User,
   School,
   CheckCircle,
   BookOpen,
@@ -60,13 +59,33 @@ interface IFilter {
   id: string;
   label: string;
   icon: LucideIcon;
+  option: string[];
 }
 const filters: IFilter[] = [
-  { id: "dormitory_id", label: "Mã nhà trọ", icon: IdCard },
-  { id: "name", label: "Tên nhà trọ", icon: User },
-  { id: "location", label: "Địa chỉ", icon: School },
-  { id: "type", label: "Loại phòng", icon: BookOpen },
-  { id: "status", label: "Trạng thái", icon: CheckCircle },
+  {
+    id: "title",
+    label: "Title",
+    icon: BookOpen,
+    option: ["Thông báo A", "Thông báo B", "Thông báo C", "Thông báo D"],
+  },
+  {
+    id: "content",
+    label: "Content",
+    icon: School,
+    option: ["Nội dung thông báo A", "Nội dung thông báo B", "Nội dung thông báo C", "Nội dung thông báo D"],
+  },
+  {
+    id: "date",
+    label: "Date",
+    icon: CheckCircle,
+    option: ["2024-02-19", "2024-02-18", "2024-02-17", "2024-02-16"],
+  },
+  {
+    id: "views",
+    label: "Views",
+    icon: IdCard,
+    option: ["123", "456", "789"],
+  },
 ];
 
 export default function page() {

@@ -4,6 +4,14 @@ import { MoreVertical, Trash2 } from "lucide-react";
 import React from "react";
 import { MdEdit } from "react-icons/md";
 import DeleteModal from "../../modals/DeleteModal";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface TableColumn {
   key: string;
@@ -55,66 +63,81 @@ export default function DataTable({ data, columns }: TableProps) {
   };
   return (
     <>
-      <div className="overflow-x-auto">
-        <table className="w-full text-center border-collapse">
-          <thead>
-            <tr className="text-gray-600">
-              <th className="p-3">
-                <input
-                  type="checkbox"
-                  onChange={handleSelectAll}
-                  checked={selectedRows.length === data.length}
-                />
-              </th>
-              {columns.map((col) => (
-                <th key={col.key} className="p-3">
-                  {col.label}
-                </th>
-              ))}
-              <th className="p-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index} className="border-t">
-                <td className="p-3 text-center">
-                  <input
-                    type="checkbox"
-                    checked={selectedRows.includes(index)}
-                    onChange={() => handleSelectRow(index)}
-                  />
-                </td>
-                {columns.map((col) => (
-                  <td key={col.key} className="p-3 text-center">
-                    {col.key === "status" ? (
-                      <span
-                        className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full ${
-                          statusColors[row[col.key]]
-                        }`}
-                      >
-                        {row[col.key]}
-                      </span>
-                    ) : (
-                      row[col.key]
-                    )}
-                  </td>
-                ))}
-                <td className="p-3 text-center ">
-                  <Button style={{ border: "none" }} href={"student/" + row.id}>
-                    <MdEdit size={16} />
-                  </Button>
-                  <Button style={{ border: "none" }} onClick={handleDelete}>
-                    <Trash2 size={16} />
-                  </Button>
-                  <Button style={{ border: "none" }}>
-                    <MoreVertical size={16} />
-                  </Button>
-                </td>
-              </tr>
+      <Table className="w-full   text-center border-collapse" scroll={true}>
+        <TableHeader>
+          <TableRow className="text-gray-600 ">
+            {/* Cột checkbox - Cố định bên trái */}
+            <TableHead className="p-3 text-center sticky left-0 bg-white z-10 border-r">
+              <input
+              className={"cursor-pointer"}
+              
+                type="checkbox"
+                onChange={handleSelectAll}
+                checked={selectedRows.length === data.length}
+              />
+            </TableHead>
+
+            {columns.map((col) => (
+              <TableHead key={col.key} className="p-3 text-center">
+                {col.label}
+              </TableHead>
             ))}
-          </tbody>
-        </table>
-      </div>
+
+            <TableHead className="p-3 text-center sticky right-0 bg-white z-10 border-l">
+              Actions
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {data.map((row, index) => (
+            <TableRow key={index} className="border-t">
+              {/* Cột checkbox - Cố định bên trái */}
+              <TableCell className="p-3 text-center sticky left-0 bg-white z-10 border-r ">
+                <input
+                className={"cursor-pointer"}
+                  type="checkbox"
+                  checked={selectedRows.includes(index)}
+                  onChange={() => handleSelectRow(index)}
+                />
+              </TableCell>
+
+              {columns.map((col) => (
+                <TableCell key={col.key} className="p-3 text-center">
+                  {col.key === "status" ? (
+                    <span
+                      className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full   ${
+                        statusColors[row[col.key]]
+                      }`}
+                    >
+                      {row[col.key]}
+                    </span>
+                  ) : (
+                    <span>{row[col.key]}</span>
+                  )}
+                </TableCell>
+              ))}
+
+              {/* Cột Actions - Cố định bên phải */}
+              <TableCell
+                className="p-3 text-center sticky right-0 bg-white z-10 border-l"
+                style={{ minWidth: "180px" }}
+              >
+                <Button style={{ border: "none" }} href={"student/" + row.id}>
+                  <MdEdit size={16} />
+                </Button>
+                <Button style={{ border: "none" }} onClick={handleDelete}>
+                  <Trash2 size={16} />
+                </Button>
+                <Button style={{ border: "none" }}>
+                  <MoreVertical size={16} />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
       <p className="p-3 text-gray-600">{data.length} students</p>
       <DeleteModal isOpen={isOpenDelete} setOpen={setOpenDelete} />
       <div className="mt-4 flex justify-center">

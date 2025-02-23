@@ -101,26 +101,62 @@ const studentColumns = [
   { key: "name", label: "Họ Tên" },
   { key: "class", label: "Lớp" },
   { key: "status", label: "Trạng thái" },
-  {key: "avatar", label: "Avatar"}
+  { key: "avatar", label: "Avatar" },
+  { key: "email", label: "Email" },
+  { key: "phone", label: "Số điện thoại" },
+  { key: "address", label: "Địa chỉ" },
+  { key: "dob", label: "Ngày sinh" },
+  { key: "gender", label: "Giới tính" },
+  { key: "nationality", label: "Quốc tịch" },
+  { key: "enrollmentYear", label: "Năm nhập học" },
+  { key: "major", label: "Chuyên ngành" },
+  { key: "gpa", label: "GPA" },
+  { key: "credits", label: "Số tín chỉ" },
 ];
 interface IFilter {
   id: string;
   label: string;
   icon: LucideIcon;
+  option: string[];
 }
 const filters: IFilter[] = [
-  { id: "dormitory_id", label: "Mã nhà trọ", icon: IdCard },
-  { id: "name", label: "Tên nhà trọ", icon: User },
-  { id: "location", label: "Địa chỉ", icon: School },
-  { id: "type", label: "Loại phòng", icon: BookOpen },
-  { id: "status", label: "Trạng thái", icon: CheckCircle },
+  {
+    id: "1",
+    label: "MSSV",
+    icon: IdCard,
+    option: ["1234", "5678", "9101", "1121", "3141", "5161"],
+  },
+  {
+    id: "2",
+    label: "Họ Tên",
+    icon: User,
+    option: [
+      "Ramon Ridwan",
+      "John Doe",
+      "Jane Smith",
+      "Alice Johnson",
+      "Bob Brown",
+      "Charlie Davis",
+    ],
+  },
+  {
+    id: "3",
+    label: "Lớp",
+    icon: School,
+    option: ["ĐHVBQ", "1234", "ABC", "DEF", "GHI", "JKL", "MNO"],
+  },
+  {
+    id: "4",
+    label: "Trạng thái",
+    icon: CheckCircle,
+    option: ["Active", "Pending", "Down"],
+  },
 ];
-
 export default function page() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 container ">
       <h1 className="text-2xl font-bold">Student Management: Students</h1>
-      <div className="flex justify-between items-center">
+      <div className="flex   justify-between items-center">
         <AddModal />
         <SearchBar name="Student" filters={filters} />
       </div>

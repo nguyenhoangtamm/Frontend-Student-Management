@@ -42,7 +42,7 @@ const sidebarItems = [
     icon: <FaExclamationTriangle />,
     title: "Báo cáo vi phạm",
     badge: undefined,
-    link: "/admin/report",
+    link: "/admin/reports",
   },
   {
     icon: <FaClipboardCheck />,
@@ -76,7 +76,7 @@ const Sidebar = () => {
     redirect(link);
   };
   return (
-    <nav className="mt-5 space-y-3">
+    <nav className="mt-5 space-y-3 ">
       {sidebarItems.map((item, index) => (
         <MenuItem
           key={index}

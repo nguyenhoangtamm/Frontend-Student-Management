@@ -12,9 +12,9 @@ export default function DashBoardLayout({
   return (
     <>
       <HeaderComponent />
-      <div className="flex">
-        <Sidebar />
-        <main className=" flex-1 p-6">{children}</main>
+      <div className="d-flex">
+      <Sidebar />
+      <main className="flex-grow-1 p-6 w-3/5">{children}</main>
       </div>
     </>
   );

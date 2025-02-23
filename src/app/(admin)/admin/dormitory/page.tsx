@@ -64,7 +64,7 @@ interface IFilter {
 
 }
 const filters: IFilter[] = [
-  { id: "1", label: "Mã nhà trọ", icon: IdCard, option: ["1", "2", "3", "4", "5"] },
+  { id: "1", label: "Mã nhà trọ", icon: IdCard, option: ["Tăng", "Giảm"] },
   { id: "2", label: "Tên nhà trọ", icon: User, option: ["Ký túc xá A", "Nhà trọ B", "Ký túc xá C", "Nhà trọ D", "Ký túc xá E"] },
   { id: "3", label: "Địa chỉ", icon: School, option: ["123 Đường ABC, TP. HCM", "456 Đường XYZ, TP. HCM", "789 Đường DEF, TP. HCM", "101 Đường GHI, TP. HCM", "202 Đường JKL, TP. HCM"] },
   { id: "4", label: "Loại phòng", icon: BookOpen, option: ["A", "B", "C", "D", "E"] },
