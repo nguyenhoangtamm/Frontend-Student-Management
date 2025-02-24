@@ -25,6 +25,10 @@ export default function FilterNotification({ filter }: FilterProps) {
   const handleSelectFilter = (id: string) => {
     setSelectedFilter(id);
     setSelectedOption(null);
+  };
+  const handleSelectOption = (option: string) => {
+    setSelectedOption(option);
+    alert(option);
   }
   return (
     <div className="relative">
@@ -70,7 +74,7 @@ export default function FilterNotification({ filter }: FilterProps) {
                         <li
                           key={item}
                           className="p-2 text-sm font-medium"
-                          onClick={() => setSelectedOption(item)}
+                          onClick={() => handleSelectOption(item)}
                         >
                           {item}
                         </li>

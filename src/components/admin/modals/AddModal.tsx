@@ -5,7 +5,11 @@ import { Plus } from "lucide-react";
 import { Modal } from "antd";
 import { Button } from "@/components/ui/button";
 
-export default function AddModal() {
+interface IProps {
+  name: string;
+  dataType: string[];
+}
+export default function AddModal({ name, dataType }: IProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -18,32 +22,23 @@ export default function AddModal() {
       </Button>
 
       <Modal
-        title="Add New Agent"
+        title={`Add New ${name}`}
         open={open}
         onCancel={() => setOpen(false)}
         footer={null}
       >
         <form>
-          <input
-            type="text"
-            placeholder="Dormitory Name"
-            className="w-full p-2 border rounded-md"
-          />
-          <input
-            type="email"
-            placeholder="Dormitory Email"
-            className="w-full p-2 border rounded-md mt-2"
-          />
-          <input
-            type="text"
-            placeholder="Dormitory ID"
-            className="w-full p-2 border rounded-md mt-2"
-          />
+          {dataType.map((data, key) => (
+            <input key={key}
+              type="text"
+              placeholder={data}
+              className="w-full p-2 border rounded-md mt-2"
+            />
+          ))}
+          
           <div className="mt-4 flex justify-end">
             <Button onClick={() => setOpen(false)}>Cancel</Button>
-            <Button className="ml-2">
-              Save
-            </Button>
+            <Button className="ml-2">Save</Button>
           </div>
         </form>
       </Modal>

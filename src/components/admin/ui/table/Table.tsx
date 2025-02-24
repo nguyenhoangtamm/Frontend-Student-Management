@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "antd";
 import { MoreVertical, Trash2 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import DeleteModal from "../../modals/DeleteModal";
 import {
@@ -13,10 +13,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface TableColumn {
-  key: string;
-  label: string;
-}
 const statusColors = {
   Active: "bg-green-500",
   Pending: "bg-purple-500",
@@ -25,13 +21,17 @@ const statusColors = {
 
 interface TableProps {
   data: Record<string, any>[]; // Mảng dữ liệu linh hoạt
-  columns: TableColumn[]; // Danh sách cột
+  columns: string[]; // Danh sách cột
 }
 
 export default function DataTable({ data, columns }: TableProps) {
   const [selectedRows, setSelectedRows] = React.useState<number[]>([]);
   const [isOpenDelete, setOpenDelete] = React.useState(false);
   const [viewButton, setViewButton] = React.useState("View More");
+  const [deleteData, setDeleteData] = useState<{ id: string; name: string }>({
+    id: "",
+    name: "",
+  });
 
   // Chọn/Bỏ chọn tất cả dòng
   const handleSelectAll = () => {
@@ -57,9 +57,12 @@ export default function DataTable({ data, columns }: TableProps) {
       setViewButton("View More");
     }
   };
-  const handleDelete = () => {
+  const handleDelete = (index: number) => {
     setOpenDelete(true);
-    console.log("delete");
+    setDeleteData({
+      id: data[index].id,
+      name: (data[index].name )?(data[index].name):(data[index].title),
+    });
   };
   return (
     <>
@@ -69,17 +72,16 @@ export default function DataTable({ data, columns }: TableProps) {
             {/* Cột checkbox - Cố định bên trái */}
             <TableHead className="p-3 text-center sticky left-0 bg-white z-10 border-r">
               <input
-              className={"cursor-pointer"}
-              
+                className={"cursor-pointer"}
                 type="checkbox"
                 onChange={handleSelectAll}
                 checked={selectedRows.length === data.length}
               />
             </TableHead>
 
-            {columns.map((col) => (
-              <TableHead key={col.key} className="p-3 text-center">
-                {col.label}
+            {columns.map((col, colKey) => (
+              <TableHead key={colKey} className="p-3 text-center">
+                {col}
               </TableHead>
             ))}
 
@@ -95,25 +97,26 @@ export default function DataTable({ data, columns }: TableProps) {
               {/* Cột checkbox - Cố định bên trái */}
               <TableCell className="p-3 text-center sticky left-0 bg-white z-10 border-r ">
                 <input
-                className={"cursor-pointer"}
+                  className={"cursor-pointer"}
                   type="checkbox"
                   checked={selectedRows.includes(index)}
                   onChange={() => handleSelectRow(index)}
                 />
               </TableCell>
 
-              {columns.map((col) => (
-                <TableCell key={col.key} className="p-3 text-center">
-                  {col.key === "status" ? (
+              {columns.map((col, colKey) => (
+                <TableCell key={colKey} className="p-3 text-center min-w-32 ">
+                  {col === "Status" &&
+                  statusColors[row[col] as keyof typeof statusColors] ? (
                     <span
                       className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full   ${
-                        statusColors[row[col.key]]
+                        statusColors[row[col] as keyof typeof statusColors]
                       }`}
                     >
-                      {row[col.key]}
+                      {row[col]}
                     </span>
                   ) : (
-                    <span>{row[col.key]}</span>
+                    <span className=" text-center">{row[col]}</span>
                   )}
                 </TableCell>
               ))}
@@ -126,7 +129,10 @@ export default function DataTable({ data, columns }: TableProps) {
                 <Button style={{ border: "none" }} href={"student/" + row.id}>
                   <MdEdit size={16} />
                 </Button>
-                <Button style={{ border: "none" }} onClick={handleDelete}>
+                <Button
+                  style={{ border: "none" }}
+                  onClick={() => handleDelete(index)}
+                >
                   <Trash2 size={16} />
                 </Button>
                 <Button style={{ border: "none" }}>
@@ -139,7 +145,11 @@ export default function DataTable({ data, columns }: TableProps) {
       </Table>
 
       <p className="p-3 text-gray-600">{data.length} students</p>
-      <DeleteModal isOpen={isOpenDelete} setOpen={setOpenDelete} />
+      <DeleteModal
+        isOpen={isOpenDelete}
+        setOpen={setOpenDelete}
+        data={deleteData}
+      />
       <div className="mt-4 flex justify-center">
         <Button
           type="primary"

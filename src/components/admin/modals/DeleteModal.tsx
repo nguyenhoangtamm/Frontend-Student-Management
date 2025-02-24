@@ -1,11 +1,18 @@
 import React from "react";
 import { Modal } from "antd";
 
+interface dataDelete {
+  id: string;
+  name: string;
+}
 interface EventModalProps {
+  data: dataDelete;
   isOpen: boolean;
   setOpen: (s: boolean) => void;
 }
 export default function DeleteModal(props: EventModalProps) {
+  const data = props.data;
+
   const { isOpen, setOpen } = props;
 
   const handleOk = () => {
@@ -23,12 +30,14 @@ export default function DeleteModal(props: EventModalProps) {
       onCancel={handleCancel}
       maskClosable={false}
     >
-      <p>
-        Sinh viên: <strong>Nguyễn Văn A</strong>
-      </p>
-      <p>
-        Mã số sinh viên: <strong>PH123456</strong>
-      </p>
+      <div>
+        <span>Id: </span>
+        {data.id}
+      </div>
+      <div>
+        <span>Name: </span>
+        {data.name}
+      </div>
     </Modal>
   );
 }

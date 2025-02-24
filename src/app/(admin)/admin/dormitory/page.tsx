@@ -50,12 +50,7 @@ const datas = [
     status: "Down",
   },
 ];
-const dataColumns = [
-  { key: "name", label: "Name" },
-  { key: "owner", label: "Owner" },
-  { key: "address", label: "Address" },
-  { key: "status", label: "Status" },
-];
+const dataColumns = ["name", "owner", "address", "status"];
 interface IFilter {
   id: string;
   label: string;
@@ -76,7 +71,7 @@ export default function page() {
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold">Student Management: Dormitorys</h1>
       <div className="flex justify-between items-center">
-        <AddModal />
+        <AddModal name="Dormitory" dataType={dataColumns}/>
 
         <SearchBar name="Dormitory" filters={filters} />
       </div>

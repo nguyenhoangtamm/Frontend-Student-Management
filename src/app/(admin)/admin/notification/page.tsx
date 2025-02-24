@@ -49,12 +49,7 @@ const datas = [
   },
 ];
 
-const dataColumns = [
-  { key: "title", label: "Title" },
-  { key: "content", label: "Content" },
-  { key: "date", label: "Date" },
-  { key: "views", label: "Views" },
-];
+const dataColumns = ["title", "content", "date", "views"];
 interface IFilter {
   id: string;
   label: string;
@@ -72,7 +67,12 @@ const filters: IFilter[] = [
     id: "content",
     label: "Content",
     icon: School,
-    option: ["Nội dung thông báo A", "Nội dung thông báo B", "Nội dung thông báo C", "Nội dung thông báo D"],
+    option: [
+      "Nội dung thông báo A",
+      "Nội dung thông báo B",
+      "Nội dung thông báo C",
+      "Nội dung thông báo D",
+    ],
   },
   {
     id: "date",
@@ -89,14 +89,11 @@ const filters: IFilter[] = [
 ];
 
 export default function page() {
-  console.log(filters);
-
-
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold">Student Management: Notification</h1>
       <div className="flex justify-between items-center">
-        <AddModal />
+        <AddModal name="Notification" dataType={dataColumns}/>
 
         <SearchBar name="Notification" filters={filters} />
       </div>

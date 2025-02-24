@@ -12,7 +12,7 @@ import { StatProps } from "@/interface/statProps";
 const students = [
   {
     id: 1,
-    status: "Active",
+    status: "Đã khai báo",
     name: "Ramon Ridwan",
     mssv: "1234",
     class: "ĐHVBQ",
@@ -20,7 +20,7 @@ const students = [
   },
   {
     id: 2,
-    status: "Down",
+    status: "Chưa khai báo",
     name: "Ramon Ridwan",
     mssv: "1234",
     class: "1234",
@@ -28,7 +28,7 @@ const students = [
   },
   {
     id: 3,
-    status: "Active",
+    status: "Đã khai báo",
     name: "Ramon Ridwan",
     mssv: "1234",
     class: "1234",
@@ -36,7 +36,7 @@ const students = [
   },
   {
     id: 4,
-    status: "Pending",
+    status: "Chờ duyệt",
     name: "Ramon Ridwan",
     mssv: "1234",
     class: "",
@@ -44,7 +44,7 @@ const students = [
   },
   {
     id: 5,
-    status: "Down",
+    status: "Chưa khai báo",
     name: "Ramon Ridwan",
     mssv: "1234",
     class: "",
@@ -52,7 +52,7 @@ const students = [
   },
   {
     id: 6,
-    status: "Active",
+    status: "Đã khai báo",
     name: "John Doe",
     mssv: "5678",
     class: "ABC",
@@ -60,7 +60,7 @@ const students = [
   },
   {
     id: 7,
-    status: "Pending",
+    status: "Chờ duyệt",
     name: "Jane Smith",
     mssv: "9101",
     class: "DEF",
@@ -68,7 +68,7 @@ const students = [
   },
   {
     id: 8,
-    status: "Down",
+    status: "Chưa khai báo",
     name: "Alice Johnson",
     mssv: "1121",
     class: "GHI",
@@ -76,7 +76,7 @@ const students = [
   },
   {
     id: 9,
-    status: "Active",
+    status: "Đã khai báo",
     name: "Bob Brown",
     mssv: "3141",
     class: "JKL",
@@ -84,30 +84,29 @@ const students = [
   },
   {
     id: 10,
-    status: "Pending",
+    status: "Chờ duyệt",
     name: "Charlie Davis",
     mssv: "5161",
     class: "MNO",
     avatar: "/avatar10.png",
   },
 ];
-
-const studentColumns = [
-  { key: "mssv", label: "MSSV" },
-  { key: "name", label: "Họ Tên" },
-  { key: "class", label: "Lớp" },
-  { key: "status", label: "Trạng thái" },
-  { key: "avatar", label: "Avatar" },
-  { key: "email", label: "Email" },
-  { key: "phone", label: "Số điện thoại" },
-  { key: "address", label: "Địa chỉ" },
-  { key: "dob", label: "Ngày sinh" },
-  { key: "gender", label: "Giới tính" },
-  { key: "nationality", label: "Quốc tịch" },
-  { key: "enrollmentYear", label: "Năm nhập học" },
-  { key: "major", label: "Chuyên ngành" },
-  { key: "gpa", label: "GPA" },
-  { key: "credits", label: "Số tín chỉ" },
+const dataColumns = [
+  "mssv",
+  "name",
+  "class",
+  "status",
+  "avatar",
+  "email",
+  "phone",
+  "address",
+  "dob",
+  "gender",
+  "nationality",
+  "enrollmentYear",
+  "major",
+  "gpa",
+  "credits",
 ];
 interface IFilter {
   id: string;
@@ -145,7 +144,7 @@ const filters: IFilter[] = [
     id: "4",
     label: "Trạng thái",
     icon: CheckCircle,
-    option: ["Active", "Pending", "Down"],
+    option: ["Đã khai báo", "Chưa khai báo", "Chờ duyệt"],
   },
 ];
 
@@ -209,11 +208,11 @@ export default function page() {
       <hr />
       <h4 className="text-gray-600">Students data</h4>
       <div className="flex   justify-between items-center">
-        <AddModal />
-        <SearchBar name="Student" filters={filters} />
+      <AddModal name="Student" dataType={dataColumns}/>
+      <SearchBar name="Student" filters={filters} />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-        <DataTable data={students} columns={studentColumns} />
+        <DataTable data={students} columns={dataColumns} />
       </div>
     </div>
   );
