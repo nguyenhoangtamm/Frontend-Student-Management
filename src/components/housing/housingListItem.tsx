@@ -41,7 +41,7 @@ export default function HousingListItem({ housing }: { housing: Housing[] }) {
   );
 
   return (
-    <div className="col-md-8">
+    <div className="">
       {displayedData.map((item, index) => (
         <HousingItem key={index} housing={item} />
       ))}

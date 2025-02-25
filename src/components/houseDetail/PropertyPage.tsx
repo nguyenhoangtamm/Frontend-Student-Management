@@ -14,10 +14,14 @@ const PropertyPage: React.FC<{ houseId: number }> = ({ houseId }) => {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Lỗi: {error.message}</p>;
   console.log(house);
+  if (Array.isArray(house) && house.length === 0) {
+    return <p>Không có dữ liệu</p>;
+  }
+  
 
   return (
     <div className="container mt-4 text-dark">
-      <ListingHeader title={house?.name} price={house.price} />
+      <ListingHeader title={house.name} price={house.price} />
       <div className="row mt-3">
         <div className="col-md-8">
           <ListingGallery

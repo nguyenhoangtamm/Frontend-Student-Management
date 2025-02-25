@@ -14,11 +14,11 @@ const Header: React.FC<{ className?: string }> = ( {className}) => {
     <Navbar bg="light" expand="lg" className={` ${className} border-bottom`}>
       <Container className="d-flex justify-content-between">
         <Navbar.Brand className="fw-bold fs-4">
-          {" "}
-          <Link href="/dashboard" style={{ textDecoration: 'none' }} >
+
+            <Link href="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }} >
             <Image src={logo} alt="Logo" width={50} height={50} />
-            Student Management
-          </Link>
+            <span style={{ marginLeft: '10px' }}>Student Management</span>
+            </Link>
         </Navbar.Brand>
         <div className="d-flex align-items-center">
           <NotificationIcon />

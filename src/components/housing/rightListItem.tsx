@@ -2,11 +2,12 @@ import React from "react";
 import RightItem from "./rightItem";
 
 interface PoupularHousing {
+  id: number;
   name: string;
 }
 export default function RightListItem(housing: { housing: PoupularHousing[] }) {
   return (
-    <div className="col-md-4">
+    <div className="">
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Đề xuất</h5>

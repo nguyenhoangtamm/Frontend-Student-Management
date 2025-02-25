@@ -9,7 +9,7 @@ const ListingHeader: React.FC<ListingHeaderProps> = ({ title, price }) => {
   return (
     <div className="listing-header">
       <h2 className="text-dark">{title}</h2>
-      <p className="text-warning fs-5">Rent: {price} / month</p>
+      <p className="text-warning fs-5">Giá: {price} / tháng</p>
     </div>
   );
 };

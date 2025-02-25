@@ -36,7 +36,7 @@ export default function HousingItem(housing: { housing: Housing }) {
           <p className="m-2 text-success font-weight-bold">{price} / month</p>
         </div>
         <div className="d-flex flex-column align-items-center m-4">
-          <RatingComponent />
+          <RatingComponent rating={4.3} />
           <Button onClick={() => setOpen(true)}>View on Map</Button>
         </div>
       </div>
