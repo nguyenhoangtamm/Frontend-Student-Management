@@ -10,6 +10,7 @@ import {
   BookOpen,
   LucideIcon,
 } from "lucide-react";
+import StatsCards from "@/components/admin/ui/Stats";
 
 const datas = [
   {
@@ -88,13 +89,27 @@ const filters: IFilter[] = [
   },
 ];
 
+const stats = [
+  {
+    name: "Notification",
+    label: ["A", "B", "C", "D", "E"],
+    labelNote: "Notification",
+    dataChart: [123, 456, 789, 101, 112],
+  },
+];
 export default function page() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold">Student Management: Notification</h1>
+      <h4 className="text-gray-600">Notification OverView</h4>
+
+      <StatsCards stats={stats} />
+      <hr />
+      <h4 className="text-gray-600">Notification data</h4>
+      
       <div className="flex justify-between items-center">
         <AddModal name="Notification" dataType={dataColumns}/>
-
+     
         <SearchBar name="Notification" filters={filters} />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">

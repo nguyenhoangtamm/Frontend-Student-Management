@@ -6,5 +6,5 @@ export interface StatProps {
     backgroundColor?: string[];
     borderColor?: string[];
     borderWidth?: number;
-    position?: "top" | "left" | "bottom" | "right" | "center" | "chartArea";
+    position?: "top" | "bottom"| "left" | "right" | "center" | "chartArea";
 }

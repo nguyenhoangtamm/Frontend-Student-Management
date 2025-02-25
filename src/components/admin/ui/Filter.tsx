@@ -15,7 +15,7 @@ interface FilterProps {
   filter: Filter[];
 }
 
-export default function FilterNotification({ filter }: FilterProps) {
+export default function FilterTable({ filter }: FilterProps) {
   const [selectedFilter, setSelectedFilter] = useState<string | null>(
     filter[0].id
   );
@@ -25,11 +25,12 @@ export default function FilterNotification({ filter }: FilterProps) {
   const handleSelectFilter = (id: string) => {
     setSelectedFilter(id);
     setSelectedOption(null);
+    setIsOpenOption(!isOpenOption);
   };
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
-    alert(option);
-  }
+    setIsOpenOption(false);
+  };
   return (
     <div className="relative">
       {/* Nút mở bộ lọc */}
@@ -47,17 +48,17 @@ export default function FilterNotification({ filter }: FilterProps) {
           <h3 className="text-gray-700 font-semibold mb-3">Add Filter</h3>
           <div className="grid grid-cols-2 gap-3">
             {filter.map(({ id, label, icon: Icon, option }) => (
-              <div key={id} className="relative">
+              <div key={id} className="relative min-width-36 ">
                 <button
                   onClick={() => {
                     handleSelectFilter(id);
-                    setIsOpenOption(!isOpenOption);
                   }}
                   className={`flex flex-col items-center justify-center p-3 rounded-lg border border-gray-200 transition-all ${
                     selectedFilter === id
                       ? "bg-purple-100 border-purple-500 text-purple-600"
                       : "bg-gray-100 text-gray-500 hover:bg-gray-200"
                   }`}
+                  style={{ minWidth: "9rem" }}
                 >
                   <Icon size={20} />
                   <span className="mt-1 text-sm font-medium">{label}</span>
