@@ -3,6 +3,7 @@
 import { offCampus } from "@/interface/offCampusInterface";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import Image from 'next/image';
 
 export default function OffCampusInfo({
   offCampus,
@@ -12,8 +13,7 @@ export default function OffCampusInfo({
   const router = useRouter();
 
   const handleEdit = () => {
-      router.push(`/edit-off-campus?`);
-    
+    router.push(`/edit-off-campus?`);
   };
 
   return (
@@ -23,6 +23,13 @@ export default function OffCampusInfo({
       {offCampus ? (
         <>
           <div className="m-1 col-md-3" style={{ padding: "10px" }}>
+            <Image
+              src={offCampus?.image}
+              className="rounded border"
+              alt="Off campus"
+              width={200}
+              height={200}
+              />
             <h3 className="fw-bold">
               <span className="font-weight-normal">{offCampus.name}</span>
             </h3>
@@ -35,12 +42,12 @@ export default function OffCampusInfo({
                   Trạng thái:{" "}
                   <strong
                     className={
-                      offCampus?.status === "confirmed"
+                      offCampus?.approval_status === "confirmed"
                         ? "text-success"
                         : "text-warning"
                     }
                   >
-                    {offCampus?.status === "confirmed"
+                    {offCampus?.approval_status === "confirmed"
                       ? "Đã xác nhận"
                       : "Chờ duyệt"}
                   </strong>
@@ -50,9 +57,6 @@ export default function OffCampusInfo({
                   <span className="small">
                     {offCampus?.contractStart} - {offCampus?.contractEnd}
                   </span>
-                </p>
-                <p>
-                  Cập nhật lần cuối: <strong>{offCampus?.lastUpdated}</strong>
                 </p>
               </div>
             </div>
@@ -65,23 +69,15 @@ export default function OffCampusInfo({
                   <strong>Địa chỉ:</strong>{" "}
                   <span className="text-primary">{offCampus?.address}</span>
                 </p>
-                <p>
-                  <strong>Quận/Huyện:</strong> {offCampus?.district}
-                </p>
-                <p>
-                  <strong>Thành phố:</strong> {offCampus?.city}
-                </p>
               </div>
               <div className="col-md-6">
                 <p>
                   <strong>Chủ trọ:</strong>{" "}
-                  <span className="text-primary">{offCampus?.landlord}</span>
+                  <span className="text-primary">{offCampus?.owner}</span>
                 </p>
                 <p>
                   <strong>Số điện thoại:</strong>{" "}
-                  <span className="text-primary">
-                    {offCampus?.landlordPhone}
-                  </span>
+                  <span className="text-primary">{offCampus?.phone}</span>
                 </p>
               </div>
             </div>
@@ -152,7 +148,7 @@ export default function OffCampusInfo({
         <div>Chưa khai báo thông tin ngoại trú</div>
       )}
       <div className="text-center mt-3">
-        <Button  onClick={handleEdit}>
+        <Button onClick={handleEdit}>
           {offCampus ? "Chỉnh sửa" : "Khai báo nhà trọ mới"}
         </Button>
       </div>

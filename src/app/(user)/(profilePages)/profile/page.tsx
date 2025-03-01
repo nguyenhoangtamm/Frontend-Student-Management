@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Profile() {
   const studentData: Student = {
-    id: "0022411792",
+    code: "0022411792",
     name: "Nguyễn Hoàng Tam",
     gender: "Nam",
     avatar: "/avatar.jpg",
@@ -13,31 +13,32 @@ export default function Profile() {
     level: "Đại học",
     faculty: "Khoa Sư phạm Toán - Tin",
     major: "Khoa học Máy tính",
-    specialization: "Khoa học máy tính",
-    enrollmentDate: "04/5/2023",
     campus: "Cơ sở 1",
     educationType: "Chính Quy",
     course: "Khóa 2022",
-    offCampus:{
+    phone: "0123456789",
+    address: "Đồng Tháp",
+    dateOfBirth: "01/01/2000",
+    birthPlace: "Đồng Tháp",
+    email: "tamnguyen@example.com",
+    offCampus: {
       id: "123",
       name: "Nhà trọ A",
       room: "234",
       address: "123 Đường Nguyễn Văn A",
-      district: "Phường 3",
-      city: "TP. Cao Lãnh",
-      landlord: "Nguyễn Văn B",
-      landlordPhone: "0912345678",
-      status: "pending",
+      owner: "Nguyễn Văn B",
+      phone: "0912345678",
+      contract_status: "active",
+      approval_status: "confirmed",
       contractStart: "01/01/2023",
       contractEnd: "31/12/2023",
-      lastUpdated: "01/10/2023",
       price: "2,000,000",
       electricityPrice: "3,500",
       waterPrice: "15,000",
       serviceFee: "100,000",
       wifiFee: "200,000",
-    }
-      
+      image: "/house.jpg",
+    },
   };
   return (
     <div>

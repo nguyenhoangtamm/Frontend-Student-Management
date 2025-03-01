@@ -4,17 +4,24 @@ import EventList from "@/components/userDashboard/EventList";
 import HostelInfo from "@/components/userDashboard/HostelInfo";
 import Notifications from "@/components/userDashboard/Notifications";
 import RegulationsComponent from "@/components/userDashboard/RegulationsComponent";
+import { useStudent } from "@/services/hooks/useStudent";
 
 export default function HomePage() {
-  const dataSend = {
-    student_code: "123456",
-    full_name: "John Doe",
-    gender: "Male",
-    email: "johndoe@example.com",
-    date_of_birth: "2000-01-01",
-    birthplace: "New York",
-    department: "Computer Science",
-  };
+  // const dataSend = {
+  //   student_code: "123456",
+  //   full_name: "John Doe",
+  //   gender: "Male",
+  //   email: "johndoe@example.com",
+  //   date_of_birth: "2000-01-01",
+  //   birthplace: "New York",
+  //   department: "Computer Science",
+  // };
+  const { data: dataSend, isLoading, error } = useStudent(2);
+
+  // Handler function to receive filtered content from FilterComponent
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Lỗi: {error.message}</p>;
 
   return (
     <div className="flex flex-wrap p-5 font-sans">
@@ -22,7 +29,7 @@ export default function HomePage() {
         <div className="flex justify-between flex-wrap">
           <HostelInfo />
           <Notifications />
-        </div> 
+        </div>
         <EventList />
         <RegulationsComponent />
       </div>

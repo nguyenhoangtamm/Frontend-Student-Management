@@ -3,8 +3,12 @@ import React from "react";
 import mapsearch from "@images/dashboard/housing.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import { OriginHousing } from "@/interface/housingInterface";
 
-const HostelInfo: React.FC = () => {
+interface HostelInfoProps {
+  data: OriginHousing
+}
+export default function HostelInfo() {
   return (
     <div className="card m-1" style={{ flex: 1, padding: "10px" }}>
       <div className="card-body">
@@ -33,4 +37,3 @@ const HostelInfo: React.FC = () => {
   );
 };
 
-export default HostelInfo;
