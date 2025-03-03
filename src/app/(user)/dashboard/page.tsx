@@ -16,8 +16,9 @@ export default function HomePage() {
   //   birthplace: "New York",
   //   department: "Computer Science",
   // };
-  const { data: dataSend, isLoading, error } = useStudent(2);
-
+  const { data: dataSend, isLoading, error } = useStudent();
+ 
+  console.log(dataSend);
   // Handler function to receive filtered content from FilterComponent
 
   if (isLoading) return <p>Loading...</p>;

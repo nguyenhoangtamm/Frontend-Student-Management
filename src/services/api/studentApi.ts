@@ -25,10 +25,10 @@ import apiClient from "./apiClient";
 //     return data ?? [];
 // };
 
-export const fetchStudentById = async (id: number) => {
-    const response = await apiClient.get(`/student/${id}`);
+export const fetchStudent = async () => {
+    const response = await apiClient.get(`/student`);
     // const data = renameFields(response.data);
-    const data = response.data;
+    const data = response.data.data;
 
     return data;
 };
