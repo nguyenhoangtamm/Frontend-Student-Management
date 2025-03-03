@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../api/authApi";
+import { login, logout } from "../api/authApi";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
@@ -17,5 +17,17 @@ export const useAuth = () => {
     }
   };
 
-  return { login: handleLogin, loading, error };
+  const handleLogout = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      await logout();
+    } catch (err: any) {
+      setError("Đăng xuất thất bại!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { login: handleLogin, logout: handleLogout, loading, error };
 };

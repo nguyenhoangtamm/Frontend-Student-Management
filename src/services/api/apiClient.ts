@@ -1,34 +1,24 @@
 import axios from "axios";
+import { getCookieValue } from "../helper/getCookie";
+
 
 const apiClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
-    withCredentials: true,
+    withCredentials: true,  // Cho phép gửi cookies nếu backend yêu cầu
     headers: {
         "Content-Type": "application/json",
     },
 });
 
-// apiClient.interceptors.request.use(
-//     (config) => {
-//         const token = localStorage.getItem("token"); // Hoặc sử dụng cookies
-//         if (token) {
-//             config.headers["Authorization"] = `Bearer ${token}`;
-//         }
-//         return config;
-//     },
-//     (error) => Promise.reject(error)
-// );
+// Thêm interceptor để tự động gửi Bearer Token
+apiClient.interceptors.request.use(async (config) => {
+    const token = await getCookieValue("auth_token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
 
-// // Xử lý khi token hết hạn
-// apiClient.interceptors.response.use(
-//     (response) => response,
-//     (error) => {
-//         if (error.response?.status === 401) {
-//             localStorage.removeItem("token"); // Xóa token khi hết hạn
-//             window.location.href = "/login"; // Chuyển hướng về trang đăng nhập
-//         }
-//         return Promise.reject(error);
-//     }
-// );
-
-export default apiClient;
+export default apiClient; 

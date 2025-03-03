@@ -13,9 +13,9 @@ const LoginComponent: React.FC = () => {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        login(username, password);
+        await login(username, password);
         if (!error) {
             router.push("/dashboard");
         }

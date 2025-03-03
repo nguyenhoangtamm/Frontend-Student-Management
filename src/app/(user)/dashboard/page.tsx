@@ -17,8 +17,6 @@ export default function HomePage() {
   //   department: "Computer Science",
   // };
   const { data: dataSend, isLoading, error } = useStudent();
- 
-  console.log(dataSend);
   // Handler function to receive filtered content from FilterComponent
 
   if (isLoading) return <p>Loading...</p>;

@@ -26,7 +26,6 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
   data,
   className,
 }) => {
-  console.log("data", data);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
