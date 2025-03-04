@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export interface OriginHousing {
+export interface OriginDormitory {
   id: number;
   name: string;
   address: string;

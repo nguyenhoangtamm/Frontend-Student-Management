@@ -8,13 +8,13 @@ import { FaUser } from "react-icons/fa6";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface UserInfoProps {
-  student_code: string;
+  code: string;
   full_name: string;
   gender: string;
   email: string;
   date_of_birth: string;
   birthplace: string;
-  department: string;
+  faculty: string;
 }
 
 interface UserInfoComponentProps {
@@ -63,7 +63,7 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
         <hr className="border-light" />
         <CardContent className="px-2">
           <p>
-            MSSV: <span className="fw-bold">{data.student_code}</span>
+            MSSV: <span className="fw-bold">{data.code}</span>
           </p>
           <p>
             Giới Tính: <span className="fw-bold">{data.gender}</span>
@@ -75,7 +75,7 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
             Nơi Sinh: <span className="fw-bold">{data.birthplace}</span>
           </p>
           <p>
-            Khoa: <span className="fw-bold">{data.department}</span>
+            Khoa: <span className="fw-bold">{data.faculty}</span>
           </p>
           <div className="text-center mt-3">
             <Link

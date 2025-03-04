@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import HousingItem from "./housingItem";
-import { OriginHousing } from "@/interface/housingInterface";
+import { OriginHousing } from "@/interface/dormitoryInterface";
 import HousingPagination from "../Pagination/Pagination";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
