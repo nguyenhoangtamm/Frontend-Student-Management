@@ -4,31 +4,25 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import NotificationIcon from "./NotificationIcon";
-import UserProfile from "./UserProfile";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@icons/logo.png";
-import { useDispatch } from "react-redux";
 import { useHeader } from "@/services/hooks/useStudent";
-import { setLayout } from "@/lib/slices/layoutSlice";
+import UserProfile from "./UserProfile";
 
-const Header: React.FC<{ className?: string }> = ({ className }) => {
-    // const dispatch = useDispatch();
-    // const { data: dataSend } = useHeader();
+export default function Header() {
+    const { data: dataSend, isLoading, isError } = useHeader();
+    if (isLoading) {
+        return;
+    }
 
-    // dispatch(
-    //     setLayout({
-    //         name: dataSend.full_name,
-    //         userImage: dataSend.avatar,
-    //         notifications: dataSend.notifications,
-    //     })
-    // );
+    if (isError) {
+        return;
+    }
+    console.log("dataSend", dataSend);
+
     return (
-        <Navbar
-            bg="light"
-            expand="lg"
-            className={` ${className} border-bottom`}
-        >
+        <Navbar bg="light" expand="lg" className={` border-bottom`}>
             <Container className="d-flex justify-content-between">
                 <Navbar.Brand className="fw-bold fs-4">
                     <Link
@@ -46,12 +40,12 @@ const Header: React.FC<{ className?: string }> = ({ className }) => {
                     </Link>
                 </Navbar.Brand>
                 <div className="d-flex align-items-center">
-                    <NotificationIcon />
-                    <UserProfile />
+                    <NotificationIcon
+                        notifications={dataSend.data.notifications}
+                    />
+                    <UserProfile name={dataSend.data.full_name} userImage={dataSend.data.avatar} />
                 </div>
             </Container>
         </Navbar>
     );
-};
-
-export default Header;
+}

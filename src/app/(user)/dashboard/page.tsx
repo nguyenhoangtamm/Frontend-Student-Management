@@ -13,7 +13,6 @@ export default function HomePage() {
     const unreadNotifications = dataSend
         ? Number(dataSend.unreadNotifications)
         : 0;
-
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Lỗi: {error.message}</p>;
     dispatch(

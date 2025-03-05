@@ -1,14 +1,17 @@
 "use client";
-import { RootState } from "@/lib/store";
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { useSelector } from "react-redux";
 
-const NotificationIcon: React.FC = () => {
-    const notifications = useSelector(
-        (state: RootState) => state.layout.notifications
-    );
+interface Notification {
+    title: string;
+    slug: string;
+}
+interface NotificationIconProps {
+    notifications: Notification[];
+}
+export default function NotificationIcon({ notifications }: NotificationIconProps) {
+    console.log("notifications", notifications);
     return (
         <div
             className="d-flex align-items-center me-4"
@@ -34,4 +37,3 @@ const NotificationIcon: React.FC = () => {
     );
 };
 
-export default NotificationIcon;

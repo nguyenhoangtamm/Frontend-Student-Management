@@ -1,8 +1,9 @@
+import { LoginBodyType } from "@/schemaValidations/auth.schema";
 import apiClient from "./apiClient";
 
-export const login = async (username: string, password: string) => {
+export const login = async (body:LoginBodyType) => {
   try {
-    const response = await apiClient.post("/auth/login", { 'code':username,'password': password }, { withCredentials: true });
+    const response = await apiClient.post("/auth/login", { 'code':body.username,'password': body.password }, { withCredentials: true });
     return response.data;
   } catch (error) {
     console.error("Login failed:", error);

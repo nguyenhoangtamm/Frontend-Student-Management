@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { login, logout } from "../api/authApi";
+import { LoginBodyType } from "@/schemaValidations/auth.schema";
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async (username: string, password: string) => {
+  const handleLogin = async (body:LoginBodyType) => {
     setLoading(true);
     setError(null);
     try {
-      await login(username, password);
+      await login(body);
     } catch (err: any) {
       setError("Đăng nhập thất bại!");
     } finally {

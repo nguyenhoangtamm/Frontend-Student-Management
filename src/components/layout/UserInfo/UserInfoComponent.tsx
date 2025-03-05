@@ -6,16 +6,7 @@ import Image from "next/image";
 import Avatar from "@images/dashboard/avatar.png";
 import { FaUser } from "react-icons/fa6";
 import { Card, CardContent } from "@/components/ui/card";
-
-interface UserInfoProps {
-  code: string;
-  full_name: string;
-  gender: string;
-  email: string;
-  date_of_birth: string;
-  birthplace: string;
-  faculty: string;
-}
+import { UserInfoProps } from "@/interface/dashboard";
 
 interface UserInfoComponentProps {
   data: UserInfoProps;

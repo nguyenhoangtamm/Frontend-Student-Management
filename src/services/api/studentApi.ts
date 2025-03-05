@@ -1,6 +1,6 @@
 import apiClient from "./apiClient";
 
-export const fetchDashboard = async () => {
+export async function fetchDashboard ()  {
     const response = await apiClient.get(`/student/dashboard`);
     const data = response.data.data;
     return data;

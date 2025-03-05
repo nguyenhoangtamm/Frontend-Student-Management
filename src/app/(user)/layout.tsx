@@ -4,8 +4,8 @@ import HeaderComponent from "@/components/layout/header/HeaderComponent";
 import SidebarComponent from "@/components/layout/sidebar/SideBarComponent";
 import { Provider } from "react-redux";
 import { makeStore, AppStore } from "@/lib/store";
-import { useRef } from "react";
-
+import { useRef, useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function DashBoardLayout({
     children,
@@ -17,16 +17,20 @@ export default function DashBoardLayout({
         // Create the store instance the first time this renders
         storeRef.current = makeStore();
     }
-    
+    const [queryClient] = useState(() => new QueryClient());
+
     return (
-        <Provider store={storeRef.current}>
+        <QueryClientProvider client={queryClient}>
+
             <HeaderComponent />
-            <main className="mt-4 flex flex-col md:flex-row">
-                <SidebarComponent />
-                <div className="container w-full md:w-10/12">
-                    <div className="container">{children}</div>
-                </div>
-            </main>
-        </Provider>
+            <Provider store={storeRef.current}>
+                <main className="mt-4 flex flex-col md:flex-row">
+                    <SidebarComponent />
+                    <div className="container w-full md:w-10/12">
+                        <div className="container">{children}</div>
+                    </div>
+                </main>
+            </Provider>
+        </QueryClientProvider>
     );
 }

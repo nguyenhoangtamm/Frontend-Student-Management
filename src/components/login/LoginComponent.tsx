@@ -6,6 +6,8 @@ import defaultbg from "@bg/defaultbg.png";
 import { Button } from "../ui/button";
 import { useAuth } from "@/services/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { routes } from "@/configs/routes";
+import { LoginBodyType } from "@/schemaValidations/auth.schema";
 
 const LoginComponent: React.FC = () => {
     const { login, loading, error } = useAuth();
@@ -15,11 +17,17 @@ const LoginComponent: React.FC = () => {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        await login(username, password);
+        const loginBody: LoginBodyType = {
+            username,
+            password,
+        };
+        await login(loginBody);
         if (!error) {
-            router.push("/dashboard");
+            router.refresh();
+            router.push(routes.manage.dashboard);
         }
     };
+
     return (
         <div className="min-h-screen flex items-center justify-center relative">
             <Image
@@ -39,7 +47,7 @@ const LoginComponent: React.FC = () => {
                     />
                     <h4>Student Performance Monitoring System 4.0</h4>
                 </div>
-                <form>
+                <form onSubmit={handleLogin}>
                     {/* Mã số sinh viên */}
                     <div className="mb-3">
                         <label
@@ -75,11 +83,7 @@ const LoginComponent: React.FC = () => {
                     </div>
 
                     {/* Nút đăng nhập */}
-                    <Button
-                        type="submit"
-                        className="btn btn-primary w-full"
-                        onClick={handleLogin}
-                    >
+                    <Button type="submit" className="btn btn-primary w-full">
                         {loading ? "Đang đăng nhập..." : "Đăng nhập"}
                     </Button>
                     {error && (
