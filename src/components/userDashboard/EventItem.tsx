@@ -6,7 +6,9 @@ import { Button } from "../ui/button";
 export interface Event {
   title: string;
   date: string;
-  status: string;
+  content: string;
+  slug: string;
+  
 }
 
 interface EventItemProps {
@@ -22,7 +24,6 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
         <small>{event.date}</small>
       </div>
       <div className="text-right">
-        <p className="mb-0 text-success">{event.status}</p>
         <Button
           onClick={() => setOpen(true)}
           className="bg-yellow-500 hover:bg-yellow-600 text-white"
@@ -30,7 +31,7 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
           Chi tiết
         </Button>
       </div>
-      <EventModal isOpen={isOpen} setOpen={setOpen} />
+      <EventModal isOpen={isOpen} setOpen={setOpen} event={event} />
     </div>
   );
 };

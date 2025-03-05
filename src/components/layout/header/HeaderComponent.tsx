@@ -8,25 +8,50 @@ import UserProfile from "./UserProfile";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@icons/logo.png";
+import { useDispatch } from "react-redux";
+import { useHeader } from "@/services/hooks/useStudent";
+import { setLayout } from "@/lib/slices/layoutSlice";
 
-const Header: React.FC<{ className?: string }> = ( {className}) => {
-  return (
-    <Navbar bg="light" expand="lg" className={` ${className} border-bottom`}>
-      <Container className="d-flex justify-content-between">
-        <Navbar.Brand className="fw-bold fs-4">
+const Header: React.FC<{ className?: string }> = ({ className }) => {
+    // const dispatch = useDispatch();
+    // const { data: dataSend } = useHeader();
 
-            <Link href="/dashboard" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }} >
-            <Image src={logo} alt="Logo" width={50} height={50} />
-            <span style={{ marginLeft: '10px' }}>Student Management</span>
-            </Link>
-        </Navbar.Brand>
-        <div className="d-flex align-items-center">
-          <NotificationIcon />
-          <UserProfile />
-        </div>
-      </Container>
-    </Navbar>
-  );
+    // dispatch(
+    //     setLayout({
+    //         name: dataSend.full_name,
+    //         userImage: dataSend.avatar,
+    //         notifications: dataSend.notifications,
+    //     })
+    // );
+    return (
+        <Navbar
+            bg="light"
+            expand="lg"
+            className={` ${className} border-bottom`}
+        >
+            <Container className="d-flex justify-content-between">
+                <Navbar.Brand className="fw-bold fs-4">
+                    <Link
+                        href="/dashboard"
+                        style={{
+                            textDecoration: "none",
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Image src={logo} alt="Logo" width={50} height={50} />
+                        <span style={{ marginLeft: "10px" }}>
+                            Student Management
+                        </span>
+                    </Link>
+                </Navbar.Brand>
+                <div className="d-flex align-items-center">
+                    <NotificationIcon />
+                    <UserProfile />
+                </div>
+            </Container>
+        </Navbar>
+    );
 };
 
 export default Header;

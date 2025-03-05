@@ -36,7 +36,7 @@ export default function DormitoryInfo({ data }: DormitoryInfoProps) {
                         </p>
                         <p className="card-text">
                             Cập nhật lần cuối:{" "}
-                            <strong>{data.updated_at}</strong>
+                            <strong>{new Date(data.updated_at).toLocaleDateString("vi-VN")}</strong>
                         </p>
                     </div>
                     <div className="d-flex flex-column align-items-center">

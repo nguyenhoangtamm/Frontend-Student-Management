@@ -1,31 +1,37 @@
 "use client";
+import { RootState } from "@/lib/store";
 import React from "react";
 import { Dropdown } from "react-bootstrap";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const NotificationIcon: React.FC = () => {
-  return (
-    <div
-      className="d-flex align-items-center me-4"
-      style={{ cursor: "pointer" }}
-    >
-      <Dropdown>
-        <Dropdown.Toggle
-          variant="light"
-          className="d-flex align-items-center border-0"
+    const notifications = useSelector(
+        (state: RootState) => state.layout.notifications
+    );
+    return (
+        <div
+            className="d-flex align-items-center me-4"
+            style={{ cursor: "pointer" }}
         >
-          <IoMdNotificationsOutline size={25} />
-          <span className="text-secondary">Thông báo</span>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        <Dropdown.Item href="/profile">Thông báo 1</Dropdown.Item>
-        <Dropdown.Item href="#/logout">Thông báo 2</Dropdown.Item>
-      </Dropdown.Menu>
-      </Dropdown>
-
-      
-    </div>
-  );
+            <Dropdown>
+                <Dropdown.Toggle
+                    variant="light"
+                    className="d-flex align-items-center border-0"
+                >
+                    <IoMdNotificationsOutline size={25} />
+                    <span className="text-secondary">Thông báo</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {notifications.map((notification, index) => (
+                        <Dropdown.Item key={index} href={`/notifications/${notification.slug}`}>
+                            {notification.title}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+    );
 };
 
 export default NotificationIcon;
