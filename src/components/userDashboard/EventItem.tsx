@@ -26,7 +26,7 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
       <div className="text-right">
         <Button
           onClick={() => setOpen(true)}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white"
+          className="bg-blue-500 hover:bg-yellow-600 text-white"
         >
           Chi tiết
         </Button>

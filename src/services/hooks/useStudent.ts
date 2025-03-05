@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchDashboard, fetchHeader } from "../api/studentApi";
+import { fetchDashboard, fetchHeader, fetchProfile } from "../api/studentApi";
 
 export function useHeader() {
     return useQuery({
@@ -10,11 +10,18 @@ export function useHeader() {
     });
 }
 
-
 export const useStudent = () => {
     return useQuery({
         queryKey: ["student"],
         queryFn: async () => fetchDashboard(),
+        staleTime: 1000 * 60 * 5, // Cache 5 phút
+    });
+};
+
+export const useProfile = () => {
+    return useQuery({
+        queryKey: ["profile"],
+        queryFn: async () => fetchProfile(),
         staleTime: 1000 * 60 * 5, // Cache 5 phút
     });
 };

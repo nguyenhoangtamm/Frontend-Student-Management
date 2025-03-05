@@ -5,23 +5,13 @@ import DormitoryInfo from "@/components/userDashboard/DormitoryInfo";
 import Notifications from "@/components/userDashboard/Notifications";
 import RegulationsComponent from "@/components/userDashboard/RegulationsComponent";
 import { useStudent } from "@/services/hooks/useStudent";
-import { useDispatch } from "react-redux";
-import { setLayout } from "@/lib/slices/layoutSlice";
 export default function HomePage() {
-    const dispatch = useDispatch();
     const { data: dataSend, isLoading, error } = useStudent();
     const unreadNotifications = dataSend
         ? Number(dataSend.unreadNotifications)
         : 0;
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Lỗi: {error.message}</p>;
-    dispatch(
-        setLayout({
-            userImage: dataSend.avatar,
-            name: dataSend.full_name,
-            notifications: dataSend.notifications,
-        })
-    );
     const notifications = dataSend.notifications;
 
     return (
@@ -31,7 +21,7 @@ export default function HomePage() {
                     <DormitoryInfo data={dataSend.dormitory} />
                     <Notifications notifications={unreadNotifications} />
                 </div>
-                <EventList  events={notifications}/>
+                <EventList events={notifications} />
                 <RegulationsComponent />
             </div>
             <UserInfoComponent

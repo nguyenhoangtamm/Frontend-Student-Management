@@ -43,7 +43,10 @@ export default function Header() {
                     <NotificationIcon
                         notifications={dataSend.data.notifications}
                     />
-                    <UserProfile name={dataSend.data.full_name} userImage={dataSend.data.avatar} />
+                    <UserProfile
+                        name={dataSend.data.full_name}
+                        userImage={dataSend.data.avatar}
+                    />
                 </div>
             </Container>
         </Navbar>

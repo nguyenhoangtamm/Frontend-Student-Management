@@ -4,7 +4,7 @@ import univlaw from "@images/dashboard/univlaw.jpg";
 import Image from "next/image";
 import Link from "next/link";
 
-const RegulationsComponent: React.FC = () => {
+export default function RegulationsComponent () {
   return (
     <div className="card m-1" style={{ flex: 1, padding: "10px" }}>
       <h1>Quy định</h1>
@@ -36,4 +36,3 @@ const RegulationsComponent: React.FC = () => {
   );
 };
 
-export default RegulationsComponent;
