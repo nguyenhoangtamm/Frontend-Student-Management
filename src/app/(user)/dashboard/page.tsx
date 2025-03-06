@@ -12,7 +12,7 @@ export default function HomePage() {
         : 0;
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Lỗi: {error.message}</p>;
-    const notifications = dataSend.notifications;
+    const notifications = dataSend?.notifications;
 
     return (
         <div className="flex flex-wrap p-5 font-sans">

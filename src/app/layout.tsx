@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "./providers"; // Import file Providers.tsx
 import './globals.css'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Toaster } from "@/components/ui/sonner";
 
 
 
@@ -30,6 +31,7 @@ export default function DefaultLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>{children}</Providers>{" "}
+        <Toaster />
       </body>
     </html>
   );

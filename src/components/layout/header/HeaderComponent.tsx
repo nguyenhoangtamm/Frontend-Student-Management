@@ -19,8 +19,6 @@ export default function Header() {
     if (isError) {
         return;
     }
-    console.log("dataSend", dataSend);
-
     return (
         <Navbar bg="light" expand="lg" className={` border-bottom`}>
             <Container className="d-flex justify-content-between">
@@ -41,11 +39,11 @@ export default function Header() {
                 </Navbar.Brand>
                 <div className="d-flex align-items-center">
                     <NotificationIcon
-                        notifications={dataSend.data.notifications}
+                        notifications={dataSend.notifications}
                     />
                     <UserProfile
-                        name={dataSend.data.full_name}
-                        userImage={dataSend.data.avatar}
+                        name={dataSend.full_name}
+                        userImage={dataSend.avatar}
                     />
                 </div>
             </Container>

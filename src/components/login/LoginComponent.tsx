@@ -1,33 +1,39 @@
 "use client";
 // components/LoginComponent.tsx
-import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner"
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import Image from "next/image";
 import defaultbg from "@bg/defaultbg.png";
 import { Button } from "../ui/button";
 import { useAuth } from "@/services/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { routes } from "@/configs/routes";
-import { LoginBodyType } from "@/schemaValidations/auth.schema";
+import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 
-const LoginComponent: React.FC = () => {
+export default function LoginComponent() {
     const { login, loading, error } = useAuth();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const loginBody: LoginBodyType = {
-            username,
-            password,
-        };
-        await login(loginBody);
+    const form = useForm<LoginBodyType>({
+        resolver: zodResolver(LoginBody),
+        defaultValues: {
+            username: "",
+            password: "",
+        },
+    });
+
+    async function handleLogin (values: LoginBodyType) {
+        console.log(values);
+        await login(values);
+        toast.success("Đăng nhập thành công!");
         if (!error) {
-            router.refresh();
             router.push(routes.manage.dashboard);
+            router.refresh();
         }
     };
-
+   
     return (
         <div className="min-h-screen flex items-center justify-center relative">
             <Image
@@ -47,21 +53,22 @@ const LoginComponent: React.FC = () => {
                     />
                     <h4>Student Performance Monitoring System 4.0</h4>
                 </div>
-                <form onSubmit={handleLogin}>
+                <form onSubmit={form.handleSubmit(handleLogin)}>
                     {/* Mã số sinh viên */}
                     <div className="mb-3">
                         <label
-                            htmlFor="userId"
+                            htmlFor="username"
                             className="block text-sm font-medium"
                         >
                             Enter Your MSSV
                         </label>
                         <input
                             type="text"
-                            id="userId"
+                            id="username"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                             placeholder="1921207"
-                            onChange={(e) => setUsername(e.target.value)}
+                            {...form.register("username")}
+
                         />
                     </div>
 
@@ -78,7 +85,7 @@ const LoginComponent: React.FC = () => {
                             id="password"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                             placeholder="Enter Your Password"
-                            onChange={(e) => setPassword(e.target.value)}
+                            {...form.register("password")}
                         />
                     </div>
 
@@ -93,6 +100,4 @@ const LoginComponent: React.FC = () => {
             </div>
         </div>
     );
-};
-
-export default LoginComponent;
+}

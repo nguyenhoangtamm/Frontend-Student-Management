@@ -7,9 +7,7 @@ interface UserProfileProps {
     name: string;
     userImage?: string;
 }
-export default function UserProfile ( { name, userImage }: UserProfileProps ) {
-   
-
+export default function UserProfile({ name, userImage }: UserProfileProps) {
     return (
         <Dropdown align="end">
             <Dropdown.Toggle
@@ -51,6 +49,4 @@ export default function UserProfile ( { name, userImage }: UserProfileProps ) {
             </Dropdown.Menu>
         </Dropdown>
     );
-};
-
-
+}

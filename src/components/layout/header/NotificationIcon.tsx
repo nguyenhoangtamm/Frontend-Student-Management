@@ -11,7 +11,6 @@ interface NotificationIconProps {
     notifications: Notification[];
 }
 export default function NotificationIcon({ notifications }: NotificationIconProps) {
-    console.log("notifications", notifications);
     return (
         <div
             className="d-flex align-items-center me-4"
