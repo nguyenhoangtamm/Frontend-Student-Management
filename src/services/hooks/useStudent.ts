@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchDashboard, fetchHeader, fetchProfile } from "../api/studentApi";
+import { fetchContract, fetchDashboard, fetchHeader, fetchProfile } from "../api/studentApi";
 
 export function useHeader() {
     return useQuery({
@@ -25,3 +25,10 @@ export const useProfile = () => {
         staleTime: 1000 * 60 * 5, // Cache 5 phút
     });
 };
+export const useContract = () => {
+    return useQuery({
+        queryKey: ["contract"],
+        queryFn: async () => fetchContract(),
+        staleTime: 1000 * 60 * 5, // Cache 5 phút
+    });
+}

@@ -15,7 +15,6 @@ interface DormitoryInfoProps {
     data: Dormitory;
 }
 export default function DormitoryInfo({ data }: DormitoryInfoProps) {
-  console.log(data);  
   return (
         <div className="card m-1" style={{ flex: 1, padding: "10px" }}>
             <div className="card-body">

@@ -1,22 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-  fetchDomainarie,
-  fetchDomainarieById,
-  fetchListDomainarie,
+
+  fetchDormitoryById,
+  fetchListDormitories,
+  
 } from "../api/domainarieApi";
 
-export const useDomainarie = (id?: number) => {
+export const useDormitory = (id: number) => {
   return useQuery({
-    queryKey: id ? ["domainarie", id] : ["domainarie"],
-    queryFn: async () => (id ? fetchDomainarieById(id) : fetchDomainarie()),
+    queryKey: ["Dormitory", id],
+    queryFn: async () => fetchDormitoryById(id),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });
 };
 
-export const useListDomainarie = () => {
+export const useListDormitoriesName = () => {
   return useQuery({
-    queryKey: ["listDomainarie"],
-    queryFn: async () => fetchListDomainarie(),
+    queryKey: ["Dormitories"],
+    queryFn: async () => fetchListDormitories(),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });
 };

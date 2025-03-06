@@ -15,13 +15,13 @@ interface EventItemProps {
   event: Event;
 }
 
-const EventItem: React.FC<EventItemProps> = ({ event }) => {
+export default function EventItem({ event }: EventItemProps) {
   const [isOpen, setOpen] = useState(false);
   return (
     <div className="d-flex justify-content-between py-2 border-bottom">
       <div>
         <p className="mb-0">{event.title}</p>
-        <small>{event.date}</small>
+        <small>{new Date(event.date).toLocaleDateString('en-GB')}</small>
       </div>
       <div className="text-right">
         <Button
@@ -36,4 +36,4 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
   );
 };
 
-export default EventItem;
+

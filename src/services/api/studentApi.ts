@@ -1,6 +1,7 @@
 import { DashboardBody, LayoutBody } from "@/schemaValidations/dashboard.schema";
 import apiClient from "./apiClient";
 import { StudentProfileBody } from "@/schemaValidations/profile.schema";
+import { ContractSchema } from "@/schemaValidations/contract.schema";
 
 export async function fetchDashboard() {
     const response = await apiClient.get(`/student/dashboard`);
@@ -11,7 +12,6 @@ export async function fetchDashboard() {
         throw new Error("Dữ liệu không hợp lệ");
     }
     if(result.data){
-        console.log("ok");
         return result.data;
     }
 
@@ -36,5 +36,15 @@ export const fetchProfile = async () => {
         console.error("Lỗi validate dữ liệu:", result.error.format());
         throw new Error("Dữ liệu không hợp lệ");
     }
-    return data;
+    return result.data;
+};
+export const fetchContract = async () => {
+    const response = await apiClient.get(`/student/contract`);
+    const data = response.data.data;
+    const result = ContractSchema.safeParse(data);
+    if (!result.success) {
+        console.error("Lỗi validate dữ liệu:", result.error.format());
+        throw new Error("Dữ liệu không hợp lệ");
+    }
+    return result.data;
 };

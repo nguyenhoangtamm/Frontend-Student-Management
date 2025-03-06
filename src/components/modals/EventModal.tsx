@@ -21,7 +21,7 @@ export default function EventModal(props: EventModalProps) {
       <Modal.Body>
         <div>
           <h5>Event Details</h5>
-          <p>Date: <strong>{event.date}</strong></p>
+            <p>Date: <strong>{new Date(event.date).toLocaleDateString('en-GB')}</strong></p>
           <p>Description:</p>
           <p>{event.content}</p>
         </div>

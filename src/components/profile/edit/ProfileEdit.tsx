@@ -1,73 +1,69 @@
-"use client";
-import { offCampus } from "@/interface/offCampusInterface";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import InputSelector from "./InputSelector";
-import { useDomainarie } from "@/services/hooks/useDomainarie";
-import { InputGroup } from "react-bootstrap";
-import { DatePicker, Select, Space } from "antd";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { Button } from "@/components/ui/button";
+'use client';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import InputSelector from './InputSelector';
+import { useDormitory } from '@/services/hooks/useDomainarie';
+import { InputGroup } from 'react-bootstrap';
+import { DatePicker, Space } from 'antd';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { Button } from '@/components/ui/button';
+import { ContractType } from '@/schemaValidations/contract.schema';
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
-type RangePickerProps = React.ComponentProps<typeof RangePicker>;
 
-const disabledDate: RangePickerProps["disabledDate"] = (
-  current: dayjs.Dayjs
-) => {
-  // Can not select days before today and today
-  return current && current < dayjs().startOf("day");
-};
+const dateFormat = 'YYYY-MM-DD';
 
-const dateFormat = "DD-MM-YYYY";
-
-const XData = {
-  id: "X",
-  name: "X",
-  room: "X",
-  address: "X",
-  district: "X",
-  city: "X",
-  landlord: "X",
-  landlordPhone: "X",
-  status: "pending" as "pending" | "confirmed",
-  contractStart: "X",
-  contractEnd: "X",
-  lastUpdated: "X",
-  price: "X",
-  electricityPrice: "X",
-  waterPrice: "X",
-  serviceFee: "X",
-  wifiFee: "X",
-};
 const EmptyData = {
-  id: "",
-  name: "",
-  room: "",
-  address: "",
-  district: "",
-  city: "",
-  landlord: "",
-  landlordPhone: "",
-  status: "pending" as "pending" | "confirmed",
-  contractStart: "",
-  contractEnd: "",
-  lastUpdated: "",
-  price: "",
-  electricityPrice: "",
-  waterPrice: "",
-  serviceFee: "",
-  wifiFee: "",
+  room: '',
+  price: '',
+  status: 'Active' as 'pending' | 'confirmed' | 'Active',
+  contractStart: '',
+  contractEnd: '',
+  dormitory: {
+    id: 0,
+    name: '',
+    ownerName: '',
+    address: '',
+    phoneNumber: '',
+    services: [
+      {
+        name: 'electricity',
+        price: 0,
+        unit: 'đồng',
+      },
+      {
+        name: 'water',
+        price: 0,
+        unit: 'đồng',
+      },
+      {
+        name: 'serviceFee',
+        price: 0,
+        unit: 'đồng',
+      },
+      {
+        name: 'wifi',
+        price: 0,
+        unit: 'đồng',
+      },
+    ],
+  },
 };
-export default function ProfileEdit({ data }: { data: offCampus }) {
+export default function ProfileEdit({ data }: { data?: ContractType }) {
   const router = useRouter();
-
   // State chứa dữ liệu chỉnh sửa
-  const [formData, setFormData] = useState<offCampus>(data);
+  const [formData, setFormData] = useState(data);
   const [showInput, setShowInput] = useState(false);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
+  const [selected, setSelected] = useState<number>(0);
+  const { data: currentDormitory } = useDormitory(selected);
+  useEffect(() => {
+    if (currentDormitory) {
+      setFormData(currentDormitory);
+    }
+  }, [currentDormitory]);
 
   // Xử lý thay đổi input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,12 +72,12 @@ export default function ProfileEdit({ data }: { data: offCampus }) {
 
   // Giả lập lưu dữ liệu
   const handleSave = () => {
-    console.log("Dữ liệu đã lưu:", formData);
-    router.push("/profile"); // Điều hướng về trang chính
+    console.log('Dữ liệu đã lưu:', formData);
+    router.push('/profile'); // Điều hướng về trang chính
   };
   const handleSelect = (selected: string) => {
-    // const { data: house, isLoading, error } = useDomainarie(Number(selected));
-    setFormData(XData);
+    console.log('Selecteddd:', selected);
+    setSelected(Number(selected));
   };
   const handleCustomInput = () => {
     setShowInput(!showInput);
@@ -90,150 +86,128 @@ export default function ProfileEdit({ data }: { data: offCampus }) {
   };
 
   return (
-    <div className="container mt-4">
-      <div className="card p-4 shadow-sm">
-        <h5 className="fw-bold text-primary">Chỉnh sửa thông tin ngoại trú</h5>
+    <div className='container mt-4'>
+      <div className='card p-4 shadow-sm'>
+        <h5 className='fw-bold text-primary'>Chỉnh sửa thông tin ngoại trú</h5>
         <hr />
-        <div className="row mt-3">
+        <div className='row mt-3'>
           <InputSelector onChange={handleSelect} />
-          <div className="col-md-12 mt-3">
+          <div className='col-md-12 mt-3'>
             <InputGroup>
               <Button onClick={() => handleCustomInput()}>Khác</Button>
               {showInput && (
                 <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Nhập thông tin khác"
+                  type='text'
+                  className='form-control'
+                  placeholder='Nhập thông tin khác'
                 />
               )}
             </InputGroup>
           </div>
         </div>
-        <div className="row mt-3">
-          <div className="col-md-6">
-            <label className="form-label">Chủ trọ</label>
+        <div className='row mt-3'>
+          <div className='col-md-6'>
+            <label className='form-label'>Chủ trọ</label>
             <input
               readOnly={isReadonly}
-              type="text"
-              className="form-control"
-              name="landlord"
-              value={formData.landlord}
+              type='text'
+              className='form-control'
+              name='landlord'
+              value={formData?.dormitory.ownerName}
               onChange={handleChange}
-              placeholder="Nhập tên chủ trọ"
+              placeholder='Nhập tên chủ trọ'
             />
           </div>
-          <div className="col-md-6">
-            <label className="form-label">Số điện thoại</label>
+          <div className='col-md-6'>
+            <label className='form-label'>Số điện thoại</label>
             <input
               readOnly={isReadonly}
-              type="tel"
-              className="form-control"
-              name="landlordPhone"
-              value={formData.landlordPhone}
+              type='tel'
+              className='form-control'
+              name='landlordPhone'
+              value={formData?.dormitory.phoneNumber}
               onChange={handleChange}
-              placeholder="Nhập số điện thoại"
+              placeholder='Nhập số điện thoại'
             />
           </div>
         </div>
-        <div className="mb-3 mt-3">
-          <label className="form-label">Địa chỉ</label>
+        <div className='mb-3 mt-3'>
+          <label className='form-label'>Địa chỉ</label>
           <input
             readOnly={isReadonly}
-            type="text"
-            className="form-control"
-            name="address"
-            value={formData.address}
+            type='text'
+            className='form-control'
+            name='address'
+            value={formData?.dormitory.address}
             onChange={handleChange}
-            placeholder="Nhập địa chỉ"
+            placeholder='Nhập địa chỉ'
           />
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <label className="form-label">Quận/Huyện</label>
+        <div className='row'>
+          <div className='col-md-6'>
+            <label className='form-label'>Quận/Huyện</label>
             <input
               readOnly={isReadonly}
-              type="text"
-              className="form-control"
-              name="district"
-              value={formData.district}
+              type='text'
+              className='form-control'
+              name='district'
+              value={formData?.dormitory.address}
               onChange={handleChange}
-              placeholder="Nhập quận/huyện"
+              placeholder='Nhập quận/huyện'
             />
           </div>
-          <div className="col-md-6">
-            <label className="form-label">Thành phố</label>
+          <div className='col-md-6'>
+            <label className='form-label'>Thành phố</label>
             <input
               readOnly={isReadonly}
-              type="text"
-              className="form-control"
-              name="city"
-              value={formData.city}
+              type='text'
+              className='form-control'
+              name='city'
+              value={formData?.dormitory.address}
               onChange={handleChange}
-              placeholder="Nhập thành phố"
+              placeholder='Nhập thành phố'
             />
           </div>
         </div>
 
-        <div className="row mt-3">
-          <div className="col-md-6">
-            <label className="form-label">Phòng</label>
+        <div className='row mt-3'>
+          <div className='col-md-6'>
+            <label className='form-label'>Phòng</label>
             <input
-              type="text"
-              className="form-control"
-              name="room"
-              value={formData.room}
+              type='text'
+              className='form-control'
+              name='room'
+              value={formData?.room}
               onChange={handleChange}
-              placeholder="Nhập số phòng"
+              placeholder='Nhập số phòng'
             />
           </div>
-          <div className="col-md-6">
-            <label className="form-label">Trạng Thái</label>
+          <div className='col-md-6'>
+            <label className='form-label'>Trạng Thái</label>
             <br />
             <input
-              type="text"
-              className="form-control"
-              name="status"
-              value={formData.status}
+              type='text'
+              className='form-control'
+              name='status'
+              value={formData?.status}
               onChange={handleChange}
-              placeholder="Trạng thái"
+              placeholder='Trạng thái'
             />
           </div>
         </div>
-        {/* <div className="row mt-3">
-          <div className="col-md-6">
-            <label className="form-label">Ngày bắt đầu hợp đồng</label>
-            <input
-              type="date"
-              className="form-control"
-              name="contractStart"
-              value={formData.contractStart}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="col-md-6">
-            <label className="form-label">Ngày kết thúc hợp đồng</label>
-            <input
-              type="date"
-              className="form-control"
-              name="contractEnd"
-              value={formData.contractEnd}
-              onChange={handleChange}
-            />
-          </div>
-        </div> */}
 
-        <div className="row mt-3">
-          <Space direction="vertical" size={12} style={{ width: "100%" }}>
-            <label className="form-label">Chọn thời hạn hợp đồng</label>
+        <div className='row mt-3'>
+          <Space direction='vertical' size={12} style={{ width: '100%' }}>
+            <label className='form-label'>Chọn thời hạn hợp đồng</label>
             <RangePicker
               // disabledDate={disabledDate}
-              placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+              placeholder={['Ngày bắt đầu', 'Ngày kết thúc']}
               format={dateFormat}
               value={
-                formData.contractStart && formData.contractEnd
+                formData?.contractStart && formData?.contractEnd
                   ? [
-                      dayjs(formData.contractStart, dateFormat),
-                      dayjs(formData.contractEnd, dateFormat),
+                      dayjs(formData?.contractStart, dateFormat),
+                      dayjs(formData?.contractEnd, dateFormat),
                     ]
                   : undefined
               }
@@ -248,75 +222,46 @@ export default function ProfileEdit({ data }: { data: offCampus }) {
           </Space>
         </div>
 
-        <div className="row mt-3">
-          <div className="col-md-6">
-            <label className="form-label">Phí ngoại trú</label>
+        <div className='row mt-3'>
+          <div className='col-md-6'>
+            <label className='form-label'>Phí ngoại trú</label>
             <input
-              type="number"
-              className="form-control"
-              name="offCampusFee"
-              value={formData.price}
+              type='number'
+              className='form-control'
+              name='offCampusFee'
+              value={formData?.price}
               onChange={handleChange}
-              placeholder="Nhập phí ngoại trú"
-            />
-          </div>
-          <div className="col-md-6">
-            <label className="form-label">Giá điện</label>
-            <input
-              type="number"
-              className="form-control"
-              name="electricityPrice"
-              value={formData.electricityPrice}
-              onChange={handleChange}
-              placeholder="Nhập giá điện"
+              placeholder='Nhập phí ngoại trú'
             />
           </div>
         </div>
-        <div className="row mt-3">
-          <div className="col-md-6">
-            <label className="form-label">Phí dịch vụ</label>
-            <input
-              type="number"
-              className="form-control"
-              name="serviceFee"
-              value={formData.serviceFee}
-              onChange={handleChange}
-              placeholder="Nhập phí dịch vụ"
-            />
-          </div>
-          <div className="col-md-6">
-            <label className="form-label">Giá nước</label>
-            <input
-              type="number"
-              className="form-control"
-              name="waterPrice"
-              value={formData.waterPrice}
-              onChange={handleChange}
-              placeholder="Nhập giá nước"
-            />
-          </div>
+        <div className='row mt-3'>
+          {formData?.dormitory.services.map((service, index) => (
+            <div className='col-md-6' key={index}>
+              <label className='form-label'>{service.name}</label>
+              <div className='input-group '>
+                <input
+                  type='number'
+                  className='form-control m-2'
+                  name={service.name}
+                  value={service.price}
+                  onChange={handleChange}
+                  placeholder={`Nhập ${service.name}`}
+                />
+                <label className='form-label m-2'>{service.unit}</label>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="row mt-3">
-          <div className="col-md-6">
-            <label className="form-label">Wifi</label>
-            <input
-              type="number"
-              className="form-control"
-              name="wifiFee"
-              value={formData.wifiFee}
-              onChange={handleChange}
-              placeholder="Nhập phí wifi"
-            />
-          </div>
-        </div>
-        <div className="text-end mt-4">
+
+        <div className='text-end mt-4'>
           <button
-            className="btn btn-outline-secondary me-2"
+            className='btn btn-outline-secondary me-2'
             onClick={() => router.back()}
           >
             Hủy
           </button>
-          <button className="btn btn-primary" onClick={handleSave}>
+          <button className='btn btn-primary' onClick={handleSave}>
             Lưu thay đổi
           </button>
         </div>
