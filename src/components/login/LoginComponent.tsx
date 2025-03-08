@@ -25,7 +25,6 @@ export default function LoginComponent() {
     });
 
     async function handleLogin (values: LoginBodyType) {
-        console.log(values);
         await login(values);
         toast.success("Đăng nhập thành công!");
         if (!error) {

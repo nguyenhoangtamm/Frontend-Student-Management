@@ -1,6 +1,5 @@
 'use client'
 import StudentProfile from "@/components/profile/StudentProfile";
-import { Student } from "@/interface/studentInterface";
 import { useProfile } from "@/services/hooks/useStudent";
 import React from "react";
 

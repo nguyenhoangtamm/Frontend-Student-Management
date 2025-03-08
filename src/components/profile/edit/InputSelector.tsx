@@ -16,13 +16,12 @@ interface Option {
 
 export default function InputSelector({ onChange }: InputSelectorProps) {
     const { data: dataOff, isLoading, error } = useListDormitoriesName();
-    const [id, setId] = useState<string>("");
     const Options = Array.isArray(dataOff) ? dataOff : [];
     const [selectedOff, setSelectedOff] = useState<string | null>(null);
     const handleChange = (selected: Option) => {
-        setId(selected.id);
         setSelectedOff(selected.name);
-        onChange(id);
+        onChange(selected.id);
+        console.log("selected", selected.id);
     };
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

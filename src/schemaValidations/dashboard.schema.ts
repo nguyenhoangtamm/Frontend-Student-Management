@@ -10,12 +10,12 @@ export const DashboardBody = z.object({
     email: z.string().email(),
     avatar: z.string().url(),
     unreadNotifications: z.number(),
-    dormitory: z.object({
+    offCampusInfo: z.object({
         name: z.string(),
         room: z.string(),
         status: z.string(),
         updated_at: z.string(),
-        image: z.string(),
+        address: z.string(), 
     }),
     notifications: z.array(
         z.object({

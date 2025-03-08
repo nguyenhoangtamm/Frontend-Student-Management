@@ -1,144 +1,33 @@
-"use client";
+'use client';
 
-import { offCampus } from "@/interface/offCampusInterface";
-import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
-import Image from "next/image";
+import { offCampus } from '@/interface/offCampusInterface';
+import { useRouter } from 'next/navigation';
+import { Button } from '../ui/button';
+import ResidenceStatus from './ResidenceStatus';
 
 export default function OffCampusInfo({
-    offCampus,
+  offCampus, residenceStatus
 }: {
-    offCampus: offCampus | undefined;
+  offCampus: offCampus | undefined;
+    residenceStatus: number;
 }) {
-    const router = useRouter();
+  const router = useRouter();
 
-    const handleEdit = () => {
-        router.push(`/edit-off-campus?`);
-    };
+  const handleEdit = () => {
+    router.push(`/edit-off-campus?`);
+  };
 
-    return (
-        <div className="mt-4 row">
-            <h5 className="fw-bold">Thông tin ngoại trú</h5>
-            <hr />
-            {offCampus ? (
-                <>
-                    <div className="m-1 col-md-3" style={{ padding: "10px" }}>
-                        <Image
-                            src={offCampus?.image}
-                            className="rounded border"
-                            alt="Off campus"
-                            width={200}
-                            height={200}
-                        />
-                        <h3 className="fw-bold">
-                            <span className="font-weight-normal">
-                                {offCampus.name}
-                            </span>
-                        </h3>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <p>
-                                    Phòng: <strong>{offCampus.room}</strong>
-                                </p>
-                                <p>
-                                    Trạng thái:{" "}
-                                    <strong
-                                        className={
-                                            offCampus?.approval_status ===
-                                            "confirmed"
-                                                ? "text-success"
-                                                : "text-warning"
-                                        }
-                                    >
-                                        {offCampus?.approval_status ===
-                                        "confirmed"
-                                            ? "Đã xác nhận"
-                                            : "Chờ duyệt"}
-                                    </strong>
-                                </p>
-                                <p>
-                                    Hợp đồng:{" "}
-                                    <span className="small">
-                                        {offCampus?.contract_start} -{" "}
-                                        {offCampus?.contract_end}
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        className="m-1 col-md-9"
-                        style={{ flex: 2, padding: "10px" }}
-                    >
-                        <div className="row">
-                            <div className="col-md-6">
-                                <p>
-                                    <strong>Địa chỉ:</strong>{" "}
-                                    <span className="text-primary">
-                                        {offCampus?.address}
-                                    </span>
-                                </p>
-                            </div>
-                            <div className="col-md-6">
-                                <p>
-                                    <strong>Chủ trọ:</strong>{" "}
-                                    <span className="text-primary">
-                                        {offCampus?.owner_name}
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Số điện thoại:</strong>{" "}
-                                    <span className="text-primary">
-                                        {offCampus?.phone_number}
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <hr />
-                        <div className="row">
-                          {offCampus?.services?.map((service, index) => (
-                            <div className="col-md-6" key={index}>
-                              <p>
-                                <strong>{service.name}:</strong>{" "}
-                                <span className="text-primary">
-                                  {service.price} VNĐ/{service.unit}
-                                </span>
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-
-                        <hr />
-                        <div className="row">
-                            <div className="col-md-6">
-                                <p>
-                                    <strong>Ngày bắt đầu hợp đồng:</strong>{" "}
-                                    <span className="text-primary">
-                                        {offCampus?.contract_end}
-                                    </span>
-                                </p>
-                            </div>
-                            <div className="col-md-6">
-                                <p>
-                                    <strong>Ngày kết thúc hợp đồng:</strong>{" "}
-                                    <span className="text-primary">
-                                        {offCampus?.contract_end}
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <div>Chưa khai báo thông tin ngoại trú</div>
-            )}
-            <div className="text-center mt-3">
-                <Button onClick={handleEdit}>
-                    {offCampus ? "Chỉnh sửa" : "Khai báo nhà trọ mới"}
-                </Button>
-            </div>
-        </div>
-    );
+  return (
+    <div className='mt-4 row'>
+      <h5 className='fw-bold'>Thông tin ngoại trú</h5>
+      <hr />
+    
+      <ResidenceStatus offCampus={offCampus} residenceStatus={residenceStatus} />
+      <div className='text-center mt-3'>
+        <Button onClick={handleEdit}>
+          {offCampus ? 'Chỉnh sửa' : 'Khai báo nhà trọ mới'}
+        </Button>
+      </div>
+    </div>
+  );
 }

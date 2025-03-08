@@ -9,6 +9,8 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Button } from '@/components/ui/button';
 import { ContractType } from '@/schemaValidations/contract.schema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
@@ -54,16 +56,29 @@ const EmptyData = {
 export default function ProfileEdit({ data }: { data?: ContractType }) {
   const router = useRouter();
   // State chứa dữ liệu chỉnh sửa
-  const [formData, setFormData] = useState(data);
+  const [formData, setFormData] = useState(data || EmptyData);
   const [showInput, setShowInput] = useState(false);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const [selected, setSelected] = useState<number>(0);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const { data: currentDormitory } = useDormitory(selected);
+  // const form = useForm<LoginBodyType>({
+  //   resolver: zodResolver(LoginBody),
+  //   defaultValues: {
+  //     username: '',
+  //     password: '',
+  //   },
+  // });
   useEffect(() => {
-    if (currentDormitory) {
-      setFormData(currentDormitory);
+    if (isFetching) {
+      if (!currentDormitory) return;
+      setFormData({
+        ...formData,
+        dormitory: currentDormitory,
+      });
+      setIsFetching(false);
     }
-  }, [currentDormitory]);
+  }, [currentDormitory, isFetching]);
 
   // Xử lý thay đổi input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,11 +88,11 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
   // Giả lập lưu dữ liệu
   const handleSave = () => {
     console.log('Dữ liệu đã lưu:', formData);
-    router.push('/profile'); // Điều hướng về trang chính
+    // router.push('/profile'); // Điều hướng về trang chính
   };
   const handleSelect = (selected: string) => {
-    console.log('Selecteddd:', selected);
     setSelected(Number(selected));
+    setIsFetching(true);
   };
   const handleCustomInput = () => {
     setShowInput(!showInput);
@@ -235,7 +250,7 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
             />
           </div>
         </div>
-        <div className='row mt-3'>
+        {/* <div className='row mt-3'>
           {formData?.dormitory.services.map((service, index) => (
             <div className='col-md-6' key={index}>
               <label className='form-label'>{service.name}</label>
@@ -252,7 +267,7 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className='text-end mt-4'>
           <button

@@ -8,12 +8,12 @@ export interface offCampus {
   name: string; // Tên nhà trọ
   room?: string; // Phòng
   address: string;
-  owner_name: string;
-  phone_number: string;
-  contract_status: "active" | "inactive"; // Trạng thái hợp đồng
-  approval_status: "confirmed" | "pending"; // Trạng thái xác nhận nhà trọ
-  contract_start: string;
-  contract_end: string;
+  ownerName: string;
+  phoneNumber: string;
+  contractStatus: "active" | "inactive"; // Trạng thái hợp đồng
+  approvalStatus: "confirmed" | "pending"; // Trạng thái xác nhận nhà trọ
+  contractStart: string;
+  contractEnd: string;
   price: string;
   services:[service];
   image: string;

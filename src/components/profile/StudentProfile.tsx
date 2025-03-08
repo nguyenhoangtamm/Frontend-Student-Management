@@ -38,7 +38,7 @@ export default function StudentProfile({ data }: { data: Student }) {
           </div>
         </div>
         <div className="row">
-          <OffCampusInfo offCampus={data.offCampus} />
+          <OffCampusInfo offCampus={data.offCampus} residenceStatus={data.residenceStatus} />
         </div>
       </div>
     </div>

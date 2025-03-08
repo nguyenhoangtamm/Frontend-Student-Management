@@ -16,16 +16,17 @@ export const StudentProfileBody = z.object({
     dateOfBirth: z.string(),
     birthPlace: z.string(),
     email: z.string().email(),
+    residenceStatus: z.number(),
     offCampus: z.object({
         name: z.string(),
         address: z.string(),
-        owner_name: z.string(),
-        phone_number: z.string(),
+        ownerName: z.string(),
+        phoneNumber: z.string(),
         room: z.string(),
         image: z.string(),
-        contract_start: z.string(),
-        contract_end: z.string(),
-        contract_status: z.string(),
+        contractStart: z.string(),
+        contractEnd: z.string(),
+        contractStatus: z.string(),
         price: z.string(),
         services: z.array(
             z.object({

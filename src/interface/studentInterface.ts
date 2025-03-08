@@ -18,5 +18,6 @@ export interface Student {
   dateOfBirth: string;
   birthPlace: string;
   email: string;
+  residenceStatus: number;
   offCampus: offCampus | undefined;
 }
