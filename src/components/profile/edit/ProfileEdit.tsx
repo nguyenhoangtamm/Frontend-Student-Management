@@ -59,45 +59,15 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
   const [formData, setFormData] = useState(data || EmptyData);
   const [showInput, setShowInput] = useState(false);
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
-  const [selected, setSelected] = useState<number>(0);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-  const { data: currentDormitory } = useDormitory(selected);
-  // const form = useForm<LoginBodyType>({
-  //   resolver: zodResolver(LoginBody),
-  //   defaultValues: {
-  //     username: '',
-  //     password: '',
-  //   },
-  // });
-  useEffect(() => {
-    if (isFetching) {
-      if (!currentDormitory) return;
-      setFormData({
-        ...formData,
-        dormitory: currentDormitory,
-      });
-      setIsFetching(false);
-    }
-  }, [currentDormitory, isFetching]);
-
-  // Xử lý thay đổi input
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   // Giả lập lưu dữ liệu
   const handleSave = () => {
     console.log('Dữ liệu đã lưu:', formData);
     // router.push('/profile'); // Điều hướng về trang chính
   };
-  const handleSelect = (selected: string) => {
-    setSelected(Number(selected));
-    setIsFetching(true);
-  };
+
   const handleCustomInput = () => {
     setShowInput(!showInput);
-    setIsReadonly(!isReadonly);
-    setFormData(EmptyData);
   };
 
   return (
@@ -105,21 +75,21 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
       <div className='card p-4 shadow-sm'>
         <h5 className='fw-bold text-primary'>Chỉnh sửa thông tin ngoại trú</h5>
         <hr />
-        <div className='row mt-3'>
-          <InputSelector onChange={handleSelect} />
-          <div className='col-md-12 mt-3'>
-            <InputGroup>
-              <Button onClick={() => handleCustomInput()}>Khác</Button>
-              {showInput && (
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Nhập thông tin khác'
-                />
-              )}
-            </InputGroup>
+        <div className='row mt-3 mb-3'>
+          <div className='col-md-6'>
+            <label className='form-label'>Trạng thái</label>
+            <select
+              className='form-select'
+              name='status'
+              value={formData?.status}
+            >
+              <option value=''>Ở nhà</option>
+              <option value='confirmed'>Ký túc xá</option>
+              <option value='Active'>Ở trọ</option>
+            </select>
           </div>
         </div>
+        <h6 className='fw-bold text-secondary'>Thông tin nhà trọ</h6>
         <div className='row mt-3'>
           <div className='col-md-6'>
             <label className='form-label'>Chủ trọ</label>
@@ -129,7 +99,6 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-control'
               name='landlord'
               value={formData?.dormitory.ownerName}
-              onChange={handleChange}
               placeholder='Nhập tên chủ trọ'
             />
           </div>
@@ -141,7 +110,6 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-control'
               name='landlordPhone'
               value={formData?.dormitory.phoneNumber}
-              onChange={handleChange}
               placeholder='Nhập số điện thoại'
             />
           </div>
@@ -154,7 +122,6 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
             className='form-control'
             name='address'
             value={formData?.dormitory.address}
-            onChange={handleChange}
             placeholder='Nhập địa chỉ'
           />
         </div>
@@ -167,7 +134,6 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-control'
               name='district'
               value={formData?.dormitory.address}
-              onChange={handleChange}
               placeholder='Nhập quận/huyện'
             />
           </div>
@@ -179,12 +145,12 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-control'
               name='city'
               value={formData?.dormitory.address}
-              onChange={handleChange}
               placeholder='Nhập thành phố'
             />
           </div>
         </div>
 
+        <h6 className='fw-bold text-secondary mt-4'>Thông tin hợp đồng</h6>
         <div className='row mt-3'>
           <div className='col-md-6'>
             <label className='form-label'>Phòng</label>
@@ -193,7 +159,6 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-control'
               name='room'
               value={formData?.room}
-              onChange={handleChange}
               placeholder='Nhập số phòng'
             />
           </div>
@@ -205,38 +170,12 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-control'
               name='status'
               value={formData?.status}
-              onChange={handleChange}
               placeholder='Trạng thái'
             />
           </div>
         </div>
 
-        <div className='row mt-3'>
-          <Space direction='vertical' size={12} style={{ width: '100%' }}>
-            <label className='form-label'>Chọn thời hạn hợp đồng</label>
-            <RangePicker
-              // disabledDate={disabledDate}
-              placeholder={['Ngày bắt đầu', 'Ngày kết thúc']}
-              format={dateFormat}
-              value={
-                formData?.contractStart && formData?.contractEnd
-                  ? [
-                      dayjs(formData?.contractStart, dateFormat),
-                      dayjs(formData?.contractEnd, dateFormat),
-                    ]
-                  : undefined
-              }
-              onChange={(dates, dateStrings) => {
-                setFormData({
-                  ...formData,
-                  contractStart: dateStrings[0],
-                  contractEnd: dateStrings[1],
-                });
-              }}
-            />
-          </Space>
-        </div>
-
+        <h6 className='fw-bold text-secondary mt-4'>Chi phí sinh hoạt</h6>
         <div className='row mt-3'>
           <div className='col-md-6'>
             <label className='form-label'>Phí ngoại trú</label>
@@ -245,29 +184,37 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-control'
               name='offCampusFee'
               value={formData?.price}
-              onChange={handleChange}
               placeholder='Nhập phí ngoại trú'
             />
           </div>
         </div>
-        {/* <div className='row mt-3'>
-          {formData?.dormitory.services.map((service, index) => (
-            <div className='col-md-6' key={index}>
-              <label className='form-label'>{service.name}</label>
-              <div className='input-group '>
-                <input
-                  type='number'
-                  className='form-control m-2'
-                  name={service.name}
-                  value={service.price}
-                  onChange={handleChange}
-                  placeholder={`Nhập ${service.name}`}
-                />
-                <label className='form-label m-2'>{service.unit}</label>
+        {showInput && (
+          <div className='row mt-3'>
+            {formData?.dormitory.services.map((service, index) => (
+              <div className='col-md-6' key={index}>
+                <label className='form-label'>{service.name}</label>
+                <div className='input-group '>
+                  <input
+                    type='number'
+                    className='form-control m-2'
+                    name={service.name}
+                    value={service.price}
+                    placeholder={`Nhập ${service.name}`}
+                  />
+                  <label className='form-label m-2'>{service.unit}</label>
+                </div>
               </div>
-            </div>
-          ))}
-        </div> */}
+            ))}
+          </div>
+        )}
+        <div className='text-start mt-4'>
+          <button
+            className='btn btn-outline-secondary me-2'
+            onClick={handleCustomInput}
+          >
+            {showInput ? 'Ẩn chi tiết' : 'Thêm chi tiết'}
+          </button>
+        </div>
 
         <div className='text-end mt-4'>
           <button

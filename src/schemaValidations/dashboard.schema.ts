@@ -8,7 +8,7 @@ export const DashboardBody = z.object({
     birthplace: z.string(),
     faculty: z.string(),
     email: z.string().email(),
-    avatar: z.string().url(),
+    avatar: z.string(),
     unreadNotifications: z.number(),
     offCampusInfo: z.object({
         name: z.string(),
@@ -31,7 +31,7 @@ export type DashboardBodyType = z.TypeOf<typeof DashboardBody>;
 
 export const LayoutBody = z.object({
     full_name: z.string(),
-    avatar: z.string().url(),
+    avatar: z.string(),
     notifications: z.array(
         z.object({
             title: z.string(),

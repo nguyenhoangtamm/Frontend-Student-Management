@@ -15,12 +15,13 @@ export default function StudentProfile({ data }: { data: Student }) {
 
   const academicInfo = {
     code: data.code,
-    classId: data.classId,
+    className: data.className,
     major: data.major,
     level: data.level,
     faculty: data.faculty,
     course: data.course,
     status: data.status,
+    educationType: data.educationType
   };
  
   return (

@@ -33,29 +33,29 @@ export default function ResidenceStatus({
               <div className='col-md-6'>
                 <p>
                   <strong>Tên nhà trọ:</strong>{' '}
-                  <span className='text-primary'>{offCampus?.name}</span>
+                  <span >{offCampus?.name}</span>
                 </p>
                 <p>
                   <strong>Chủ trọ:</strong>{' '}
-                  <span className='text-primary'>{offCampus?.ownerName}</span>
+                  <span >{offCampus?.ownerName}</span>
                 </p>
                 <p>
                   <strong>Số điện thoại:</strong>{' '}
-                  <span className='text-primary'>{offCampus?.phoneNumber}</span>
+                  <span >{offCampus?.phoneNumber}</span>
                 </p>
               </div>
               <div className='col-md-6'>
                 <p>
                   <strong>Địa chỉ:</strong>{' '}
-                  <span className='text-primary'>{offCampus?.address}</span>
+                  <span >{offCampus?.address}</span>
                 </p>
                 <p>
                   <strong>Phòng:</strong>{' '}
-                  <span className='text-primary'>{offCampus?.room}</span>
+                  <span >{offCampus?.room}</span>
                 </p>
                 <p>
                   <strong>Trạng thái:</strong>{' '}
-                  <span className='text-primary'>
+                  <span >
                     {offCampus?.contractStatus}
                   </span>
                 </p>
@@ -69,14 +69,14 @@ export default function ResidenceStatus({
             <div>
                 <p>
                     <strong>Giá phòng:</strong>{' '}
-                    <span className='text-primary'>{offCampus?.price} VNĐ/tháng</span>
+                    <span >{offCampus?.price} VNĐ/tháng</span>
                 </p>
             </div>
               {offCampus?.services?.map((service, index) => (
                 <div className='col-md-6' key={index}>
                   <p>
                     <strong>{service.name}:</strong>{' '}
-                    <span className='text-primary'>
+                    <span >
                       {service.price} VNĐ/{service.unit}
                     </span>
                   </p>

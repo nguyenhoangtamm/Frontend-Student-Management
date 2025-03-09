@@ -1,25 +1,13 @@
+import { Student } from "@/interface/studentInterface";
+
 interface ProfileDetailsProps {
   title: string;
-  student: {
-    code?: string;
-    name?: string;
-    status?: string;
-    classId?: string;
-    level?: string;
-    faculty?: string;
-    major?: string;
-    campus?: string;
-    educationType?: string;
-    course?: string;
-    phone?: string;
-    address?: string;
-    dateOfBirth?: string;
-    birthPlace?: string;
-    email?: string;
-  };
+  student: Student;
 }
 
+
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ student, title }) => {
+  console.log(student);
   return (
     <div>
       <h5 className="fw-bold">{title}</h5>
@@ -72,19 +60,19 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ student, title }) => {
             {student.status && (
               <p>
                 <strong>Trạng thái:</strong>{" "}
-                <span className="text-primary">{student.status}</span>
+                <span>{student.status}</span>
               </p>
             )}
-            {student.classId && (
+            {student.className && (
               <p>
                 <strong>Lớp học:</strong>{" "}
-                <span className="text-primary">{student.classId}</span>
+                <span>{student.className}</span>
               </p>
             )}
             {student.level && (
               <p>
                 <strong>Bậc đào tạo:</strong>{" "}
-                <span className="text-primary">{student.level}</span>
+                <span>{student.level}</span>
               </p>
             )}
             {student.faculty && (
@@ -102,7 +90,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ student, title }) => {
             {student.educationType && (
               <p>
                 <strong>Loại hình đào tạo:</strong>{" "}
-                <span className="text-primary">{student.educationType}</span>
+                <span>{student.educationType}</span>
               </p>
             )}
             {student.major && (
@@ -113,7 +101,7 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ student, title }) => {
             {student.course && (
               <p>
                 <strong>Khóa học:</strong>{" "}
-                <span className="text-primary">{student.course}</span>
+                <span>{student.course}</span>
               </p>
             )}
           </div>

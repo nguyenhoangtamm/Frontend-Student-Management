@@ -6,7 +6,7 @@ export interface Student {
   gender: string;
   avatar: string;
   status: string;
-  classId: string;
+  className: string;
   level: string;
   faculty: string;
   major: string;

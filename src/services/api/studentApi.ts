@@ -9,13 +9,12 @@ export async function fetchDashboard() {
     const result = DashboardBody.safeParse(data);
     if (!result.success) {
         console.error("Lỗi validate dữ liệu:", result.error.format());
-        throw new Error("Dữ liệu không hợp lệ");
+        throw new Error(`Dữ liệu không hợp lệ: ${JSON.stringify(result.error.format(), null, 2)}`);
     }
     if(result.data){
         return result.data;
     }
-
-    }
+}
 export const fetchHeader = async () => {
     const response = await apiClient.get(`/student/header-info`);
     const data = response.data.data;
@@ -34,7 +33,7 @@ export const fetchProfile = async () => {
     const result = StudentProfileBody.safeParse(data);
     if (!result.success) {
         console.error("Lỗi validate dữ liệu:", result.error.format());
-        throw new Error("Dữ liệu không hợp lệ");
+        throw new Error(`Dữ liệu không hợp lệ: ${JSON.stringify(result.error.format(), null, 2)}`);
     }
     return result.data;
 };
