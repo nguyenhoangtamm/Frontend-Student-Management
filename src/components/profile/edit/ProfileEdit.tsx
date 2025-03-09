@@ -12,11 +12,6 @@ import { ContractType } from '@/schemaValidations/contract.schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-dayjs.extend(customParseFormat);
-const { RangePicker } = DatePicker;
-
-const dateFormat = 'YYYY-MM-DD';
-
 const EmptyData = {
   room: '',
   price: '',
@@ -27,7 +22,12 @@ const EmptyData = {
     id: 0,
     name: '',
     ownerName: '',
+    fullAddress: '',
     address: '',
+    ward: '',
+    district: '',
+    province: '',
+
     phoneNumber: '',
     services: [
       {
@@ -58,18 +58,30 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
   // State chứa dữ liệu chỉnh sửa
   const [formData, setFormData] = useState(data || EmptyData);
   const [showInput, setShowInput] = useState(false);
-  const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
   // Giả lập lưu dữ liệu
   const handleSave = () => {
-    console.log('Dữ liệu đã lưu:', formData);
     // router.push('/profile'); // Điều hướng về trang chính
   };
 
-  const handleCustomInput = () => {
+  const handleMoreService = () => {
     setShowInput(!showInput);
   };
-
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      const keys = name.split('.');
+      const updatedData = { ...prevData };
+      let current = updatedData;
+      for (let i = 0; i < keys.length - 1; i++) {
+        current = current[keys[i]];
+      }
+      current[keys[keys.length - 1]] = value;
+      return updatedData;
+    });
+  };
   return (
     <div className='container mt-4'>
       <div className='card p-4 shadow-sm'>
@@ -82,6 +94,7 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               className='form-select'
               name='status'
               value={formData?.status}
+              onChange={handleChange}
             >
               <option value=''>Ở nhà</option>
               <option value='confirmed'>Ký túc xá</option>
@@ -94,62 +107,86 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
           <div className='col-md-6'>
             <label className='form-label'>Chủ trọ</label>
             <input
-              readOnly={isReadonly}
               type='text'
               className='form-control'
-              name='landlord'
+              name='dormitory.ownerName'
               value={formData?.dormitory.ownerName}
               placeholder='Nhập tên chủ trọ'
+              onChange={handleChange}
             />
           </div>
           <div className='col-md-6'>
             <label className='form-label'>Số điện thoại</label>
             <input
-              readOnly={isReadonly}
               type='tel'
               className='form-control'
-              name='landlordPhone'
+              name='dormitory.phoneNumber'
               value={formData?.dormitory.phoneNumber}
               placeholder='Nhập số điện thoại'
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-6'>
+            <label className='form-label'>Tỉnh/ Thành phố</label>
+            <input
+              type='text'
+              className='form-control'
+              name='dormitory.province'
+              value={formData?.dormitory.province}
+              placeholder='Nhập tỉnh/thành phố'
+              onChange={handleChange}
+            />
+          </div>
+          <div className='col-md-6'>
+            <label className='form-label'>Thành phố/ huyện</label>
+            <input
+              type='text'
+              className='form-control'
+              name='dormitory.district'
+              value={formData?.dormitory.district}
+              placeholder='Nhập thành phố'
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className='row'>
+          <div className='col-md-6'>
+            <label className='form-label'>Xã/ Phường</label>
+            <input
+              type='text'
+              className='form-control'
+              name='dormitory.ward'
+              value={formData?.dormitory.ward}
+              placeholder='Nhập xã/phường'
+              onChange={handleChange}
+            />
+          </div>
+          <div className='col-md-6'>
+            <label className='form-label'>Địa chỉ</label>
+            <input
+              type='text'
+              className='form-control'
+              name='dormitory.address'
+              value={formData?.dormitory.address}
+              placeholder='Nhập địa chỉ'
+              onChange={handleChange}
             />
           </div>
         </div>
         <div className='mb-3 mt-3'>
           <label className='form-label'>Địa chỉ</label>
           <input
-            readOnly={isReadonly}
             type='text'
             className='form-control'
-            name='address'
-            value={formData?.dormitory.address}
+            name='dormitory.fullAddress'
+            value={formData?.dormitory.fullAddress}
             placeholder='Nhập địa chỉ'
+            onChange={handleChange}
           />
         </div>
-        <div className='row'>
-          <div className='col-md-6'>
-            <label className='form-label'>Quận/Huyện</label>
-            <input
-              readOnly={isReadonly}
-              type='text'
-              className='form-control'
-              name='district'
-              value={formData?.dormitory.address}
-              placeholder='Nhập quận/huyện'
-            />
-          </div>
-          <div className='col-md-6'>
-            <label className='form-label'>Thành phố</label>
-            <input
-              readOnly={isReadonly}
-              type='text'
-              className='form-control'
-              name='city'
-              value={formData?.dormitory.address}
-              placeholder='Nhập thành phố'
-            />
-          </div>
-        </div>
-
         <h6 className='fw-bold text-secondary mt-4'>Thông tin hợp đồng</h6>
         <div className='row mt-3'>
           <div className='col-md-6'>
@@ -160,6 +197,7 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               name='room'
               value={formData?.room}
               placeholder='Nhập số phòng'
+              onChange={handleChange}
             />
           </div>
           <div className='col-md-6'>
@@ -171,6 +209,7 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
               name='status'
               value={formData?.status}
               placeholder='Trạng thái'
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -182,9 +221,10 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
             <input
               type='number'
               className='form-control'
-              name='offCampusFee'
+              name='price'
               value={formData?.price}
               placeholder='Nhập phí ngoại trú'
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -197,9 +237,10 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
                   <input
                     type='number'
                     className='form-control m-2'
-                    name={service.name}
+                    name={`dormitory.services.${index}.price`}
                     value={service.price}
                     placeholder={`Nhập ${service.name}`}
+                    onChange={handleChange}
                   />
                   <label className='form-label m-2'>{service.unit}</label>
                 </div>
@@ -210,7 +251,7 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
         <div className='text-start mt-4'>
           <button
             className='btn btn-outline-secondary me-2'
-            onClick={handleCustomInput}
+            onClick={handleMoreService}
           >
             {showInput ? 'Ẩn chi tiết' : 'Thêm chi tiết'}
           </button>
