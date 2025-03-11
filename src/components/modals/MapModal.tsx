@@ -2,15 +2,14 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import MapComponent from "./Mapcomponent";
-import { OriginHousing } from "@/interface/dormitoryInterface";
 import { Button } from "../ui/button";
+import { DormitoryPaginationType } from "@/schemaValidations/dormitory.schema";
 
-export type HousingLocation = Omit<OriginHousing, "id" | "owner">;
 
 interface LocationProps {
     isOpen: boolean;
     setOpen: (s: boolean) => void;
-    housingLocation: HousingLocation;
+    housingLocation: DormitoryPaginationType;
 }
 
 export default function MapModal(props: LocationProps) {

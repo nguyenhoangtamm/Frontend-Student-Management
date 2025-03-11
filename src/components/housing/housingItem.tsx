@@ -6,11 +6,10 @@ import Link from "next/link";
 import RatingComponent from "../featureComponent/RatingComponent";
 import { Button } from "../ui/button";
 import MapModal from "../modals/MapModal";
-import { OriginHousing } from "@/interface/dormitoryInterface";
-export type Housing = Omit<OriginHousing, "owner">;
+import { DormitoryPaginationType } from "@/schemaValidations/dormitory.schema";
 
-export default function HousingItem(housing: { housing: Housing }) {
-    const { id, name, address, price, description } = housing.housing;
+export default function HousingItem(housing: { housing: DormitoryPaginationType }) {
+    const { id, name, address, minPrice,maxPrice, description,rating } = housing.housing;
     const [isOpen, setOpen] = React.useState(false);
 
     return (
@@ -34,11 +33,12 @@ export default function HousingItem(housing: { housing: Housing }) {
                     <p className="m-2 card-text text-muted">{address}</p>
                     <p className="m-2 mb-2">{description}</p>
                     <p className="m-2 text-success font-weight-bold">
-                        {price} / month
+                        {minPrice} - {maxPrice} / month
                     </p>
+                    
                 </div>
                 <div className="d-flex flex-column align-items-center m-4">
-                    <RatingComponent rating={4.3} />
+                    <RatingComponent rating={parseFloat(rating)} />
                     <Button onClick={() => setOpen(true)}>View on Map</Button>
                 </div>
             </div>
