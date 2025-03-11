@@ -1,55 +1,34 @@
-"use client";
-import React, { useState } from "react";
-import HousingItem from "./housingItem";
-import { OriginHousing } from "@/interface/dormitoryInterface";
-import HousingPagination from "../Pagination/Pagination";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/store";
+'use client';
+import React, { useState } from 'react';
+import HousingItem from './housingItem';
+import HousingPagination from '../Pagination/Pagination';
+import { useDormitoriesPaging } from '@/services/hooks/useDomitory';
 
-export type Housing = Omit<OriginHousing, "owner">;
+export default function HousingListItem() {
+const [currentPage, setCurrentPage] = useState(1);
+ 
+const {
+    data: pagesItem,
+    isLoading,
+    error,
+} = useDormitoriesPaging({ page: currentPage, perPage: 10 });
 
-export default function HousingListItem({ housing }: { housing: Housing[] }) {
-    const filterHouse = useSelector((state: RootState) => state.filHouse);
-    if (filterHouse.price === "l-h") {
-        housing = housing.sort((a, b) => a.price - b.price);
-    }
-    if (filterHouse.price === "h-l") {
-        housing = housing.sort((a, b) => b.price - a.price);
-    }
-    if (filterHouse.newest === "newest") {
-        housing = housing.sort((a, b) => b.id - a.id);
-    }
-    if (filterHouse.newest === "oldest") {
-        housing = housing.sort((a, b) => a.id - b.id);
-    }
-    const searchHouse = useSelector(
-        (state: RootState) => state.house.selectedHouse
-    );
-    if (searchHouse) {
-        housing = housing.filter(
-            (item) => item.id.toString() === searchHouse.id?.toString()
-        );
-    }
+if (isLoading) return <p>Loading...</p>;
+if (error) return <p>Error: {error.message}</p>;
+if (!pagesItem) return <p>No data available</p>;
 
-    const itemsPerPage = 5;
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const totalPages = Math.ceil(housing.length / itemsPerPage);
-    const displayedData = housing.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
-
-    return (
-        <div className="">
-            {displayedData.map((item, index) => (
-                <HousingItem key={index} housing={item} />
-            ))}
-            <HousingPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
-        </div>
-    );
+const totalPages = pagesItem.lastPage;
+const displayedData = pagesItem.data;
+  return (
+    <div className=''>
+      {displayedData.map((item, index) => (
+        <HousingItem key={index} housing={item} />
+      ))}
+      <HousingPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
+    </div>
+  );
 }

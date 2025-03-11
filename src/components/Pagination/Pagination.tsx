@@ -1,5 +1,5 @@
-import React from "react";
-import { Pagination } from "react-bootstrap";
+import React from 'react';
+import { Pagination } from 'react-bootstrap';
 
 interface PaginationProps {
   currentPage: number;
@@ -7,7 +7,12 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function HousingPagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function HousingPagination({
+  currentPage,
+  totalPages,
+
+  onPageChange,
+}: PaginationProps) {
   const handlePrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -22,19 +27,28 @@ export default function HousingPagination({ currentPage, totalPages, onPageChang
 
   return (
     <Pagination>
-      <Pagination.First onClick={() => onPageChange(1)} disabled={currentPage === 1} />
+      <Pagination.First
+        onClick={() => onPageChange(1)}
+        disabled={currentPage === 1}
+      />
       <Pagination.Prev onClick={handlePrevious} disabled={currentPage === 1} />
       {Array.from({ length: totalPages }, (_, index) => (
-      <Pagination.Item
-        key={index + 1}
-        active={index + 1 === currentPage}
-        onClick={() => onPageChange(index + 1)}
-      >
-        {index + 1}
-      </Pagination.Item>
+        <Pagination.Item
+          key={index + 1}
+          active={index + 1 === currentPage}
+          onClick={() => onPageChange(index + 1)}
+        >
+          {index + 1}
+        </Pagination.Item>
       ))}
-      <Pagination.Next onClick={handleNext} disabled={currentPage === totalPages} />
-      <Pagination.Last onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages} />
+      <Pagination.Next
+        onClick={handleNext}
+        disabled={currentPage === totalPages}
+      />
+      <Pagination.Last
+        onClick={() => onPageChange(totalPages)}
+        disabled={currentPage === totalPages}
+      />
     </Pagination>
   );
 }

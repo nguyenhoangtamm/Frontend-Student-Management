@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import InputSelector from './InputSelector';
-import { useDormitory } from '@/services/hooks/useDomainarie';
+import { useDormitory } from '@/services/hooks/useDomitory';
 import { InputGroup } from 'react-bootstrap';
 import { DatePicker, Space } from 'antd';
 import dayjs from 'dayjs';

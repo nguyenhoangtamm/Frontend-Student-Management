@@ -7,16 +7,14 @@ import RegulationsComponent from "@/components/userDashboard/RegulationsComponen
 import { useStudent } from "@/services/hooks/useStudent";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import DashBoardSkeleton from "@/components/skeletons/DashBoardSkeleton";
 export default function HomePage() {
     const { data: dataSend, isLoading, error } = useStudent();
     const unreadNotifications = dataSend
         ? Number(dataSend.unreadNotifications)
         : 0;
     if (isLoading) return (
-      <div >
-        <Skeleton height={50} count={10} />
-        
-      </div>
+     <DashBoardSkeleton />
    
     );
     if (error) return <p>Lỗi: {error.message}</p>;
@@ -25,9 +23,9 @@ export default function HomePage() {
     return (
         <div className="flex flex-wrap p-5 font-sans">
             <div className="flex-1 min-w-[300px] md:flex-[1_1_70%]">
-                <div className="flex justify-between flex-wrap">
-                    <DormitoryInfo data={dataSend.offCampusInfo } />
-                    <Notifications notifications={unreadNotifications} />
+                <div className="flex flex-col md:flex-row justify-between flex-wrap">
+                    <DormitoryInfo data={dataSend.offCampusInfo} className="w-full md:w-auto mb-4 md:mb-0" />
+                    <Notifications notifications={unreadNotifications} className="w-full md:w-auto" />
                 </div>
                 <EventList events={notifications} />
                 <RegulationsComponent />

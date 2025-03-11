@@ -1,5 +1,4 @@
 "use client";
-import { useListDomainarie } from "@/services/hooks/useDomainarie";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { useDispatch, useSelector } from "react-redux";
