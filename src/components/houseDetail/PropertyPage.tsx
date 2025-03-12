@@ -6,27 +6,26 @@ import ListingDescription from '@/components/houseDetail/ListingDescription';
 import AgentContact from '@/components/houseDetail/AgentContact';
 import RequestForm from '@/components/houseDetail/RequestForm';
 import ReviewSection from './ReviewSection';
-import { useDomainarie } from '@/services/hooks/useDomitory';
+import { useDormitory } from '@/services/hooks/useDomitory';
+import Status from './Status';
 
-const PropertyPage: React.FC<{ houseId: number }> = ({ houseId }) => {
-  const { data: house, isLoading, error } = useDomainarie(houseId);
+export default function PropertyPage({ slug }: { slug: string }) {
+  const { data: house, isLoading, error } = useDormitory(slug);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Lỗi: {error.message}</p>;
-  console.log(house);
-  if (Array.isArray(house) && house.length === 0) {
-    return <p>Không có dữ liệu</p>;
-  }
+  if (!house) return <p>Không tìm thấy dữ liệu</p>;
 
   return (
     <div className='container mt-4 text-dark'>
-      <ListingHeader title={house.name} price={house.price} />
+      <ListingHeader title={house.name} minPrice={house.minPrice} maxPrice={house.maxPrice}/>
       <div className='row mt-3'>
         <div className='col-md-8'>
           <ListingGallery
             images={Array.isArray(house.image) ? house.image : []}
           />
-          <ListingDescription description={house.description} />
+          <Status status={house.status} studentNumber={house.students}  />
+          <ListingDescription description={house.description} content={house.content} />
         </div>
 
         <div className='col-md-4'>
@@ -34,9 +33,7 @@ const PropertyPage: React.FC<{ houseId: number }> = ({ houseId }) => {
           <RequestForm housingLocation={house} />
         </div>
       </div>
-      <ReviewSection />
+      <ReviewSection rating={parseFloat(house.rating)} />
     </div>
   );
-};
-
-export default PropertyPage;
+}

@@ -3,7 +3,7 @@ import React from "react";
 import { FaPhone } from "react-icons/fa";
 import { Button } from "../ui/button";
 
-const AgentContact: React.FC = () => {
+export default function AgentContact() {
   return (
     <div className="agent-card bg-dark text-light p-3 rounded">
       <h5>Liên hệ:</h5>
@@ -33,4 +33,3 @@ const AgentContact: React.FC = () => {
   );
 };
 
-export default AgentContact;

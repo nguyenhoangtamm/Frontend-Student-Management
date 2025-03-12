@@ -1,20 +1,22 @@
 import React from "react";
 import RatingComponent from "../featureComponent/RatingComponent";
 
-const ReviewSection: React.FC = () => {
+interface ReviewSectionProps {
+  rating: number;
+}
+export default function ReviewSection({rating}: ReviewSectionProps) {
   const reviews = [
     { id: 1, user: "Alice", comment: "Great place!", rating: 5 },
     { id: 2, user: "Bob", comment: "Very comfortable.", rating: 4.8 },
     { id: 3, user: "Charlie", comment: "Good value for money.", rating: 4.2 },
   ];
-  const avgRating = parseFloat((reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1));
-
+  const formattedRating = Number.isInteger(rating) ? rating.toFixed(1) : rating;
   return (
     <div className="review-section mt-4">
       <h3>Reviews</h3>
       <div className="d-flex align-items-center mb-3">
-        <h1 className="me-2">{avgRating}</h1>
-        <RatingComponent rating={avgRating} />
+        <h1 className="me-2">{formattedRating}</h1>
+        <RatingComponent rating={rating} />
       </div>
       <p className="ms-2">({reviews.length} reviews)</p>
       <div>
@@ -30,4 +32,3 @@ const ReviewSection: React.FC = () => {
   );
 };
 
-export default ReviewSection;

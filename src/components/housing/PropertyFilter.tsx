@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import DropdownFilter from "../housing/Dropdown";
-import SearchHouse from "./SearchHouse";
 
 const filterOptions = [
   {
@@ -41,7 +40,7 @@ export default function PropertyFilter() {
 
       {/* Search Box */}
       <div className="input-group d-flex" style={{ maxWidth: "350px" }}>
-        <SearchHouse />
+        {/* <SearchHouse /> */}
       </div>
 
       {/* Save & Reset Buttons */}

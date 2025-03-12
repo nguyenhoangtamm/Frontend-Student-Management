@@ -59,7 +59,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu >
       <DropdownMenuTrigger asChild>
         <Button variant="outline" style={{ width: widthFilter }}>
           {selected}

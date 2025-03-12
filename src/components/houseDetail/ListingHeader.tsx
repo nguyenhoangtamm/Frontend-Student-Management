@@ -2,16 +2,21 @@ import React from "react";
 
 interface ListingHeaderProps {
   title: string;
-  price: string;
+  minPrice: string;
+  maxPrice?: string;
 }
 
-const ListingHeader: React.FC<ListingHeaderProps> = ({ title, price }) => {
+export default function ListingHeader({ title, minPrice,maxPrice }: ListingHeaderProps) {
   return (
     <div className="listing-header">
       <h2 className="text-dark">{title}</h2>
-      <p className="text-warning fs-5">Giá: {price} / tháng</p>
+      <p className="text-warning fs-5">
+        Giá: {minPrice}
+        {maxPrice && <span> - {maxPrice}</span>}
+        / tháng
+      </p>
     </div>
   );
 };
 
-export default ListingHeader;
+
