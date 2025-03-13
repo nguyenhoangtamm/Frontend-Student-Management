@@ -29,11 +29,11 @@ export default function PropertyPage({ slug }: { slug: string }) {
         </div>
 
         <div className='col-md-4'>
-          <AgentContact />
+          <AgentContact phoneNumber={house.phoneNumber} ownerName={house.ownerName}/>
           <RequestForm housingLocation={house} />
         </div>
       </div>
-      <ReviewSection rating={parseFloat(house.rating)} />
+      <ReviewSection rating={parseFloat(house.rating)} id={house.id} />
     </div>
   );
 }

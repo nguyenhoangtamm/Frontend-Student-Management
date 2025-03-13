@@ -34,6 +34,7 @@ export const LayoutBody = z.object({
     avatar: z.string(),
     notifications: z.array(
         z.object({
+            id: z.number(),
             title: z.string(),
             slug: z.string(),
         })

@@ -5,6 +5,7 @@ import {
   fetchDormitoryBySlug,
 
   fetchListDormitories,
+  fetchReviewsOfDormitory,
 } from '../api/domainarieApi';
 
 export const useDormitory = (slug:string) => {
@@ -67,3 +68,10 @@ export const useDormitoriesPaging = ({
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });
 };
+export const useReviewsOfDormitory = (id: number) => {
+  return useQuery({
+    queryKey: ['ReviewsOfDormitory', id],
+    queryFn: async () => fetchReviewsOfDormitory(id),
+    staleTime: 1000 * 60 * 5, // Cache 5 phút
+  });
+}

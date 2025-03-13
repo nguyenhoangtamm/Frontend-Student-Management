@@ -1,38 +1,43 @@
-"use client";
-import React from "react";
-import { Dropdown } from "react-bootstrap";
-import { IoMdNotificationsOutline } from "react-icons/io";
+'use client';
+import React from 'react';
+import { Dropdown } from 'react-bootstrap';
+import { IoMdNotificationsOutline } from 'react-icons/io';
 
 interface Notification {
-    title: string;
-    slug: string;
+  id: number;
+  title: string;
+  slug: string;
 }
 interface NotificationIconProps {
-    notifications: Notification[];
+  notifications: Notification[];
 }
-export default function NotificationIcon({ notifications }: NotificationIconProps) {
-    return (
-        <div
-            className="d-flex align-items-center me-4"
-            style={{ cursor: "pointer" }}
+export default function NotificationIcon({
+  notifications,
+}: NotificationIconProps) {
+  return (
+    <div
+      className='d-flex align-items-center me-4'
+      style={{ cursor: 'pointer' }}
+    >
+      <Dropdown>
+        <Dropdown.Toggle
+          variant='light'
+          className='d-flex align-items-center border-0'
         >
-            <Dropdown>
-                <Dropdown.Toggle
-                    variant="light"
-                    className="d-flex align-items-center border-0"
-                >
-                    <IoMdNotificationsOutline size={25} />
-                    <span className="text-secondary">Thông báo</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    {notifications.map((notification, index) => (
-                        <Dropdown.Item key={index} href={`/notifications/${notification.slug}`}>
-                            {notification.title}
-                        </Dropdown.Item>
-                    ))}
-                </Dropdown.Menu>
-            </Dropdown>
-        </div>
-    );
-};
-
+          <IoMdNotificationsOutline size={25} />
+          <span className='text-secondary'>Thông báo</span>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {notifications.map((notification, index) => (
+            <Dropdown.Item
+              key={index}
+              href={`/notification/${notification.slug}`}
+            >
+              {notification.title}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
+  );
+}

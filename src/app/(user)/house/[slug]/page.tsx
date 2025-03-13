@@ -6,6 +6,5 @@ export default async function House({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params;
-  console.log("slug", slug);
   return <PropertyPage slug={slug} />;
 }

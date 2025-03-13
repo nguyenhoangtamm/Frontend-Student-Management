@@ -1,27 +1,5 @@
-import { DormitoriesName, DormitoriesPaginationSchema, Dormitory } from "@/schemaValidations/dormitory.schema";
-import { HousingApi } from "../interface/housingInterface";
+import { DormitoriesName, DormitoriesPaginationSchema, Dormitory, DormitoryReviews } from "@/schemaValidations/dormitory.schema";
 import apiClient from "./apiClient";
-import exp from "constants";
-
-const renameLongitudeField = (data: HousingApi) => {
-    if (Array.isArray(data)) {
-        return data.map((item) => {
-            const { longitude, latitude, ...rest } = item;
-            return {
-                ...rest,
-                long: longitude,
-                lat: latitude,
-            };
-        });
-    } else {
-        const { longitude, latitude, ...rest } = data;
-        return {
-            ...rest,
-            long: longitude,
-            lat: latitude,
-        };
-    }
-};
 
 export const fetchDormitory = async () => {
     const response = await apiClient.get("/domainaries");
@@ -71,6 +49,18 @@ export const fetchDormitoriesPaging = async ({ page, perPage, keyword, provinceI
     const response = await apiClient.get(`/dormitories/paging?${params.toString()}`);
     const data = response.data.data;
     const result = DormitoriesPaginationSchema.safeParse(data);
+    if (!result.success) {
+        console.error("Lỗi validate dữ liệu:", result.error.format());
+        throw new Error("Dữ liệu không hợp lệ");
+    }
+    return result.data ?? [];
+}
+
+export const fetchReviewsOfDormitory = async (dormitoryId: number) => {
+    const response = await apiClient.get(`/dormitory/${dormitoryId}/reviews`);
+    const data= response.data.data;
+    console.log('data', data);
+    const result = DormitoryReviews.safeParse(data);
     if (!result.success) {
         console.error("Lỗi validate dữ liệu:", result.error.format());
         throw new Error("Dữ liệu không hợp lệ");
