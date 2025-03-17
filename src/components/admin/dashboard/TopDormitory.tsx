@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const TopDormitory = () => {
@@ -23,9 +24,9 @@ const TopDormitory = () => {
           <p>Số lượng sinh viên hiện tại: 25</p>
         </div>
       </div>
-      <button className="absolute top-4 right-4 bg-white text-pink-500 font-bold py-2 px-4 rounded-full shadow-lg">
+      <Link href={"/admin/dormitory"} className="absolute top-4 right-4 bg-white text-pink-500 font-bold py-2 px-4 rounded-full shadow-lg">
         Chi tiết &gt;&gt;
-      </button>
+      </Link>
     </div>
   );
 };

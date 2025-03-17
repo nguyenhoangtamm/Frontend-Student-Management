@@ -25,7 +25,7 @@ export default function OffCampusInfo({
       <ResidenceStatus offCampus={offCampus} residenceStatus={residenceStatus} />
       <div className='text-center mt-3'>
         <Button onClick={handleEdit}>
-          {offCampus ? 'Chỉnh sửa' : 'Khai báo nhà trọ mới'}
+          {offCampus ? 'Chỉnh sửa' : 'Khai báo thông tin ngoại trú'}
         </Button>
       </div>
     </div>

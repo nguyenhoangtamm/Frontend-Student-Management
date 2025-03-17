@@ -14,6 +14,14 @@ export default function Main({slug}: {slug: string}) {
         (điểm I)
       </h1>
       <p className='text-gray-700'>{data?.content}</p>
+      <div className='mt-6'>
+        <h2 className='text-xl font-semibold text-gray-800 mb-2'>Tập tin đính kèm</h2>
+        <ul className='list-disc list-inside text-gray-700'>
+          {/* {data?.details.map((detail: string, index: number) => (
+        <li key={index}>{detail}</li>
+          ))} */}
+        </ul>
+      </div>
     </div>
   );
 }

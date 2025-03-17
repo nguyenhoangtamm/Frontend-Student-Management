@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa6";
 
@@ -35,9 +36,9 @@ const StudentTable = () => {
         </tbody>
       </table>
       <div className="flex justify-end mt-4">
-        <button className="bg-admin-theme text-white p-2 rounded-full shadow-md">
-          <FaArrowRight size={30}/>
-        </button>
+        <Link href="admin/student" className="bg-admin-theme text-white p-2 rounded-full shadow-md">
+          <FaArrowRight size={30} />
+        </Link>
       </div>
     </div>
   );

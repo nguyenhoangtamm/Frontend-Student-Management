@@ -10,12 +10,14 @@ export const useAuth = () => {
     setLoading(true);
     setError(null);
     try {
-      await login(body);
+      const res=await login(body);
+      return res.user.isAdmin;
     } catch (err: any) {
       setError("Đăng nhập thất bại!");
     } finally {
       setLoading(false);
     }
+    
   };
 
   const handleLogout = async () => {

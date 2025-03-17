@@ -11,6 +11,14 @@ export const routes = {
       attendanceHistory: "/manage/attendance-history",
       attendanceTracking: "/manage/attendance-tracking",
     },
+    user:{
+      dashboard: "/dashboard",
+      users: "/manage/users",
+    },
+    admin:{
+      dashboard: "admin/dashboard",
+      
+    },
     auth:{
       login: "/login",
       logout: "/logout",
