@@ -32,6 +32,8 @@ export const useDormitoriesPaging = ({
   wardId,
   rating,
   price,
+  sortBy,
+  sortOrder
 }: {
   page: number;
   perPage: number;
@@ -41,6 +43,8 @@ export const useDormitoriesPaging = ({
   wardId?: string;
   rating?: number;
   price?: number;
+  sortBy?: string;
+  sortOrder?: string;
 }) => {
   return useQuery({
     queryKey: [
@@ -53,6 +57,8 @@ export const useDormitoriesPaging = ({
       wardId,
       rating,
       price,
+      sortBy,
+      sortOrder
     ],
     queryFn: async () =>
       fetchDormitoriesPaging({
@@ -64,6 +70,8 @@ export const useDormitoriesPaging = ({
         wardId,
         rating,
         price,
+        sortBy,
+        sortOrder
       }),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });

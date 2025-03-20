@@ -1,7 +1,9 @@
 import { z } from 'zod';
+import { paginationSchema } from './pagination';
 
-const studentsPagingSchema = z.object({
+const studentPage = z.object({
     id: z.number(),
+    code: z.string(),
     fullName: z.string(),
     email: z.string().email().nullable(),
     phone: z.string().nullable(),
@@ -10,9 +12,15 @@ const studentsPagingSchema = z.object({
     wardId: z.number().nullable(),
     classId: z.number().nullable(),
     majorId: z.number().nullable(),
-    residenceStatus: z.string().nullable(),
+    residenceStatus: z.number().nullable(),
     academicYear: z.string().nullable(),
 });
 
-export default studentsPagingSchema;
-export type Student = z.infer<typeof studentsPagingSchema>;
+const studentsPagingSchema = z.object({
+    data: z.array(studentPage),
+    pagination: paginationSchema
+}); 
+
+export { studentPage, studentsPagingSchema };
+export type Student = z.infer<typeof studentPage>;
+export type StudentsPaging = z.infer<typeof studentsPagingSchema>;
