@@ -1,48 +1,18 @@
 'use client';
+import { studentColumns } from '@/constants/table/studentColumns';
 import { useStudentsPaging } from '@/services/hooks/useStudentPagination';
 import Link from 'next/link';
 import React from 'react';
 import { FaArrowRight } from 'react-icons/fa6';
 
-const StudentTable = () => {
-  // const students = [
-  //   {
-  //     id: 1,
-  //     mssv: '0022411787',
-  //     name: 'Nguyễn Văn A',
-  //     class: 'ĐHCNTT22C',
-  //     bitcoin: 'N400.00',
-  //   },
-  //   {
-  //     id: 2,
-  //     mssv: '0022411787',
-  //     name: 'Nguyễn Thị B',
-  //     class: 'ĐHCNTT22A',
-  //     bitcoin: 'N400.00',
-  //   },
-  //   {
-  //     id: 3,
-  //     mssv: '0022411787',
-  //     name: 'Lê Văn C',
-  //     class: 'ĐHCNTP22',
-  //     bitcoin: 'N400.00',
-  //   },
-  //   {
-  //     id: 4,
-  //     mssv: '0022411787',
-  //     name: 'Trần Thị D',
-  //     class: 'ĐHCNSH23B',
-  //     bitcoin: 'N400.00',
-  //   },
-  // ];
+export default function StudentTable() {
   const {
     data: data,
     isLoading,
     error,
-  } = useStudentsPaging({ page:1, perPage: 5 });
+  } = useStudentsPaging({ page: 1, perPage: 5, residenceStatus: 0 });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-
 
   return (
     <div className='bg-white p-6 rounded-2xl shadow-md border border-gray-200'>
@@ -52,23 +22,26 @@ const StudentTable = () => {
       <table className='w-full mt-4 text-left border-collapse'>
         <thead>
           <tr className='text-sm text-gray-600'>
-            <th className='py-2 px-4 font-semibold text-purple-600'>STT</th>
-            <th className='py-2 px-4 font-semibold text-purple-600'>MSSV</th>
-            <th className='py-2 px-4 font-semibold text-purple-600'>
-              Họ và tên
-            </th>
-            <th className='py-2 px-4 font-semibold text-purple-600'>Lớp</th>
-            <th className='py-2 px-4 font-semibold text-purple-600'>Mã ngành</th>
+            {studentColumns.map((col) => (
+              <th
+                key={col.key}
+                className='py-2 px-4 font-semibold text-purple-600'
+              >
+                {col.label}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {data?.data.map((item, index) => (
             <tr key={item.id} className='text-sm border-t border-gray-200'>
-              <td className='py-2 px-4'>{index + 1}</td>
-              <td className='py-2 px-4'>{item.code}</td>
-              <td className='py-2 px-4'>{item.fullName}</td>
-              <td className='py-2 px-4'>{item.classId}</td>
-              <td className='py-2 px-4'>{item.majorId}</td>
+              {studentColumns.map((col) => (
+                <td key={col.key} className='py-2 px-4'>
+                  {col.key === 'index'
+                    ? index + 1
+                    : item[col.key]}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
@@ -83,6 +56,4 @@ const StudentTable = () => {
       </div>
     </div>
   );
-};
-
-export default StudentTable;
+}

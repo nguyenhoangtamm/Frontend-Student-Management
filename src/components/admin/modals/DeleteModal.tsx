@@ -1,8 +1,8 @@
-import React from "react";
-import { Modal } from "antd";
+import React from 'react';
+import { Modal } from 'antd';
 
 interface dataDelete {
-  id: string;
+  id: number;
   name: string;
 }
 interface EventModalProps {
@@ -24,7 +24,7 @@ export default function DeleteModal(props: EventModalProps) {
   };
   return (
     <Modal
-      title="Bạn có chắc chắn muốn xóa?"
+      title='Bạn có chắc chắn muốn xóa?'
       open={isOpen}
       onOk={handleOk}
       onCancel={handleCancel}

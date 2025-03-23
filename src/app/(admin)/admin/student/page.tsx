@@ -8,106 +8,10 @@ import React from "react";
 import { IdCard, User, School, CheckCircle, LucideIcon } from "lucide-react";
 import StatsCards from "@/components/admin/ui/Stats";
 import { StatProps } from "@/interface/statProps";
+import { studentColumns } from "@/constants/table/studentColumns";
 
-const students = [
-  {
-    id: 1,
-    status: "Đã khai báo",
-    name: "Ramon Ridwan",
-    mssv: "1234",
-    class: "ĐHVBQ",
-    avatar: "/avatar1.png",
-  },
-  {
-    id: 2,
-    status: "Chưa khai báo",
-    name: "Ramon Ridwan",
-    mssv: "1234",
-    class: "1234",
-    avatar: "/avatar2.png",
-  },
-  {
-    id: 3,
-    status: "Đã khai báo",
-    name: "Ramon Ridwan",
-    mssv: "1234",
-    class: "1234",
-    avatar: "/avatar3.png",
-  },
-  {
-    id: 4,
-    status: "Chờ duyệt",
-    name: "Ramon Ridwan",
-    mssv: "1234",
-    class: "",
-    avatar: "/avatar4.png",
-  },
-  {
-    id: 5,
-    status: "Chưa khai báo",
-    name: "Ramon Ridwan",
-    mssv: "1234",
-    class: "",
-    avatar: "/avatar5.png",
-  },
-  {
-    id: 6,
-    status: "Đã khai báo",
-    name: "John Doe",
-    mssv: "5678",
-    class: "ABC",
-    avatar: "/avatar6.png",
-  },
-  {
-    id: 7,
-    status: "Chờ duyệt",
-    name: "Jane Smith",
-    mssv: "9101",
-    class: "DEF",
-    avatar: "/avatar7.png",
-  },
-  {
-    id: 8,
-    status: "Chưa khai báo",
-    name: "Alice Johnson",
-    mssv: "1121",
-    class: "GHI",
-    avatar: "/avatar8.png",
-  },
-  {
-    id: 9,
-    status: "Đã khai báo",
-    name: "Bob Brown",
-    mssv: "3141",
-    class: "JKL",
-    avatar: "/avatar9.png",
-  },
-  {
-    id: 10,
-    status: "Chờ duyệt",
-    name: "Charlie Davis",
-    mssv: "5161",
-    class: "MNO",
-    avatar: "/avatar10.png",
-  },
-];
-const dataColumns = [
-  "mssv",
-  "name",
-  "class",
-  "status",
-  "avatar",
-  "email",
-  "phone",
-  "address",
-  "dob",
-  "gender",
-  "nationality",
-  "enrollmentYear",
-  "major",
-  "gpa",
-  "credits",
-];
+
+
 interface IFilter {
   id: string;
   label: string;
@@ -151,9 +55,9 @@ const filters: IFilter[] = [
 const stats: StatProps[] = [
   {
     name: "Total Students",
-    label: ["Ngoại trú", "Nội trú", "Ở nhà", "Chưa khai báo"],
+    label: ["Ngoại trú", "Nội trú", "Ở nhà"],
     labelNote: "Total",
-    dataChart: [123, 140, 234, 50],
+    dataChart: [123, 140, 234],
     backgroundColor: [
       "rgba(255, 99, 132, 0.6)",
       "rgba(54, 162, 235, 0.6)",
@@ -200,7 +104,8 @@ const stats: StatProps[] = [
   //   position: "right",
   // },
 ];
-export default function page() {
+export default function Page() {
+ 
   return (
     <div className="flex flex-col gap-6 container ">
       <h1 className="text-2xl font-bold">Student Management: Students</h1>
@@ -210,11 +115,11 @@ export default function page() {
       <hr />
       <h4 className="text-gray-600">Students data</h4>
       <div className="flex   justify-between items-center">
-        <AddModal name="Student" dataType={dataColumns} />
+        <AddModal name="Student" dataType={studentColumns.map((col) => col.label)} />
         <SearchBar name="Student" filters={filters} />
       </div>
       <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-        <DataTable data={students} columns={dataColumns} />
+        <DataTable/>
       </div>
     </div>
   );

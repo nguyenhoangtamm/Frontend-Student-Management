@@ -8,6 +8,7 @@ export const useStudentsPaging = ({
   provinceId,
   districtId,
   wardId,
+  residenceStatus,
 }: {
   page: number;
   perPage: number;
@@ -15,6 +16,7 @@ export const useStudentsPaging = ({
   provinceId?: string;
   districtId?: string;
   wardId?: string;
+  residenceStatus?: number;
 }) => {
   return useQuery({
     queryKey: [
@@ -25,6 +27,7 @@ export const useStudentsPaging = ({
       provinceId,
       districtId,
       wardId,
+      residenceStatus,
     ],
     queryFn: async () =>
       fetchStudentsPaging({
@@ -34,6 +37,7 @@ export const useStudentsPaging = ({
         provinceId,
         districtId,
         wardId,
+        residenceStatus,
       }),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });
