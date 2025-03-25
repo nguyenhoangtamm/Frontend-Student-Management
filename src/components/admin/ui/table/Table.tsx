@@ -1,7 +1,7 @@
 'use client';
 import { Button } from 'antd';
 import { MoreVertical, Trash2 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 import DeleteModal from '../../modals/DeleteModal';
 import {
@@ -20,12 +20,28 @@ const statusColors = {
   Pending: 'bg-purple-500',
   Down: 'bg-red-500',
 };
+
 export default function DataTable() {
-  const {
-    data: data,
-    isLoading,
-    error,
-  } = useStudentsPaging({ page: 1, perPage: 5 });
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading, error } = useStudentsPaging({ page, perPage: 5 });
+  const [isFetching, setIsFetching] = useState(false);
+
+  const [tableData, setTableData] = useState<any[]>([]);
+
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastRowRef = useCallback((node) => {
+    if (isLoading || isFetching) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setIsFetching(true);
+        setPage((prevPage) => prevPage + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [isLoading, isFetching]);
+
   const [selectedRows, setSelectedRows] = React.useState<number[]>([]);
   const [isOpenDelete, setOpenDelete] = React.useState(false);
   const [viewButton, setViewButton] = React.useState('View More');
@@ -33,14 +49,18 @@ export default function DataTable() {
     id: 0,
     name: '',
   });
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  // Chọn/Bỏ chọn tất cả dòng
+  useEffect(() => {
+    if (data?.data) {
+      setTableData((prev) => [...prev, ...data.data]);
+      setIsFetching(false);
+    }
+  }, [data]);
+
   const handleSelectAll = () => {
-    if (selectedRows.length === data?.data.length) {
+    if (selectedRows.length === tableData.length) {
       setSelectedRows([]);
     } else {
-      setSelectedRows(data?.data.map((item, index) => index));
+      setSelectedRows(tableData.map((item, index) => index));
     }
   };
 
@@ -62,10 +82,12 @@ export default function DataTable() {
   const handleDelete = (index: number) => {
     setOpenDelete(true);
     setDeleteData({
-      id: data?.data[index].id? data?.data[index].id : 0,
-      name: data?.data[index].fullName ? data?.data[index].fullName : '',
+      id: tableData[index].id ? tableData[index].id : 0,
+      name: tableData[index].fullName ? tableData[index].fullName : '',
     });
   };
+  // console.log("observerRef", observerRef);
+  // console.log("lastRowRef", lastRowRef);
   return (
     <>
       <Table className='w-full   text-center border-collapse'>
@@ -77,7 +99,7 @@ export default function DataTable() {
                 className={'cursor-pointer'}
                 type='checkbox'
                 onChange={handleSelectAll}
-                checked={selectedRows.length === data?.data.length}
+                checked={selectedRows.length === tableData.length}
               />
             </TableHead>
 
@@ -99,8 +121,11 @@ export default function DataTable() {
         </TableHeader>
 
         <TableBody>
-          {data?.data.map((item, index) => (
-            <TableRow key={item.id} className='border-t'>
+          {tableData.map((item, index) => (
+            <TableRow
+              key={item.id}
+              ref={index === tableData.length - 1 ? lastRowRef : null}
+            >
               {/* Cột checkbox - Cố định bên trái */}
               <TableCell className='p-3 text-center sticky left-0 bg-white z-10 border-r '>
                 <input
@@ -154,7 +179,7 @@ export default function DataTable() {
         </TableBody>
       </Table>
 
-      <p className='p-3 text-gray-600'>{data?.data.length} students</p>
+      {/* <p className='p-3 text-gray-600'>{tableData.length} students</p> */}
       <DeleteModal
         isOpen={isOpenDelete}
         setOpen={setOpenDelete}
