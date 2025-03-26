@@ -7,4 +7,13 @@ const adminStatusSchema = z.object({
   unconfirmedStudents: z.number(),
 });
 
-export default adminStatusSchema;
+const studentsStatisticsSchema = z.object({
+  confirmedStudents: z.number(),
+  unconfirmedStudents: z.number(),
+  atHomeStudents: z.number(),
+  otherStudents: z.number(),
+});
+
+export { adminStatusSchema, studentsStatisticsSchema };
+export type AdminStatus = z.infer<typeof adminStatusSchema>;
+export type StudentsStatistics = z.infer<typeof studentsStatisticsSchema>;

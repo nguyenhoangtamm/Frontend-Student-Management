@@ -1,16 +1,18 @@
-"use client";
+'use client';
 
-import AddModal from "@/components/admin/modals/AddModal";
-import SearchBar from "@/components/admin/ui/SearchBar";
-import DataTable from "@/components/admin/ui/table/Table";
+import AddModal from '@/components/admin/modals/AddModal';
+import SearchBar from '@/components/admin/ui/SearchBar';
+import DataTable from '@/components/admin/ui/table/Table';
 
-import React from "react";
-import { IdCard, User, School, CheckCircle, LucideIcon } from "lucide-react";
-import StatsCards from "@/components/admin/ui/Stats";
-import { StatProps } from "@/interface/statProps";
-import { studentColumns } from "@/constants/table/studentColumns";
-
-
+import React from 'react';
+import { IdCard, User, School, CheckCircle, LucideIcon } from 'lucide-react';
+import StatsCards from '@/components/admin/ui/Stats';
+import { StatProps } from '@/interface/statProps';
+import { studentColumns } from '@/constants/table/studentColumns';
+import { useAdminStats, useStudentsStatistics } from '@/services/hooks/useAdminStatus';
+import { studentsStatistics } from '@/constants/chart/student';
+import { pieChartColors } from '@/constants/chart/color/pieChart';
+import { object } from 'zod';
 
 interface IFilter {
   id: string;
@@ -20,58 +22,48 @@ interface IFilter {
 }
 const filters: IFilter[] = [
   {
-    id: "1",
-    label: "MSSV",
+    id: '1',
+    label: 'MSSV',
     icon: IdCard,
-    option: ["1234", "5678", "9101", "1121", "3141", "5161"],
+    option: ['1234', '5678', '9101', '1121', '3141', '5161'],
   },
   {
-    id: "2",
-    label: "Họ Tên",
+    id: '2',
+    label: 'Họ Tên',
     icon: User,
     option: [
-      "Ramon Ridwan",
-      "John Doe",
-      "Jane Smith",
-      "Alice Johnson",
-      "Bob Brown",
-      "Charlie Davis",
+      'Ramon Ridwan',
+      'John Doe',
+      'Jane Smith',
+      'Alice Johnson',
+      'Bob Brown',
+      'Charlie Davis',
     ],
   },
   {
-    id: "3",
-    label: "Lớp",
+    id: '3',
+    label: 'Lớp',
     icon: School,
-    option: ["ĐHVBQ", "1234", "ABC", "DEF", "GHI", "JKL", "MNO"],
+    option: ['ĐHVBQ', '1234', 'ABC', 'DEF', 'GHI', 'JKL', 'MNO'],
   },
   {
-    id: "4",
-    label: "Trạng thái",
+    id: '4',
+    label: 'Trạng thái',
     icon: CheckCircle,
-    option: ["Đã khai báo", "Chưa khai báo", "Chờ duyệt"],
+    option: ['Đã khai báo', 'Chưa khai báo', 'Chờ duyệt'],
   },
 ];
 
 const stats: StatProps[] = [
   {
-    name: "Total Students",
-    label: ["Ngoại trú", "Nội trú", "Ở nhà"],
-    labelNote: "Total",
-    dataChart: [123, 140, 234],
-    backgroundColor: [
-      "rgba(255, 99, 132, 0.6)",
-      "rgba(54, 162, 235, 0.6)",
-      "rgba(255, 206, 86, 0.6)",
-      "rgba(75, 192, 192, 0.6)",
-    ],
-    borderColor: [
-      "rgba(255, 99, 132, 1)",
-      "rgba(54, 162, 235, 1)",
-      "rgba(255, 206, 86, 1)",
-      "rgba(75, 192, 192, 1)",
-    ],
+    name: 'Total Students',
+    label: studentsStatistics,
+    labelNote: 'Total',
+    dataChart: [],
+    backgroundColor: pieChartColors.backgroundColor,
+    borderColor: pieChartColors.borderColor,
     borderWidth: 1,
-    position: "right",
+    position: 'right',
   },
   // {
   //   name: "Total Dormitories",
@@ -105,21 +97,28 @@ const stats: StatProps[] = [
   // },
 ];
 export default function Page() {
- 
+  const { data, isLoading, error } = useStudentsStatistics();
+  if (data) {
+    stats[0].dataChart = Object.values(data);
+  }
+  console.log("data", data);
   return (
-    <div className="flex flex-col gap-6 container ">
-      <h1 className="text-2xl font-bold">Student Management: Students</h1>
-      <h4 className="text-gray-600">Students OverView</h4>
+    <div className='flex flex-col gap-6 container '>
+      <h1 className='text-2xl font-bold'>Student Management: Students</h1>
+      <h4 className='text-gray-600'>Students OverView</h4>
 
       <StatsCards stats={stats} />
       <hr />
-      <h4 className="text-gray-600">Students data</h4>
-      <div className="flex   justify-between items-center">
-        <AddModal name="Student" dataType={studentColumns.map((col) => col.label)} />
-        <SearchBar name="Student" filters={filters} />
+      <h4 className='text-gray-600'>Students data</h4>
+      <div className='flex   justify-between items-center'>
+        <AddModal
+          name='Student'
+          dataType={studentColumns.map((col) => col.label)}
+        />
+        <SearchBar name='Student' filters={filters} />
       </div>
-      <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-        <DataTable/>
+      <div className='bg-white p-6 rounded-2xl shadow-md border border-gray-200'>
+        <DataTable />
       </div>
     </div>
   );

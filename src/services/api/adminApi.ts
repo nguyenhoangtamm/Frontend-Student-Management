@@ -1,4 +1,4 @@
-import adminStatusSchema from "@/schemaValidations/admin.schema";
+import { adminStatusSchema, studentsStatisticsSchema } from "@/schemaValidations/admin.schema";
 import apiClient from "./apiClient";
 
 export const fetchAdminStatus = async () => {
@@ -11,3 +11,15 @@ export const fetchAdminStatus = async () => {
     }
     return result.data;
 };
+
+export const fetchStudentsStatistics = async () => {
+    const response = await apiClient.get(`/admin/students/statistics`);
+    const data = response.data.data;
+    const result = studentsStatisticsSchema.safeParse(data);
+    if (!result.success) {
+        console.error("Lỗi validate dữ liệu:", result.error.format());
+        throw new Error("Dữ liệu không hợp lệ");
+    }
+    return result.data;
+};
+
