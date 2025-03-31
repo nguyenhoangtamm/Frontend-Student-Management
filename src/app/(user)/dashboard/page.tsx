@@ -4,12 +4,12 @@ import EventList from "@/components/userDashboard/EventList";
 import DormitoryInfo from "@/components/userDashboard/DormitoryInfo";
 import Notifications from "@/components/userDashboard/Notifications";
 import RegulationsComponent from "@/components/userDashboard/RegulationsComponent";
-import { useStudent } from "@/services/hooks/useStudent";
+import { useDashboard } from "@/services/hooks/useStudent";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import DashBoardSkeleton from "@/components/skeletons/DashBoardSkeleton";
 export default function HomePage() {
-    const { data: dataSend, isLoading, error } = useStudent();
+    const { data: dataSend, isLoading, error } = useDashboard();
     const unreadNotifications = dataSend
         ? Number(dataSend.unreadNotifications)
         : 0;

@@ -10,9 +10,16 @@ export function useHeader() {
     });
 }
 
-export const useStudent = () => {
+export const useDashboard = () => {
     return useQuery({
         queryKey: ["student"],
+        queryFn: async () => fetchDashboard(),
+        staleTime: 1000 * 60 * 5, // Cache 5 phút
+    });
+};
+export const useNotifications = () => {
+    return useQuery({
+        queryKey: ["notifications"],
         queryFn: async () => fetchDashboard(),
         staleTime: 1000 * 60 * 5, // Cache 5 phút
     });

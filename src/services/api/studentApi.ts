@@ -6,12 +6,26 @@ import { ContractSchema } from "@/schemaValidations/contract.schema";
 export async function fetchDashboard() {
     const response = await apiClient.get(`/student/dashboard`);
     const data = response.data.data;
+    console.log("data", data);  
     const result = DashboardBody.safeParse(data);
+    console.log("result", result);
     if (!result.success) {
         console.error("Lỗi validate dữ liệu:", result.error.format());
         throw new Error(`Dữ liệu không hợp lệ: ${JSON.stringify(result.error.format(), null, 2)}`);
     }
     if(result.data){
+        return result.data;
+    }
+}
+export const fetchNotifications = async () => {
+    const response = await apiClient.get(`/student/notifications`);
+    const data = response.data.data;
+    const result = data;
+    if (!result.success) {
+        console.error("Lỗi validate dữ liệu:", result.error.format());
+        throw new Error("Dữ liệu không hợp lệ");
+    }
+    if (result.data) {
         return result.data;
     }
 }

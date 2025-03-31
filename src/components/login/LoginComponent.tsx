@@ -29,7 +29,7 @@ export default function LoginComponent() {
     toast.success('Đăng nhập thành công!');
     if (!error) {
         if (isAdmin) {
-            router.push(routes.admin.dashboard);
+            router.push(routes.admin.owerview);
         } else {
             router.push(routes.user.dashboard);
         }

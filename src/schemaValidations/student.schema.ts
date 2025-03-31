@@ -5,6 +5,8 @@ const studentPage = z.object({
     id: z.number(),
     code: z.string(),
     fullName: z.string(),
+    gender: z.number(),
+    dateOfBirth: z.string().nullable(),
     email: z.string().email().nullable(),
     phone: z.string().nullable(),
     provinceId: z.number().nullable(),

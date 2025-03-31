@@ -31,7 +31,7 @@ export default function DataTable() {
 
   const observer = useRef<IntersectionObserver | null>(null);
   const lastRowRef = useCallback(
-    (node: Element|null) => {
+    (node: Element | null) => {
       if (isLoading || isFetching) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
@@ -74,13 +74,6 @@ export default function DataTable() {
         ? prev.filter((id) => id !== index)
         : [...prev, index],
     );
-  };
-  const handleViewMore = () => {
-    if (viewButton === 'View More') {
-      setViewButton('View Less');
-    } else {
-      setViewButton('View More');
-    }
   };
   const handleDelete = (index: number) => {
     setOpenDelete(true);
@@ -193,6 +186,14 @@ export default function DataTable() {
             ))}
           </TableBody>
         </Table>
+        {isFetching && (
+          <>
+            <span className='loading loading-bars loading-xl'></span>
+            <span className='loading loading-bars loading-xl'></span>
+            <span className='loading loading-bars loading-xl'></span>
+            <span className='loading loading-bars loading-xl'></span>
+          </>
+        )}
       </div>
       {/* <p className='p-3 text-gray-600'>{tableData.length} students</p> */}
       <DeleteModal

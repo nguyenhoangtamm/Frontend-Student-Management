@@ -5,21 +5,19 @@ import SearchBar from '@/components/admin/ui/SearchBar';
 import DataTable from '@/components/admin/ui/table/Table';
 
 import React from 'react';
-import { IdCard, User, School, CheckCircle, LucideIcon } from 'lucide-react';
+import { IdCard, User, School, CheckCircle } from 'lucide-react';
 import StatsCards from '@/components/admin/ui/Stats';
 import { StatProps } from '@/interface/statProps';
-import { studentColumns } from '@/constants/table/studentColumns';
-import { useAdminStats, useStudentsStatistics } from '@/services/hooks/useAdminStatus';
+import {
+
+  useStudentsStatistics,
+} from '@/services/hooks/useAdminStatus';
 import { studentsStatistics } from '@/constants/chart/student';
 import { pieChartColors } from '@/constants/chart/color/pieChart';
-import { object } from 'zod';
+import { IFilter } from '@/interface/filter/filter';
+import { studentFiels } from '@/constants/addEntity/studentFiel';
 
-interface IFilter {
-  id: string;
-  label: string;
-  icon: LucideIcon;
-  option: string[];
-}
+
 const filters: IFilter[] = [
   {
     id: '1',
@@ -101,7 +99,7 @@ export default function Page() {
   if (data) {
     stats[0].dataChart = Object.values(data);
   }
-  console.log("data", data);
+  console.log('data', data);
   return (
     <div className='flex flex-col gap-6 container '>
       <h1 className='text-2xl font-bold'>Student Management: Students</h1>
@@ -113,7 +111,7 @@ export default function Page() {
       <div className='flex   justify-between items-center'>
         <AddModal
           name='Student'
-          dataType={studentColumns.map((col) => col.label)}
+          dataType={studentFiels}
         />
         <SearchBar name='Student' filters={filters} />
       </div>
