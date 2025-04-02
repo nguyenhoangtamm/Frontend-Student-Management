@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { paginationSchema } from './pagination';
 
 export const DormitoriesName = z.array(
   z.object({
@@ -58,75 +59,37 @@ export const Dormitory = z
     status: obj.status,
   }));
 
-const DormitoryPagination = z
-  .object({
-    id: z.number(),
-    name: z.string(),
-    address: z.string(),
-    full_address: z.string(),
-    ward_id: z.number(),
-    district_id: z.number(),
-    province_id: z.number(),
-    owner_name: z.string(),
-    description: z.string(),
-    rating: z.string(),
-    slug: z.string(),
-    students: z.number(),
-    min_price: z.string(),
-    max_price: z.string(),
-    longitude: z.string(),
-    latitude: z.string(),
-    status: z.number(),
-  })
-  .transform((obj) => ({
-    id: obj.id,
-    name: obj.name,
-    address: obj.address,
-    fullAddress: obj.full_address,
-    wardId: obj.ward_id,
-    districtId: obj.district_id,
-    provinceId: obj.province_id,
-    ownerName: obj.owner_name,
-    description: obj.description,
-    rating: obj.rating,
-    slug: obj.slug,
-    students: obj.students,
-    minPrice: obj.min_price,
-    maxPrice: obj.max_price,
-    longitude: obj.longitude,
-    latitude: obj.latitude,
-    status: obj.status,
-  }));
+const DormitoryPagination = z.object({
+  id: z.number(),
+  name: z.string(),
+  address: z.string(),
+  fullAddress: z.string(),
+  wardId: z.number(),
+  districtId: z.number(),
+  provinceId: z.number(),
+  ownerName: z.string(),
+  phoneNumber: z.string(),
+  description: z.string(),
+  rating: z.string(),
+  slug: z.string(),
+  students: z.number(),
+  minPrice: z.string(),
+  maxPrice: z.string(),
+  longitude: z.string(),
+  latitude: z.string(),
+  status: z.number(),
+});
+
 const LinksPaginationSchema = z.object({
   url: z.string().nullable(),
   label: z.string(),
   active: z.boolean(),
 });
-const DormitoriesPaginationSchema = z
-  .object({
-    current_page: z.number(),
-    data: z.array(DormitoryPagination),
-    first_page_url: z.string(),
-    from: z.number(),
-    last_page: z.number(),
-    path: z.string(),
-    per_page: z.number(),
-    prev_page_url: z.string().nullable(),
-    to: z.number(),
-    total: z.number(),
-  })
-  .transform((obj) => ({
-    currentPage: obj.current_page,
-    data: obj.data,
-    firstPageUrl: obj.first_page_url,
-    from: obj.from,
-    lastPage: obj.last_page,
-    path: obj.path,
-    perPage: obj.per_page,
-    prevPageUrl: obj.prev_page_url,
-    to: obj.to,
-    total: obj.total,
-  }));
+const DormitoriesPaginationSchema = z.object({
+  data: z.array(DormitoryPagination),
+  pagination: paginationSchema,
+});
+
 const DormitoryReview = z.object({
   id: z.number(),
   name: z.string(),

@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchContract, fetchDashboard, fetchHeader, fetchProfile } from "../api/studentApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createStudent, fetchContract, fetchDashboard, fetchHeader, fetchProfile } from "../api/studentApi";
+import { StudentCreateBody } from "@/schemaValidations/student.schema";
 
 export function useHeader() {
     return useQuery({
@@ -38,4 +39,10 @@ export const useContract = () => {
         queryFn: async () => fetchContract(),
         staleTime: 1000 * 60 * 5, // Cache 5 phút
     });
-}
+};
+export const useCreateStudent = () => {
+    return useMutation({
+        mutationFn: async (studentData: StudentCreateBody) => createStudent(studentData),
+    });
+};
+

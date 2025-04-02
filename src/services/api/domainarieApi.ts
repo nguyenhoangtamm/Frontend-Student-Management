@@ -64,21 +64,21 @@ export const fetchDormitoriesPaging = async ({
 }) => {
   const params = new URLSearchParams({
     page: page.toString(),
-    per_page: perPage.toString(),
+    perPage: perPage.toString(),
     ...(keyword && { keyword }),
-    ...(provinceId && { province_id: provinceId }),
-    ...(districtId && { district_id: districtId }),
-    ...(wardId && { ward_id: wardId }),
+    ...(provinceId && { provinceId }),
+    ...(districtId && { districtId }),
+    ...(wardId && { wardId }),
     ...(rating !== undefined && { rating: rating.toString() }),
     ...(price !== undefined && { price: price.toString() }),
-    ...(sortBy && { sort_by: sortBy }),
-    ...(sortOrder && { sort_order: sortOrder }),
+    ...(sortBy && { sortBy }),
+    ...(sortOrder && { sortOrder }),
   });
 
   const response = await apiClient.get(
     `/dormitories/paging?${params.toString()}`,
   );
-  const data = response.data.data;
+  const data = response.data.data.data;
   const result = DormitoriesPaginationSchema.safeParse(data);
   if (!result.success) {
     console.error('Lỗi validate dữ liệu:', result.error.format());

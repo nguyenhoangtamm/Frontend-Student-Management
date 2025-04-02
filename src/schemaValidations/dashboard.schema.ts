@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const DashboardBody = z.object({
     code: z.string(),
-    full_name: z.string(),
+    fullName: z.string(),
     gender: z.string(),
-    date_of_birth: z.string(),
+    dateOfBirth: z.string(),
     birthplace: z.string(),
     faculty: z.string(),
     email: z.string().email(),
@@ -14,7 +14,7 @@ export const DashboardBody = z.object({
         name: z.string(),
         room: z.string(),
         status: z.string(),
-        updated_at: z.string(),
+        updatedAt: z.string(),
         address: z.string(), 
     }),
     notifications: z.array(
