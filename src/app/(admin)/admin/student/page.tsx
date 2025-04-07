@@ -96,10 +96,10 @@ const stats: StatProps[] = [
 ];
 export default function Page() {
   const { data, isLoading, error } = useStudentsStatistics();
+
   if (data) {
     stats[0].dataChart = Object.values(data);
   }
-  console.log('data', data);
   return (
     <div className='flex flex-col gap-6 container '>
       <h1 className='text-2xl font-bold'>Student Management: Students</h1>

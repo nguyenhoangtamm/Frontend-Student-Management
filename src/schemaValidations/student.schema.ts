@@ -28,15 +28,25 @@ export type Student = z.infer<typeof studentPage>;
 export type StudentsPaging = z.infer<typeof studentsPagingSchema>;
 
 export const StudentCreateBody = z.object({
-  studentId: z.string(),
-  fullName: z.string(),
-  email: z.string().email(),
-  phone: z.string(),
-  address: z.string(),
-  dateOfBirth: z.string(),
-  gender: z.enum(['MALE', 'FEMALE']),
-  classId: z.string(),
-  majorId: z.string(),
+  code: z.string().max(255),
+  password: z.string().min(8).optional(),
+  full_name: z.string().max(255),
+  gender: z.number().min(0).max(2),
+  date_of_birth: z.string(),
+  phone_number: z.string().max(15),
+  email: z.string().email().max(255),
+  class_id: z.number(),
+  major_id: z.number().optional(),
+  education_level: z.string().max(255).optional(),
+  academic_year: z.string().min(1).optional(),
+  birthplace: z.string().max(255).optional(),
+  residence_status: z.number().max(255),
+  current_address: z.string().max(255).optional(),
+  status: z.string().max(50).optional(),
+  isadmin: z.boolean().optional(),
+  avatar: z.string().max(255).optional().nullable(),
+  faculty: z.string().max(255).optional(),
+  dormitory_id: z.number().optional().nullable(),
 });
 
 export type StudentCreateBody = z.infer<typeof StudentCreateBody>;

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { StudentField } from '@/constants/addEntity/studentFiel';
 import { useCreateStudent } from '@/services/hooks/useStudent';
 import { StudentCreateBody } from '@/schemaValidations/student.schema';
+import OptionInput from './OptionInput';
 
 interface IProps {
   name: string;
@@ -19,7 +20,6 @@ export default function AddModal({ name, dataType }: IProps) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const studentData = Object.fromEntries(formData);
-    console.log('studentData', studentData);
     createStudent(studentData as StudentCreateBody);
   };
   return (
@@ -36,38 +36,42 @@ export default function AddModal({ name, dataType }: IProps) {
         open={open}
         onCancel={() => setOpen(false)}
         footer={null}
+        width={800}
       >
-        <form onSubmit={handleSubmit}>
-          {dataType.map((data, key) =>
-            (data.option ?? []).length > 0 ? (
-              <select
-                key={key}
-                className='w-full p-2 border rounded-md mt-2'
-                name={data.key}
-              >
-                <option value='' disabled selected>
-                  {data.label}
-                </option>
-                {(data.option ?? []).map((opt, index) => (
-                  <option key={index} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                key={key}
-                type='text'
-                placeholder={data.label}
-                name={data.key}
-                className='w-full p-2 border rounded-md mt-2'
-              />
-            ),
-          )}
+        <form onSubmit={handleSubmit} className='p-4'>
+          <div className='grid grid-cols-2 gap-6'>
+            {dataType.map((data, key) =>
+              data.option === true ? (
+                <OptionInput key={data.key} fieldKey={data.key} label={data.label} />
+              ) : (
+                <div key={key} className='flex flex-col'>
+                  <label className='text-sm font-medium mb-1'>
+                    {data.label}
+                  </label>
+                  <input
+                    type='text'
+                    placeholder={`Enter ${data.label}`}
+                    name={data.key}
+                    className='w-full p-3 border rounded-md focus:ring-2 focus:ring-admin-theme focus:border-admin-theme'
+                  />
+                </div>
+              ),
+            )}
+          </div>
 
-          <div className='mt-4 flex justify-end'>
-            <Button onClick={() => setOpen(false)}>Cancel</Button>
-            <Button className='ml-2' type='submit' disabled={isPending}>
+          <div className='mt-8 flex justify-end gap-4'>
+            <Button
+              onClick={() => setOpen(false)}
+              variant='outline'
+              className='px-6'
+            >
+              Cancel
+            </Button>
+            <Button
+              className='px-6 bg-admin-theme hover:bg-admin-theme/90'
+              type='submit'
+              disabled={isPending}
+            >
               {isPending ? 'Saving...' : 'Save'}
             </Button>
           </div>

@@ -2,7 +2,7 @@ import { offCampus } from "./offCampusInterface";
 
 export interface Student {
   code?: string;
-  name: string;
+  fullName: string;
   gender: string;
   avatar: string;
   status: string;
@@ -20,4 +20,12 @@ export interface Student {
   email: string;
   residenceStatus: number;
   offCampus: offCampus | undefined;
+  provinceId: number;
+  districtId: number;
+  wardId: number;
+  classId: number;
+  majorId: number;
+  contractStatus: number;
+  academicYear: string;
+
 }

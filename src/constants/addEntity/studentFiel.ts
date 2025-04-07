@@ -1,22 +1,29 @@
-import { Student } from '@/schemaValidations/student.schema';
+import { Student } from '@/interface/studentInterface';
+
 export interface StudentField {
   key: keyof Student | 'index';
   label: string;
-  option?:string[];
+  option: boolean;
 }
+
+
 export const studentFiels: StudentField[] = [
-  { key: 'code', label: 'MSSV' },
-  { key: 'gender', label: 'Giới tính' , option:['Nam','Nữ','Khác']},
-  { key: 'dateOfBirth', label: 'Ngày sinh' },
-  { key: 'fullName', label: 'Họ và tên' },
-  { key: 'email', label: 'Email' },
-  { key: 'phone', label: 'Số điện thoại' },
-  { key: 'provinceId', label: 'Tỉnh' },
-  { key: 'districtId', label: 'Huyện' },
-  { key: 'wardId', label: 'Xã' },
-  { key: 'classId', label: 'Lớp' },
-  { key: 'majorId', label: 'Mã ngành' },
-  { key: 'residenceStatus', label: 'Trạng thái', option:['Ngoại trú', 'Nội trú', 'Ở nhà', 'Khác'] },
-  { key: 'academicYear', label: 'Năm học' },
-];
-export type StudentFieldKey = StudentField['key'];
+    { key: 'code', label: 'MSSV', option: false },
+    { key: 'gender', label: 'Giới tính', option: true },
+    { key: 'dateOfBirth', label: 'Ngày sinh', option: false },
+    { key: 'fullName', label: 'Họ và tên', option: false },
+    { key: 'email', label: 'Email', option: false },
+    { key: 'phone', label: 'Số điện thoại', option: false },
+    { key: 'provinceId', label: 'Tỉnh', option: true },
+    { key: 'districtId', label: 'Huyện', option: true },
+    { key: 'wardId', label: 'Xã', option: true },
+    { key: 'classId', label: 'Lớp', option: true },
+    { key: 'majorId', label: 'Mã ngành', option: false },
+    {
+      key: 'residenceStatus',
+      label: 'Trạng thái',
+      option: true
+    },
+    { key: 'academicYear', label: 'Năm học', option: false },
+  ];
+  export type StudentFieldKey = StudentField['key'];

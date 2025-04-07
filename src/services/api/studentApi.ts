@@ -69,8 +69,6 @@ export const fetchContract = async () => {
 };
 
 export const createStudent = async (studentData: StudentCreateBody) => {
-  console.log('studentData', studentData);
-
   const response = await apiClient.post(`/students`, studentData);
   const data = response.data.data;
   return data;

@@ -32,7 +32,6 @@ export const fetchStudentsPaging = async ({
     `/students/get-paging?${params.toString()}`,
   );
   const data = response.data.data;
-  console.log('Dữ liệu từ API:', data); // Log dữ liệu từ API
   const result = studentsPagingSchema.safeParse(data);
   if (!result.success) {
     console.error('Chi tiết lỗi validate dữ liệu:', JSON.stringify(result.error.format(), null, 2));
