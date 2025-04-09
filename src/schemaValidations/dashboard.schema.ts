@@ -30,7 +30,7 @@ export const DashboardBody = z.object({
 export type DashboardBodyType = z.TypeOf<typeof DashboardBody>;
 
 export const LayoutBody = z.object({
-    full_name: z.string(),
+    fullName: z.string(),
     avatar: z.string(),
     notifications: z.array(
         z.object({

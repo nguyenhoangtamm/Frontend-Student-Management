@@ -8,7 +8,7 @@ import { ContractSchema } from '@/schemaValidations/contract.schema';
 import { StudentCreateBody } from '@/schemaValidations/student.schema';
 
 export async function fetchDashboard() {
-  const response = await apiClient.get(`/student/dashboard`);
+  const response = await apiClient.get(`/students/dashboard`);
   const data = response.data.data;
   const result = DashboardBody.safeParse(data);
   if (!result.success) {
@@ -22,7 +22,7 @@ export async function fetchDashboard() {
   }
 }
 export const fetchNotifications = async () => {
-  const response = await apiClient.get(`/student/notifications`);
+  const response = await apiClient.get(`/students/notifications`);
   const data = response.data.data;
   const result = data;
   if (!result.success) {
@@ -34,7 +34,7 @@ export const fetchNotifications = async () => {
   }
 };
 export const fetchHeader = async () => {
-  const response = await apiClient.get(`/student/header-info`);
+  const response = await apiClient.get(`/students/header-info`);
   const data = response.data.data;
   const result = LayoutBody.safeParse(data);
   if (!result.success) {
@@ -46,7 +46,7 @@ export const fetchHeader = async () => {
   }
 };
 export const fetchProfile = async () => {
-  const response = await apiClient.get(`/student/profile`);
+  const response = await apiClient.get(`/students/profile`);
   const data = response.data.data;
   const result = StudentProfileBody.safeParse(data);
   if (!result.success) {
@@ -58,7 +58,7 @@ export const fetchProfile = async () => {
   return result.data;
 };
 export const fetchContract = async () => {
-  const response = await apiClient.get(`/student/contract`);
+  const response = await apiClient.get(`/students/contract`);
   const data = response.data.data;
   const result = ContractSchema.safeParse(data);
   if (!result.success) {

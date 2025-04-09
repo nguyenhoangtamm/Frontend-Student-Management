@@ -42,7 +42,7 @@ export default function Header() {
                         notifications={dataSend.notifications}
                     />
                     <UserProfile
-                        name={dataSend.full_name}
+                        name={dataSend.fullName}
                         userImage={dataSend.avatar}
                     />
                 </div>
