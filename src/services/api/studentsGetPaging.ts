@@ -19,8 +19,8 @@ export const fetchStudentsPaging = async ({
   residenceStatus?: number;
 }) => {
   const params = new URLSearchParams({
-    page: page.toString(),
-    perPage: perPage.toString(),
+    pageNumber: page.toString(),
+    pageSize: perPage.toString(),
     ...(keyword && { keyword }),
     ...(provinceId && { provinceId: provinceId }),
     ...(districtId && { districtId: districtId }),

@@ -1,14 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   fetchDormitoriesPaging,
-
   fetchDormitoryBySlug,
-
   fetchListDormitories,
   fetchReviewsOfDormitory,
-} from '../api/domainarieApi';
+} from '../api/dormitoryApi';
 
-export const useDormitory = (slug:string) => {
+export const useDormitory = (slug: string) => {
   return useQuery({
     queryKey: ['Dormitory', slug],
     queryFn: async () => fetchDormitoryBySlug(slug),
@@ -33,7 +31,7 @@ export const useDormitoriesPaging = ({
   rating,
   price,
   sortBy,
-  sortOrder
+  sortOrder,
 }: {
   page: number;
   perPage: number;
@@ -58,7 +56,7 @@ export const useDormitoriesPaging = ({
       rating,
       price,
       sortBy,
-      sortOrder
+      sortOrder,
     ],
     queryFn: async () =>
       fetchDormitoriesPaging({
@@ -71,7 +69,7 @@ export const useDormitoriesPaging = ({
         rating,
         price,
         sortBy,
-        sortOrder
+        sortOrder,
       }),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });
@@ -82,4 +80,4 @@ export const useReviewsOfDormitory = (id: number) => {
     queryFn: async () => fetchReviewsOfDormitory(id),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });
-}
+};

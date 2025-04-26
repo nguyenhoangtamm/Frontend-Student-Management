@@ -7,7 +7,7 @@ interface IProps {
   stats: StatProps[];
 }
 
-export default function StatsCards({ stats }: IProps) {
+export default function StatsCards({ stats }: any) {
   const conunt = stats.length;
   if (conunt === 0) return null;
   return (

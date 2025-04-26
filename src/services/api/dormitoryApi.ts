@@ -18,7 +18,7 @@ export const fetchDormitory = async () => {
 };
 
 export const fetchDormitoryBySlug = async (slug: string) => {
-  const response = await apiClient.get(`/dormitory/${slug}`);
+  const response = await apiClient.get(`/dormitories/get-by-slug/${slug}`);
   const data = response.data.data;
   const result = Dormitory.safeParse(data);
   if (!result.success) {
@@ -63,8 +63,8 @@ export const fetchDormitoriesPaging = async ({
   sortOrder?: string;
 }) => {
   const params = new URLSearchParams({
-    page: page.toString(),
-    perPage: perPage.toString(),
+    pageNumber: page.toString(),
+    pageSize: perPage.toString(),
     ...(keyword && { keyword }),
     ...(provinceId && { provinceId }),
     ...(districtId && { districtId }),
@@ -76,9 +76,9 @@ export const fetchDormitoriesPaging = async ({
   });
 
   const response = await apiClient.get(
-    `/dormitories/paging?${params.toString()}`,
+    `/dormitories/pagination?${params.toString()}`,
   );
-  const data = response.data.data.data;
+  const data = response.data.data;
   const result = DormitoriesPaginationSchema.safeParse(data);
   if (!result.success) {
     console.error('Lỗi validate dữ liệu:', result.error.format());
@@ -88,9 +88,8 @@ export const fetchDormitoriesPaging = async ({
 };
 
 export const fetchReviewsOfDormitory = async (dormitoryId: number) => {
-  const response = await apiClient.get(`/dormitory/${dormitoryId}/reviews`);
+  const response = await apiClient.get(`/dormitories/${dormitoryId}/reviews`);
   const data = response.data.data;
-  console.log('data', data);
   const result = DormitoryReviews.safeParse(data);
   if (!result.success) {
     console.error('Lỗi validate dữ liệu:', result.error.format());
