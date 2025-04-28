@@ -15,7 +15,7 @@ import { studentsStatistics } from '@/constants/chart/student';
 import { pieChartColors } from '@/constants/chart/color/pieChart';
 import { IFilter } from '@/interface/filter/filter';
 import { studentFiels } from '@/constants/addEntity/studentFiel';
-import DataTable from '@/components/admin/student/StudentTable';
+import DataTable from './student-table';
 
 
 const filters: IFilter[] = [
