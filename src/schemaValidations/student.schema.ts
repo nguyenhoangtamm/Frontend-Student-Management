@@ -1,3 +1,4 @@
+import { createStudent } from './../services/api/studentApi';
 import { z } from 'zod';
 import { paginationSchema } from './pagination';
 
@@ -50,3 +51,8 @@ export const StudentCreateBody = z.object({
 });
 
 export type StudentCreateBody = z.infer<typeof StudentCreateBody>;
+
+export const createStudentSchema = z.object({
+  data: StudentCreateBody,
+});
+export type CreateStudentResponse = z.infer<typeof createStudentSchema>;

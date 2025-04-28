@@ -2,7 +2,6 @@
 
 import AddModal from '@/components/admin/modals/AddModal';
 import SearchBar from '@/components/admin/ui/SearchBar';
-import DataTable from '@/components/admin/ui/table/Table';
 
 import React from 'react';
 import { IdCard, User, School, CheckCircle } from 'lucide-react';
@@ -16,6 +15,7 @@ import { studentsStatistics } from '@/constants/chart/student';
 import { pieChartColors } from '@/constants/chart/color/pieChart';
 import { IFilter } from '@/interface/filter/filter';
 import { studentFiels } from '@/constants/addEntity/studentFiel';
+import DataTable from '@/components/admin/student/StudentTable';
 
 
 const filters: IFilter[] = [

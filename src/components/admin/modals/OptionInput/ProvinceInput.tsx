@@ -11,10 +11,10 @@ export default function ProvinceInput({
 }) {
   const [options, setOptions] = useState<{ name: string; id: number }[]>([]);
   const { data } = useProvinces();
-  console.log('data', data);
+  // console.log('data', data);
   useEffect(() => {
     if (data) {
-      setOptions(data.provinces);
+      setOptions(data);
     }
   }, [data]);
   return (

@@ -3,7 +3,6 @@ import { Button } from 'antd';
 import { MoreVertical, Trash2 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
-import DeleteModal from '../../modals/DeleteModal';
 import {
   Table,
   TableBody,

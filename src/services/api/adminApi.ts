@@ -13,7 +13,7 @@ export const fetchAdminStatus = async () => {
 };
 
 export const fetchStudentsStatistics = async () => {
-    const response = await apiClient.get(`/admin/students/statistics`);
+    const response = await apiClient.get(`/admin/students/get-statistics`);
     const data = response.data.data;
     const result = studentsStatisticsSchema.safeParse(data);
     if (!result.success) {
