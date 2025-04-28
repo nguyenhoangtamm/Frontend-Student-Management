@@ -1,6 +1,5 @@
 'use client';
 
-import AddModal from '@/components/admin/modals/AddModal';
 import SearchBar from '@/components/admin/ui/SearchBar';
 
 import React from 'react';
@@ -16,6 +15,7 @@ import { pieChartColors } from '@/constants/chart/color/pieChart';
 import { IFilter } from '@/interface/filter/filter';
 import { studentFiels } from '@/constants/addEntity/studentFiel';
 import DataTable from './student-table';
+import AddModal from './add-modal';
 
 
 const filters: IFilter[] = [

@@ -5,7 +5,7 @@ import {
 import apiClient from './apiClient';
 import { StudentProfileBody } from '@/schemaValidations/profile.schema';
 import { ContractSchema } from '@/schemaValidations/contract.schema';
-import { StudentCreateBody } from '@/schemaValidations/student.schema';
+import { CreateStudentType } from '@/schemaValidations/student.schema';
 
 export async function fetchDashboard() {
   const response = await apiClient.get(`/students/dashboard`);
@@ -68,7 +68,7 @@ export const fetchContract = async () => {
   return result.data;
 };
 
-export const createStudent = async (studentData: StudentCreateBody) => {
+export const createStudent = async (studentData: CreateStudentType) => {
   const response = await apiClient.post(`/students`, studentData);
   const data = response.data.data;
   return data;

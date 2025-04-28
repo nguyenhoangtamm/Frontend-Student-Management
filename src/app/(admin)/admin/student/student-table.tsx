@@ -46,7 +46,6 @@ export default function DataTable() {
 
   const [selectedRows, setSelectedRows] = React.useState<number[]>([]);
   const [isOpenDelete, setOpenDelete] = React.useState(false);
-  const [viewButton, setViewButton] = React.useState('View More');
   const [deleteData, setDeleteData] = useState<{ id: number; name: string }>({
     id: 0,
     name: '',

@@ -1,4 +1,3 @@
-import { createStudent } from './../services/api/studentApi';
 import { z } from 'zod';
 import { paginationSchema } from './pagination';
 
@@ -53,6 +52,15 @@ export const StudentCreateBody = z.object({
 export type StudentCreateBody = z.infer<typeof StudentCreateBody>;
 
 export const createStudentSchema = z.object({
-  data: StudentCreateBody,
+  code: z.string().max(255).nonempty("Mã sinh viên là bắt buộc"),
+  fullName: z.string().max(255).nonempty("Họ và tên là bắt buộc"),
+  gender: z.number().min(0, "Giới tính phải lớn hơn hoặc bằng 0").max(2, "Giới tính phải nhỏ hơn hoặc bằng 2"),
+  dateOfBirth: z.string().nonempty("Ngày sinh là bắt buộc"),
+  phoneNumber: z.string().max(15).nonempty("Số điện thoại là bắt buộc"),
+  email: z.string().email("Định dạng email không hợp lệ").max(255).nonempty("Email là bắt buộc"),
+  classId: z.number().nonnegative("ID lớp phải là số không âm"),
+  majorId: z.number().optional(),
+  academicYear: z.string().min(1).optional(),
+  birthplace: z.string().max(255).optional(),
 });
-export type CreateStudentResponse = z.infer<typeof createStudentSchema>;
+export type CreateStudentType = z.infer<typeof createStudentSchema>;

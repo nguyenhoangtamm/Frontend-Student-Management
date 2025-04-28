@@ -1,11 +1,10 @@
-
-import { ProvinceSchemas } from '@/schemaValidations/province.schema';
+import { MajorSchemas } from '@/schemaValidations/major.schema';
 import apiClient from './apiClient';
 
-export const fetchProvinces = async () => {
-  const response = await apiClient.get('/provinces/get-all');
+export const fetchMajor = async () => {
+  const response = await apiClient.get('/majors/get-all');
   const data = response.data.data;
-  const result = ProvinceSchemas.safeParse(data);
+  const result = MajorSchemas.safeParse(data);
   if (!result.success) {
     console.error('Lỗi validate dữ liệu:', result.error.format());
     throw new Error('Dữ liệu không hợp lệ');
