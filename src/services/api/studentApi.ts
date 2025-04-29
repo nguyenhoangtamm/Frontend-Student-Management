@@ -5,7 +5,7 @@ import {
 import apiClient from './apiClient';
 import { StudentProfileBody } from '@/schemaValidations/profile.schema';
 import { ContractSchema } from '@/schemaValidations/contract.schema';
-import { CreateStudentType } from '@/schemaValidations/student.schema';
+import { CreateStudentType, detailStudent } from '@/schemaValidations/student.schema';
 
 export async function fetchDashboard() {
   const response = await apiClient.get(`/students/dashboard`);
@@ -69,7 +69,34 @@ export const fetchContract = async () => {
 };
 
 export const createStudent = async (studentData: CreateStudentType) => {
-  const response = await apiClient.post(`/students`, studentData);
+  const response = await apiClient.post(`/students/create`, studentData);
   const data = response.data.data;
   return data;
+};
+export const deleteStudent = async (studentId: number) => {
+  const response = await apiClient.post(`/students/delete/${studentId}`);
+  const data = response.data.data;
+  return data;
+};
+
+export const editStudent = async (
+  studentId: number,
+  studentData: CreateStudentType,
+) => {
+  const response = await apiClient.post(
+    `/students/edit/${studentId}`,
+    studentData,
+  );
+  const data = response.data.data;
+  return data;
+};
+export const fetchStudentById = async (studentId: number) => {
+  const response = await apiClient.get(`/students/get-by-id/${studentId}`);
+  const data = response.data.data;
+  const result = detailStudent.safeParse(data);
+  if (!result.success) {
+    console.error('Lỗi validate dữ liệu:', JSON.stringify(result.error.format(), null, 2));
+    throw new Error(`Dữ liệu không hợp lệ: ${JSON.stringify(result.error.format(), null, 2)}`);
+  }
+  return result.data;
 };

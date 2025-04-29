@@ -20,13 +20,6 @@ import { useMajor } from '@/services/hooks/useMajor';
 
 export default function AddModal() {
   const [open, setOpen] = useState(false);
-  // const { mutate: createStudent, isPending } = useCreateStudent();
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.target as HTMLFormElement);
-  //   const studentData = Object.fromEntries(formData);
-  //   createStudent(studentData as StudentCreateBody);
-  // };
   const createStudentMutation = useCreateStudentMutation();
 
   //province
@@ -60,14 +53,14 @@ export default function AddModal() {
     defaultValues: {
       code: "",
       fullName: "",
-      gender:undefined,
+      gender: undefined,
       dateOfBirth: "",
       phoneNumber: "",
       email: "",
       classId: undefined,
       majorId: undefined,
       academicYear: "",
-      birthplace: "",
+      provinceId: undefined,
     },
   });
   const onSubmit = async (values: CreateStudentType) => {
@@ -79,17 +72,19 @@ export default function AddModal() {
       });
       reset();
       setOpen(false);
-    } catch (error: any) {
-      toast.success(
-        error?.response?.data?.message, {
-        description: "Thông báo",
-      });
-      // handleErrorApi({
-      //   error,
-      //   setError: form.setError,
-      // });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message, {
+          description: "Thông báo",
+        });
+      }
     }
-  };
+    // handleErrorApi({
+    //   error,
+    //   setError: form.setError,
+    // });
+  }
+
 
   const reset = () => {
     form.reset();
@@ -116,9 +111,12 @@ export default function AddModal() {
           </DialogHeader>
           <Form {...form}>
             <form
+              id="create-student-form"
               onSubmit={form.handleSubmit(onSubmit)}
               onReset={reset}
-              className='p-4'>
+              className='p-4'
+            >
+
               <div className='grid grid-cols-2 gap-6'>
                 <FormField
                   control={form.control}
@@ -170,22 +168,25 @@ export default function AddModal() {
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                         <Label htmlFor="gender">Giới tính</Label>
                         <div className="col-span-3 w-full space-y-2">
-                          <Select
+                            <Select
                             value={field.value?.toString()}
                             onValueChange={(value) => {
-                              field.onChange(value);
+                              const parsed = parseInt(value);
+                              if (!isNaN(parsed)) {
+                              field.onChange(parsed);
+                              }
                             }}
-                          >
+                            >
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder="Chọn giới tính" />
+                              <SelectValue placeholder="Chọn giới tính" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="male">Nam</SelectItem>
-                              <SelectItem value="female">Nữ</SelectItem>
+                              <SelectItem key="0" value="0">Nam</SelectItem>
+                              <SelectItem key="1" value="1">Nữ</SelectItem>
                             </SelectContent>
-                          </Select>
+                            </Select>
                           <FormMessage />
                         </div>
                       </div>
@@ -256,7 +257,7 @@ export default function AddModal() {
                 />
                 <FormField
                   control={form.control}
-                  name="birthplace"
+                  name="provinceId"
                   render={({ field }) => (
                     <FormItem>
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
@@ -398,13 +399,14 @@ export default function AddModal() {
               <Button
                 className='px-6 bg-admin-theme hover:bg-admin-theme/90'
                 type='submit'
+                form="create-student-form"
               >
                 Save
               </Button>
             </div>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog >
 
     </>
   );

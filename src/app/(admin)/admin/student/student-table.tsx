@@ -14,7 +14,8 @@ import {
 import { studentColumns } from '@/constants/table/studentColumns';
 import { useStudentsPaging } from '@/services/hooks/useStudentPagination';
 import { Student } from '@/schemaValidations/student.schema';
-import DeleteModal from '@/components/admin/modals/DeleteModal';
+import DeleteModal from './delete-modal';
+import EditModal from './edit-modal';
 
 const statusColors = {
   Active: 'bg-green-500',
@@ -23,15 +24,24 @@ const statusColors = {
 };
 
 export default function DataTable() {
+  const [isEditOpen, setEditOpen] = useState(false);
+  const [selectId, setDeleteId] = useState<number | undefined>(undefined);
   const [page, setPage] = useState(1);
-
-  const { data, isLoading } = useStudentsPaging({ page, perPage: 5 });
+  const [hasMore, setHasMore] = useState(true);
+  const { data, isLoading ,refetch} = useStudentsPaging({ page, perPage: 5 });
   const [isFetching, setIsFetching] = useState(false);
   const [tableData, setTableData] = useState<Student[]>([]);
   const observer = useRef<IntersectionObserver | null>(null);
+
+  const handleEdit = (id: number) => {
+    setDeleteId(id);
+    setEditOpen(true);
+
+  }
+
   const lastRowRef = useCallback(
     (node: Element | null) => {
-      if (isLoading || isFetching) return;
+      if (isLoading || isFetching || !hasMore) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
@@ -41,7 +51,7 @@ export default function DataTable() {
       });
       if (node) observer.current.observe(node);
     },
-    [isLoading, isFetching],
+    [isLoading, isFetching, hasMore],
   );
 
   const [selectedRows, setSelectedRows] = React.useState<number[]>([]);
@@ -52,11 +62,21 @@ export default function DataTable() {
   });
   useEffect(() => {
     if (data?.data) {
-      setTableData((prev) => [...prev, ...data.data]);
+      if (data.data.length === 0) {
+        setHasMore(false); // Không còn dữ liệu để fetch
+      } else {
+        setTableData((prev) => {
+          if (prev.length === data.data.length) {
+            return [...data.data]; // Thay thế nếu kích thước không đổi
+          }
+          return [...prev, ...data.data]; // Chèn thêm nếu kích thước thay đổi
+        });
+        setHasMore(true); // Vẫn còn dữ liệu
+      }
       setIsFetching(false);
     }
   }, [data]);
-
+  console.log('tableData', tableData);
   const handleSelectAll = () => {
     if (selectedRows.length === tableData.length) {
       setSelectedRows([]);
@@ -145,7 +165,7 @@ export default function DataTable() {
                       <span
                         className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full   ${statusColors[
                           item[col.key] as keyof typeof statusColors
-                          ]
+                        ]
                           }`}
                       >
                         {item[col.key]}
@@ -165,13 +185,13 @@ export default function DataTable() {
                 >
                   <Button
                     style={{ border: 'none' }}
-                    href={'student/' + item.id}
+                    onClick={() => handleEdit(item.id)}
                   >
                     <MdEdit size={16} />
                   </Button>
                   <Button
                     style={{ border: 'none' }}
-                    onClick={() => handleDelete(index)}
+                    onClick={() => handleDelete(item.id)}
                   >
                     <Trash2 size={16} />
                   </Button>
@@ -191,6 +211,9 @@ export default function DataTable() {
             <span className='loading loading-bars loading-xl'></span>
           </>
         )}
+        {!hasMore && (
+          <p className="text-center text-gray-500 mt-4">Không còn dữ liệu để hiển thị</p>
+        )}
       </div>
       {/* <p className='p-3 text-gray-600'>{tableData.length} students</p> */}
       <DeleteModal
@@ -198,6 +221,13 @@ export default function DataTable() {
         setOpen={setOpenDelete}
         data={deleteData}
       />
+      <EditModal
+        id={selectId}
+        open={isEditOpen}
+        setOpen={setEditOpen} 
+        onSubmitSuccess={refetch}
+
+        />
       {/* <div className='mt-4 flex justify-center'>
         <Button
           type='primary'
