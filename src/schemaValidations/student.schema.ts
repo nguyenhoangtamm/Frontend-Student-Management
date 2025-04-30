@@ -8,7 +8,7 @@ const studentPage = z.object({
   gender: z.number(),
   dateOfBirth: z.string().nullable(),
   email: z.string().email().nullable(),
-  phone: z.string().nullable(),
+  phoneNumber: z.string().nullable(),
   provinceId: z.number().nullable(),
   districtId: z.number().nullable(),
   wardId: z.number().nullable(),
@@ -16,6 +16,7 @@ const studentPage = z.object({
   majorId: z.number().nullable(),
   residenceStatus: z.number().nullable(),
   academicYear: z.string().nullable(),
+  
 });
 
 const studentsPagingSchema = z.object({
@@ -97,21 +98,17 @@ export type EditStudentType = z.infer<typeof editStudentSchema>;
 
 export const detailStudent = z.object({
   id: z.number(),
-  code: z.string().max(255).nonempty('Mã sinh viên là bắt buộc'),
-  fullName: z.string().max(255).nonempty('Họ và tên là bắt buộc'),
-  gender: z
-    .number()
-    .min(0, 'Giới tính phải lớn hơn hoặc bằng 0')
-    .max(2, 'Giới tính phải nhỏ hơn hoặc bằng 2'),
-  dateOfBirth: z.string().nonempty('Ngày sinh là bắt buộc'),
-  phoneNumber: z.string().max(15).nonempty('Số điện thoại là bắt buộc'),
-  email: z
-    .string()
-    .email('Định dạng email không hợp lệ')
-    .max(255)
-    .nonempty('Email là bắt buộc'),
-  classId: z.number().nonnegative('ID lớp phải là số không âm'),
+  code: z.string(),
+  fullName: z.string(),
+  gender: z.number(),
+  dateOfBirth: z.string(),
+  phoneNumber: z.string(),
+  email: z.string(),
+  classId: z.number(),
   majorId: z.number().optional(),
-  academicYear: z.string().min(1).optional(),
-  provinceId: z.number().nonnegative('ID tỉnh phải là số không âm'),
+  academicYear: z.string().optional(),
+  provinceId: z.number().optional().nullable(),
+  districtId: z.number().optional().nullable(),
+  wardId: z.number().nullable(),
+  residenceStatus: z.number(),
 });
