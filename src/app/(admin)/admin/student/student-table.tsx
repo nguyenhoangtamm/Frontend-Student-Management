@@ -16,6 +16,8 @@ import { useStudentsPaging } from '@/services/hooks/useStudentPagination';
 import { Student } from '@/schemaValidations/student.schema';
 import DeleteModal from './delete-modal';
 import EditModal from './edit-modal';
+import AddModal from './add-modal';
+import { FaSearch } from 'react-icons/fa';
 
 const statusColors = {
   Active: 'bg-green-500',
@@ -32,6 +34,7 @@ export default function DataTable() {
   const [isFetching, setIsFetching] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [tableData, setTableData] = useState<Student[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   // const observer = useRef<IntersectionObserver | null>(null);
 
   const handleEdit = (id: number) => {
@@ -97,133 +100,166 @@ export default function DataTable() {
   };
   // console.log("observerRef", observerRef);
   // console.log("lastRowRef", lastRowRef);
+  const handleSearch = (keyword: string) => {
+    setSearchTerm(keyword);
+    const filteredData = data?.data.filter((item) =>
+      Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(keyword.toLowerCase()),
+      ),
+    );
+    setTableData(filteredData || []);
+  }
   return (
     <>
-      <div
-        className='table-container'
-        style={{ maxHeight: '500px', overflow: 'auto' }}
-      >
-        <Table className='w-full   text-center border-collapse'>
-          <TableHeader>
-            <TableRow className='text-gray-600 '>
-              {/* Cột checkbox - Cố định bên trái */}
-              <TableHead className='p-3 text-center sticky left-0 bg-white z-10 border-r'>
-                <input
-                  className={'cursor-pointer'}
-                  type='checkbox'
-                  onChange={handleSelectAll}
-                  checked={selectedRows.length === tableData.length}
-                />
-              </TableHead>
 
-              {/* {columns.map((col, colKey) => (
+      <div className='flex   justify-between items-center'>
+        <AddModal onSubmitSuccess={refetch} />
+        <div className="flex items-center space-x-2 border rounded-full px-4 py-2 w-1/3 justify-end">
+          {/* <FilterTable filter={filters} /> */}
+          <input
+            type="text"
+            placeholder={`Search student...`}
+            className="w-full outline-none"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+
+          />
+          <Button
+            type='primary'
+            onClick={() => handleSearch(searchTerm)}
+            className='rounded-full bg-admin-theme text-white'
+          >
+            <FaSearch className="text-gray-500 text-white" />
+          </Button>
+        </div>
+      </div>
+      <div className='bg-white p-6 rounded-2xl shadow-md border border-gray-200'>
+
+        <div
+          className='table-container'
+          style={{ maxHeight: '500px', overflow: 'auto' }}
+        >
+          <Table className='w-full   text-center border-collapse'>
+            <TableHeader>
+              <TableRow className='text-gray-600 '>
+                {/* Cột checkbox - Cố định bên trái */}
+                <TableHead className='p-3 text-center sticky left-0 bg-white z-10 border-r'>
+                  <input
+                    className={'cursor-pointer'}
+                    type='checkbox'
+                    onChange={handleSelectAll}
+                    checked={selectedRows.length === tableData.length}
+                  />
+                </TableHead>
+
+                {/* {columns.map((col, colKey) => (
               <TableHead key={colKey} className='p-3 text-center'>
                 {col}
               </TableHead>
             ))} */}
-              {studentColumns.map((col) => (
-                <TableHead key={col.key} className='p-3 text-center'>
-                  {col.label}
-                </TableHead>
-              ))}
-
-              <TableHead className='p-3 text-center sticky right-0 bg-white z-10 border-l'>
-                Actions
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {tableData.map((item, index) => (
-              <TableRow
-                key={item.id}
-              >
-                {/* Cột checkbox - Cố định bên trái */}
-                <TableCell className='p-3 text-center sticky left-0 bg-white z-10 border-r '>
-                  <input
-                    className={'cursor-pointer'}
-                    type='checkbox'
-                    checked={selectedRows.includes(index)}
-                    onChange={() => handleSelectRow(index)}
-                  />
-                </TableCell>
-
                 {studentColumns.map((col) => (
-                  <TableCell
-                    key={col.key}
-                    className='p-3 text-center min-w-32 '
-                  >
-                    {col.label === 'Status' &&
-                      col.key !== 'index' &&
-                      statusColors[item[col.key] as keyof typeof statusColors] ? (
-                      <span
-                        className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full   ${statusColors[
-                          item[col.key] as keyof typeof statusColors
-                        ]
-                          }`}
-                      >
-                        {item[col.key]}
-                      </span>
-                    ) : (
-                      <span className=' text-center'>
-                        {col.key === 'index' ? index + 1 : item[col.key]}
-                      </span>
-                    )}
-                  </TableCell>
+                  <TableHead key={col.key} className='p-3 text-center'>
+                    {col.label}
+                  </TableHead>
                 ))}
 
-                {/* Cột Actions - Cố định bên phải */}
-                <TableCell
-                  className='p-3 text-center sticky right-0 bg-white z-10 border-l'
-                  style={{ minWidth: '180px' }}
-                >
-                  <Button
-                    style={{ border: 'none' }}
-                    onClick={() => handleEdit(item.id)}
-                  >
-                    <MdEdit size={16} />
-                  </Button>
-                  <Button
-                    style={{ border: 'none' }}
-                    onClick={() => handleDelete(item.id)}
-                  >
-                    <Trash2 size={16} />
-                  </Button>
-                  <Button style={{ border: 'none' }}>
-                    <MoreVertical size={16} />
-                  </Button>
-                </TableCell>
+                <TableHead className='p-3 text-center sticky right-0 bg-white z-10 border-l'>
+                  Actions
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        {isFetching && (
-          <>
-            <span className='loading loading-bars loading-xl'></span>
-            <span className='loading loading-bars loading-xl'></span>
-            <span className='loading loading-bars loading-xl'></span>
-            <span className='loading loading-bars loading-xl'></span>
-          </>
-        )}
-        {!hasMore && (
-          <p className="text-center text-gray-500 mt-4">Không còn dữ liệu để hiển thị</p>
-        )}
-      </div>
-      {/* <p className='p-3 text-gray-600'>{tableData.length} students</p> */}
-      <DeleteModal
-        isOpen={isOpenDelete}
-        setOpen={setOpenDelete}
-        id={deleteData ? deleteData : 0}
-        onSubmitSuccess={handleRefetch}
-      />
-      <EditModal
-        id={selectId}
-        open={isEditOpen}
-        setOpen={setEditOpen}
-        onSubmitSuccess={handleRefetch}
+            </TableHeader>
 
-      />
-      {/* <div className='mt-4 flex justify-center'>
+            <TableBody>
+              {tableData.map((item, index) => (
+                <TableRow
+                  key={item.id}
+                >
+                  {/* Cột checkbox - Cố định bên trái */}
+                  <TableCell className='p-3 text-center sticky left-0 bg-white z-10 border-r '>
+                    <input
+                      className={'cursor-pointer'}
+                      type='checkbox'
+                      checked={selectedRows.includes(index)}
+                      onChange={() => handleSelectRow(index)}
+                    />
+                  </TableCell>
+
+                  {studentColumns.map((col) => (
+                    <TableCell
+                      key={col.key}
+                      className='p-3 text-center min-w-32 '
+                    >
+                      {col.label === 'Status' &&
+                        col.key !== 'index' &&
+                        statusColors[item[col.key] as keyof typeof statusColors] ? (
+                        <span
+                          className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full   ${statusColors[
+                            item[col.key] as keyof typeof statusColors
+                          ]
+                            }`}
+                        >
+                          {item[col.key]}
+                        </span>
+                      ) : (
+                        <span className=' text-center'>
+                          {col.key === 'index' ? index + 1 : item[col.key]}
+                        </span>
+                      )}
+                    </TableCell>
+                  ))}
+
+                  {/* Cột Actions - Cố định bên phải */}
+                  <TableCell
+                    className='p-3 text-center sticky right-0 bg-white z-10 border-l'
+                    style={{ minWidth: '180px' }}
+                  >
+                    <Button
+                      style={{ border: 'none' }}
+                      onClick={() => handleEdit(item.id)}
+                    >
+                      <MdEdit size={16} />
+                    </Button>
+                    <Button
+                      style={{ border: 'none' }}
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      <Trash2 size={16} />
+                    </Button>
+                    <Button style={{ border: 'none' }}>
+                      <MoreVertical size={16} />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          {isFetching && (
+            <>
+              <span className='loading loading-bars loading-xl'></span>
+              <span className='loading loading-bars loading-xl'></span>
+              <span className='loading loading-bars loading-xl'></span>
+              <span className='loading loading-bars loading-xl'></span>
+            </>
+          )}
+          {!hasMore && (
+            <p className="text-center text-gray-500 mt-4">Không còn dữ liệu để hiển thị</p>
+          )}
+        </div>
+        {/* <p className='p-3 text-gray-600'>{tableData.length} students</p> */}
+        <DeleteModal
+          isOpen={isOpenDelete}
+          setOpen={setOpenDelete}
+          id={deleteData ? deleteData : 0}
+          onSubmitSuccess={handleRefetch}
+        />
+        <EditModal
+          id={selectId}
+          open={isEditOpen}
+          setOpen={setEditOpen}
+          onSubmitSuccess={handleRefetch}
+
+        />
+        {/* <div className='mt-4 flex justify-center'>
         <Button
           type='primary'
           onClick={handleViewMore}
@@ -232,6 +268,7 @@ export default function DataTable() {
           {viewButton}
         </Button>
       </div> */}
+      </div>
     </>
   );
 }

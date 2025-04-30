@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useCreateStudentMutation } from '@/services/hooks/useStudent';
+import { Button } from '@/components/ui/button';
 import { createStudentSchema, CreateStudentType } from '@/schemaValidations/student.schema';
 import { useProvinces } from '@/services/hooks/useProvince';
 import { useStudentClass } from '@/services/hooks/useStudentClass';
@@ -17,8 +17,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useMajor } from '@/services/hooks/useMajor';
 
+type AddModalProps = {
+  onSubmitSuccess: () => void;
+};
 
-export default function AddModal() {
+export default function AddModal({onSubmitSuccess}: AddModalProps) {
   const [open, setOpen] = useState(false);
   const createStudentMutation = useCreateStudentMutation();
 
@@ -72,7 +75,7 @@ export default function AddModal() {
       });
       reset();
       setOpen(false);
-      window.location.reload();
+      onSubmitSuccess();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message, {
@@ -169,25 +172,25 @@ export default function AddModal() {
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                         <Label htmlFor="gender">Giới tính</Label>
                         <div className="col-span-3 w-full space-y-2">
-                            <Select
+                          <Select
                             value={field.value?.toString()}
                             onValueChange={(value) => {
                               const parsed = parseInt(value);
                               if (!isNaN(parsed)) {
-                              field.onChange(parsed);
+                                field.onChange(parsed);
                               }
                             }}
-                            >
+                          >
                             <FormControl>
                               <SelectTrigger>
-                              <SelectValue placeholder="Chọn giới tính" />
+                                <SelectValue placeholder="Chọn giới tính" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
                               <SelectItem key="0" value="0">Nam</SelectItem>
                               <SelectItem key="1" value="1">Nữ</SelectItem>
                             </SelectContent>
-                            </Select>
+                          </Select>
                           <FormMessage />
                         </div>
                       </div>
