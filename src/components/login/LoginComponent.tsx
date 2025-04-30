@@ -26,13 +26,15 @@ export default function LoginComponent() {
 
   async function handleLogin(values: LoginBodyType) {
     const isAdmin = await login(values);
-    toast.success('Đăng nhập thành công!');
     if (!error) {
-        if (isAdmin) {
-            router.push(routes.admin.owerview);
-        } else {
-            router.push(routes.user.dashboard);
-        }
+      toast.success('Đăng nhập thành công!');
+
+      if (isAdmin) {
+
+        router.push(routes.admin.owerview);
+      } else {
+        router.push(routes.user.dashboard);
+      }
     }
   }
 

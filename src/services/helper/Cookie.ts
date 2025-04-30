@@ -6,3 +6,7 @@ export async function getCookieValue(cookieName: string): Promise<string | undef
     const cookie = cookieStore.get(cookieName)
     return cookie?.value
 }
+export async function deleteCookie(cookieName: string): Promise<void> {
+    const cookieStore = await cookies()
+    cookieStore.delete(cookieName)
+}

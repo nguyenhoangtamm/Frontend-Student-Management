@@ -95,15 +95,14 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
     const onSubmit = async (values: EditStudentType) => {
         if (editStudentMutation.isPending) return;
         try {
-            const result = await editStudentMutation.mutateAsync(values);
-            toast.success(result?.message, {
-                description: "Thông báo",
-            });
+            await editStudentMutation.mutateAsync(values);
+            toast.success('Đăng nhập thành công!');
+
             reset();
             setOpen(false);
-          
+
             onSubmitSuccess(); // Làm mới bảng ProjectTable
-       
+
 
         } catch (error: unknown) {
             if (error instanceof Error) {
