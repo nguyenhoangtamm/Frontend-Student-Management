@@ -3,25 +3,29 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useDeleteStudentMutation } from '@/services/hooks/useStudent';
 import React from 'react';
 
-interface dataDelete {
-    id: number;
-    name: string;
-}
+// interface dataDelete {
+//     id: number;
+//     name: string;
+// }
 interface EventModalProps {
-    data: dataDelete;
+    id: number;
     isOpen: boolean;
     setOpen: (s: boolean) => void;
+    onSubmitSuccess: () => void;
+
 }
 export default function DeleteModal(props: EventModalProps) {
     const deleteStudentMutation = useDeleteStudentMutation();
 
-    const data = props.data;
+    const id = props.id;
 
     const { isOpen, setOpen } = props;
 
     const handleDelete = () => {
-        deleteStudentMutation.mutate(data.id);
+        deleteStudentMutation.mutate(id);
         setOpen(false);
+        props.onSubmitSuccess();
+
     };
 
     const handleCancel = () => {
@@ -37,7 +41,7 @@ export default function DeleteModal(props: EventModalProps) {
                     <DialogDescription>Bạn có chắc chắn muốn xóa sinh viên này không?</DialogDescription>
                 </DialogHeader>
 
-
+                {/* 
                 <div>
 
                     <div>
@@ -48,7 +52,7 @@ export default function DeleteModal(props: EventModalProps) {
                         <span>Name: </span>
                         {data.name}
                     </div>
-                </div>
+                </div> */}
 
                 <DialogFooter>
                     <Button onClick={handleCancel} className="btn-cancel">

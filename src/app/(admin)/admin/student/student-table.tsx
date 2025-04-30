@@ -1,7 +1,7 @@
 'use client';
 import { Button } from 'antd';
 import { MoreVertical, Trash2 } from 'lucide-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 import {
   Table,
@@ -28,7 +28,7 @@ export default function DataTable() {
   const [selectId, setDeleteId] = useState<number | undefined>(undefined);
   // const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const { data, refetch } = useStudentsPaging({ page:1, perPage: 5000 });
+  const { data, refetch } = useStudentsPaging({ page: 1, perPage: 5000 });
   const [isFetching, setIsFetching] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
   const [tableData, setTableData] = useState<Student[]>([]);
@@ -62,10 +62,7 @@ export default function DataTable() {
 
   const [selectedRows, setSelectedRows] = React.useState<number[]>([]);
   const [isOpenDelete, setOpenDelete] = React.useState(false);
-  const [deleteData, setDeleteData] = useState<{ id: number; name: string }>({
-    id: 0,
-    name: '',
-  });
+  const [deleteData, setDeleteData] = useState<number | undefined>(undefined);
   useEffect(() => {
     if (data?.data) {
       if (data.data.length === 0) {
@@ -94,12 +91,9 @@ export default function DataTable() {
         : [...prev, index],
     );
   };
-  const handleDelete = (index: number) => {
+  const handleDelete = (id: number) => {
     setOpenDelete(true);
-    setDeleteData({
-      id: tableData[index].id ? tableData[index].id : 0,
-      name: tableData[index].fullName ? tableData[index].fullName : '',
-    });
+    setDeleteData(id);
   };
   // console.log("observerRef", observerRef);
   // console.log("lastRowRef", lastRowRef);
@@ -219,7 +213,8 @@ export default function DataTable() {
       <DeleteModal
         isOpen={isOpenDelete}
         setOpen={setOpenDelete}
-        data={deleteData}
+        id={deleteData ? deleteData : 0}
+        onSubmitSuccess={handleRefetch}
       />
       <EditModal
         id={selectId}

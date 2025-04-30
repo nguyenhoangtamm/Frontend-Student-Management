@@ -72,6 +72,7 @@ export default function AddModal() {
       });
       reset();
       setOpen(false);
+      window.location.reload();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message, {
