@@ -112,3 +112,50 @@ export type DormitoriesPaginationType = z.infer<
 export type LinksPaginationType = z.infer<typeof LinksPaginationSchema>;
 export type DormitoryReviewType = z.infer<typeof DormitoryReview>;
 export type DormitoryReviewsType = z.infer<typeof DormitoryReviews>;
+
+export const createDormitorySchema = z.object({
+  name: z.string().max(255).nonempty('Tên ký túc xá là bắt buộc'),
+  address: z.string().max(255).nonempty('Địa chỉ là bắt buộc'),
+  wardId: z.number().nonnegative('ID phường/xã phải là số không âm'),
+  districtId: z.number().nonnegative('ID quận/huyện phải là số không âm'),
+  provinceId: z.number().nonnegative('ID tỉnh/thành phố phải là số không âm'),
+  ownerName: z.string().max(50).nonempty('Tên chủ sở hữu là bắt buộc'),
+  phoneNumber: z.string().max(30).nonempty('Số điện thoại là bắt buộc'),
+  description: z.string().optional(),
+  content: z.string().optional(),
+  status: z.number().nonnegative('Trạng thái là bắt buộc'),
+});
+export type CreateDormitoryType = z.infer<typeof createDormitorySchema>;
+
+export const editDormitorySchema = z.object({
+  id: z.number(),
+  name: z.string().max(255).nonempty('Tên ký túc xá là bắt buộc'),
+  address: z.string().max(255).nonempty('Địa chỉ là bắt buộc'),
+  wardId: z.number().nonnegative('ID phường/xã phải là số không âm'),
+  districtId: z.number().nonnegative('ID quận/huyện phải là số không âm'),
+  provinceId: z.number().nonnegative('ID tỉnh/thành phố phải là số không âm'),
+  ownerName: z.string().max(50).nonempty('Tên chủ sở hữu là bắt buộc'),
+  phoneNumber: z.string().max(30).nonempty('Số điện thoại là bắt buộc'),
+  description: z.string().optional(),
+  content: z.string().optional(),
+  status: z.number().nonnegative('Trạng thái là bắt buộc'),
+});
+export type EditDormitoryType = z.infer<typeof editDormitorySchema>;
+
+export const detailDormitory = z.object({
+  id: z.number(),
+  name: z.string(),
+  address: z.string(),
+  wardId: z.number(),
+  districtId: z.number(),
+  provinceId: z.number(),
+  ownerName: z.string(),
+  phoneNumber: z.string(),
+  description: z.string().optional(),
+  content: z.string().optional(),
+  status: z.number(),
+  fullAddress: z.string().optional().nullable(),
+  longitude: z.number().optional().nullable(),
+  latitude: z.number().optional().nullable(),
+});
+export type DetailDormitoryType = z.infer<typeof detailDormitory>;

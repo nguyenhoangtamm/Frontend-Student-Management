@@ -1,4 +1,5 @@
 import {
+  CreateDormitoryType,
   DormitoriesName,
   DormitoriesPaginationSchema,
   Dormitory,
@@ -96,4 +97,10 @@ export const fetchReviewsOfDormitory = async (dormitoryId: number) => {
     throw new Error('Dữ liệu không hợp lệ');
   }
   return result.data ?? [];
+};
+
+export const createDormitoryApi = async (data: CreateDormitoryType) => {
+  const response = await apiClient.post('/dormitories/create', data);
+  const result = response.data.data;
+return result;
 };

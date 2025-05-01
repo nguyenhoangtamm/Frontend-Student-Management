@@ -1,10 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+  createDormitoryApi,
   fetchDormitoriesPaging,
   fetchDormitoryBySlug,
   fetchListDormitories,
   fetchReviewsOfDormitory,
 } from '../api/dormitoryApi';
+import { CreateDormitoryType } from '@/schemaValidations/dormitory.schema';
 
 export const useDormitory = (slug: string) => {
   return useQuery({
@@ -79,5 +81,17 @@ export const useReviewsOfDormitory = (id: number) => {
     queryKey: ['ReviewsOfDormitory', id],
     queryFn: async () => fetchReviewsOfDormitory(id),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
+  });
+};
+export const useCreateDormitoryMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (dormitoryData: CreateDormitoryType) =>
+      createDormitoryApi(dormitoryData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['Dormitories'],
+      });
+    },
   });
 };
