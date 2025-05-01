@@ -10,8 +10,9 @@ import {
   FaBell,
 } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { redirect, usePathname } from "next/navigation";
-import Link from "next/link";
+import { redirect, usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/services/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 const sidebarItems = [
   {
@@ -59,6 +60,14 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
+  const { logout, error } = useAuth();
+  const router = useRouter();
+  const handleLout = async () => {
+    await logout();
+    if (!error) {
+      router.push('/login');
+    }
+  };
   const currentPath = usePathname();
 
   // Xác định mục active ngay từ đầu để tránh bị nhảy về 0
@@ -91,13 +100,15 @@ const Sidebar = () => {
           changeMenu={() => handleClick(index, item.link)}
         />
       ))}
-      <Link
-        href={"/login"}
-        className="mt-auto flex items-center gap-3 p-3 text-gray-600 cursor-pointer hover:text-red-500 no-underline"
+      <Button
+        onClick={handleLout}
+        className="mt-auto flex items-center gap-3 p-3 text-gray-500 cursor-pointer hover:text-red-500 no-underline text-base font-medium"
+        variant="ghost"
+        size="sm"
       >
         <BiLogOut />
         <span>Logout</span>
-      </Link>
+      </Button>
     </nav>
   );
 };

@@ -111,4 +111,5 @@ export const detailStudent = z.object({
   districtId: z.number().optional().nullable(),
   wardId: z.number().nullable(),
   residenceStatus: z.number(),
+  fullAddress: z.string().optional().nullable(),
 });
