@@ -41,7 +41,7 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
   // districts
   const [selectedProvinceId, setSelectedProvinceId] = useState<number | undefined>(undefined);
   const [districtOptions, setDistrictOptions] = useState<{ name: string; id: number }[]>([]);
-  const { data: districtsData } = useDistricts(selectedProvinceId ?? 0);
+  const { data: districtsData } = useDistricts({ provinceId: selectedProvinceId ?? 0, enabled: Boolean(selectedProvinceId) });
   useEffect(() => {
     if (districtsData) {
       setDistrictOptions(districtsData);
@@ -51,8 +51,7 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
   // wards
   const [selectedDistrictId, setSelectedDistrictId] = useState<number | undefined>(undefined);
   const [wardOptions, setWardOptions] = useState<{ name: string; id: number }[]>([]);
-  const { data: wardsData } = useWards(selectedDistrictId ?? 0);
-  console.log(wardsData);
+  const { data: wardsData } = useWards({ districtId: selectedDistrictId ?? 0, enabled: Boolean(selectedDistrictId) });
   useEffect(() => {
     if (wardsData) {
       setWardOptions(wardsData);

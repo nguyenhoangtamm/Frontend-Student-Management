@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchDistricts, fetchDistrictById } from '../api/districtApi';
 
-export const useDistricts = (provinceId: number) => {
+export const useDistricts = ({provinceId, enabled}:{provinceId: number, enabled:boolean}) => {
   return useQuery({
     queryKey: ['Districts', provinceId],
     queryFn: async () => fetchDistricts(provinceId),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
+    enabled: enabled,
   });
 };
 

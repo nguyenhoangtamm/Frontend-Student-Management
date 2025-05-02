@@ -17,6 +17,8 @@ import { DormitoryPaginationType } from '@/schemaValidations/dormitory.schema';
 // import EditModal from './edit-modal';
 import AddModal from './add-modal';
 import { FaSearch } from 'react-icons/fa';
+import EditModal from './edit-modal';
+import DeleteModal from './delete-modal';
 
 // Define dormitory columns for the table
 const dormitoryColumns = [
@@ -234,18 +236,18 @@ export default function DataTable() {
             <p className="text-center text-gray-500 mt-4">Không còn dữ liệu để hiển thị</p>
           )}
         </div>
-        {/* <DeleteModal
+        <DeleteModal
           isOpen={isOpenDelete}
           setOpen={setOpenDelete}
           id={deleteData ? deleteData : 0}
           onSubmitSuccess={handleRefetch}
-        /> */}
-        {/* <EditModal
+        />
+        <EditModal
           id={selectId}
           open={isEditOpen}
           setOpen={setEditOpen}
           onSubmitSuccess={handleRefetch}
-        /> */}
+        />
       </div>
     </>
   );

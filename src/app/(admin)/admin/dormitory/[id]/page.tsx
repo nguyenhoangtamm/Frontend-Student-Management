@@ -1,6 +1,7 @@
-import Student from "@/components/admin/dormitory/dormitoryDetail/Dormitory";
-import React from "react";
+import DormitoryInfo from "./dormitory-info";
 
-export default function page() {
-  return <Student />;
+export default function page({ params }: { params: { id: string } }) {
+  return (
+    <DormitoryInfo id={Number(params.id)} />
+  );
 }

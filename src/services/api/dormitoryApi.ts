@@ -1,4 +1,8 @@
 import {
+  detailDormitory,
+  EditDormitoryType,
+} from './../../schemaValidations/dormitory.schema';
+import {
   CreateDormitoryType,
   DormitoriesName,
   DormitoriesPaginationSchema,
@@ -102,5 +106,25 @@ export const fetchReviewsOfDormitory = async (dormitoryId: number) => {
 export const createDormitoryApi = async (data: CreateDormitoryType) => {
   const response = await apiClient.post('/dormitories/create', data);
   const result = response.data.data;
-return result;
+  return result;
+};
+export const editDormitoryApi = async (id: number, data: EditDormitoryType) => {
+  const response = await apiClient.post(`/dormitories/edit/${id}`, data);
+  const result = response.data.data;
+  return result;
+};
+export const deleteDormitoryApi = async (id: number) => {
+  const response = await apiClient.post(`/dormitories/delete/${id}`);
+  const result = response.data.data;
+  return result;
+};
+export const getDormitoryById = async (id: number) => {
+  const response = await apiClient.get(`/dormitories/get-by-id/${id}`);
+  const data = response.data.data;
+  const result = detailDormitory.safeParse(data);
+  if (!result.success) {
+    console.error('Lỗi validate dữ liệu:', result.error.format());
+    throw new Error('Dữ liệu không hợp lệ');
+  }
+  return result.data;
 };

@@ -88,9 +88,9 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             form.setValue('classId', detailStudent.classId);
             form.setValue('majorId', detailStudent.majorId);
             form.setValue('academicYear', detailStudent.academicYear);
-            form.setValue('provinceId', detailStudent.provinceId);
+            form.setValue('provinceId', detailStudent.provinceId ?? 0);
         }
-    }, [detailStudent, form]);
+    }, [detailStudent, form,open]);
 
     const onSubmit = async (values: EditStudentType) => {
         if (editStudentMutation.isPending) return;

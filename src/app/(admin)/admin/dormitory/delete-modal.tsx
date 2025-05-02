@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { useDeleteStudentMutation } from '@/services/hooks/useStudent';
+import { useDeleteDormitoryMutation } from '@/services/hooks/useDomitory';
 import React from 'react';
 
 // interface dataDelete {
@@ -14,17 +14,15 @@ interface EventModalProps {
     onSubmitSuccess: () => void;
 
 }
-export default function DeleteModal(props: EventModalProps) {
-    const deleteStudentMutation = useDeleteStudentMutation();
+export default function DeleteModal({ id, isOpen, setOpen, onSubmitSuccess }: EventModalProps) {
+    const deleteDormitoryMutation = useDeleteDormitoryMutation();
 
-    const id = props.id;
 
-    const { isOpen, setOpen } = props;
 
     const handleDelete = async () => {
-        await deleteStudentMutation.mutateAsync(id); // Chờ mutation hoàn tất
+        await deleteDormitoryMutation.mutateAsync(id); // Chờ mutation hoàn tất
         setOpen(false);
-        props.onSubmitSuccess();
+        onSubmitSuccess();
 
     };
 
@@ -37,7 +35,7 @@ export default function DeleteModal(props: EventModalProps) {
         >
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Xóa sinh viên</DialogTitle>
+                    <DialogTitle>Xóa nhà trọ</DialogTitle>
                     <DialogDescription>Bạn có chắc chắn muốn xóa sinh viên này không?</DialogDescription>
                 </DialogHeader>
 

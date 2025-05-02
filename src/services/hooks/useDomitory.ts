@@ -1,12 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createDormitoryApi,
+  deleteDormitoryApi,
+  editDormitoryApi,
   fetchDormitoriesPaging,
   fetchDormitoryBySlug,
   fetchListDormitories,
   fetchReviewsOfDormitory,
+  getDormitoryById,
 } from '../api/dormitoryApi';
-import { CreateDormitoryType } from '@/schemaValidations/dormitory.schema';
+import {
+  CreateDormitoryType,
+  EditDormitoryType,
+} from '@/schemaValidations/dormitory.schema';
 
 export const useDormitory = (slug: string) => {
   return useQuery({
@@ -93,5 +99,44 @@ export const useCreateDormitoryMutation = () => {
         queryKey: ['Dormitories'],
       });
     },
+  });
+};
+export const useEditDormitoryMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (dormitoryData: EditDormitoryType) =>
+      editDormitoryApi(dormitoryData.id, dormitoryData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['Dormitories'],
+      });
+    },
+  });
+};
+
+export const useDeleteDormitoryMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: number) => deleteDormitoryApi(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['Dormitories'],
+      });
+    },
+  });
+};
+
+export const useDormitoryById = ({
+  id,
+  enabled,
+}: {
+  id: number;
+  enabled: boolean;
+}) => {
+  return useQuery({
+    queryKey: ['DormitoryById', id],
+    queryFn: async () => getDormitoryById(id),
+    staleTime: 1000 * 60 * 5, // Cache 5 phút
+    enabled,
   });
 };
