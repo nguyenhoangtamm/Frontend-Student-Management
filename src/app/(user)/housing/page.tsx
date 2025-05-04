@@ -5,6 +5,7 @@ import RightListItem from '@/components/housing/rightListItem';
 import PropertyFilter from '@/components/housing/PropertyFilter';
 import SearchBar from '@/components/admin/ui/SearchBar';
 import { Clock, DollarSign, Home, MapPin } from 'lucide-react';
+import { FaSearch } from 'react-icons/fa';
 
 const HousingPage = () => {
   const rightDataSend = [
@@ -21,39 +22,20 @@ const HousingPage = () => {
       name: 'The Estella',
     },
   ];
-  
 
-  const filterOptions = [
-    {
-      id: 'price',
-      label: 'Giá',
-      icon: DollarSign, // Replace with the actual icon from Lucide
-      option: ['Giá: Thấp đến Cao', 'Giá: Cao đến Thấp'],
-    },
-    {
-      id: 'newest',
-      label: 'Mới nhất',
-      icon: Clock, // Replace with the actual icon from Lucide
-      option: ['Mới nhất', 'Cũ nhất'],
-    },
-    {
-      id: 'location',
-      label: 'Vị trí',
-      icon: MapPin, // Replace with the actual icon from Lucide
-      option: ['Gần trường học', 'Gần bệnh viện', 'Gần chợ'],
-    },
-    {
-      id: 'amenities',
-      label: 'Tiện ích trọ',
-      icon: Home, // Replace with the actual icon from Lucide
-      option: ['Ban công', 'Phòng tập gym', 'Hồ bơi', 'Chỗ đậu xe'],
-    },
-  ];
-  
+
   return (
     <div>
       {/* <PropertyFilter /> */}
-      <SearchBar filters={filterOptions} name='a' />
+      <div className="flex items-center space-x-2 border rounded-full px-4 py-2 w-1/3 justify-end">
+        {/* <FilterTable filter={filters} /> */}
+        <input
+          type="text"
+          placeholder={`Search dormitory...`}
+          className="w-full outline-none"
+        />
+        <FaSearch className="text-gray-500" />
+      </div>
       <div className='mt-4 container mx-auto'>
         <div className='grid grid-cols-12 gap-4'>
           {/* Cột chiếm 8 phần (2/3) */}

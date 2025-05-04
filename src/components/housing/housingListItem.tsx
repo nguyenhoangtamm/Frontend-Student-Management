@@ -17,7 +17,7 @@ export default function HousingListItem() {
   if (error) return <p>Error: {error.message}</p>;
   if (!pagesItem) return <p>No data available</p>;
 
-  const totalPages = pagesItem.lastPage;
+  const totalPages = pagesItem.pagination.total;
   const displayedData = pagesItem.data;
   return (
     <div className=''>

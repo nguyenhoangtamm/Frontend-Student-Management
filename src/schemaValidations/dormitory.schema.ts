@@ -141,6 +141,8 @@ export const editDormitorySchema = z.object({
   description: z.string().optional(),
   content: z.string().optional(),
   status: z.number().nonnegative('Trạng thái là bắt buộc'),
+  longitude: z.number().optional(),
+  latitude: z.number().optional(),
 });
 export type EditDormitoryType = z.infer<typeof editDormitorySchema>;
 

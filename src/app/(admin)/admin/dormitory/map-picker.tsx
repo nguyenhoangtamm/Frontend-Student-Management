@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Button, Modal } from 'react-bootstrap';
+import { MapPin } from 'lucide-react';
 
 interface MapPickerProps {
     setLongitude: (lng: number) => void;
@@ -66,7 +67,9 @@ export default function MapPicker({ setLatitude, setLongitude }: MapPickerProps)
 
     return (
         <div>
-            <Button onClick={openModal}>Select Location</Button>
+            <Button onClick={openModal} className="p-2">
+                <MapPin size={20} />
+            </Button>
             <Modal show={showModal} onHide={closeModal} size="lg" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Select Location on Map</Modal.Title>

@@ -15,7 +15,10 @@ import { toast } from 'sonner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useDormitoryById, useEditDormitoryMutation } from '@/services/hooks/useDomitory';
-
+import SunEditor from 'suneditor-react';
+import 'suneditor/dist/css/suneditor.min.css';
+import MapPicker from './map-picker';
+import TextArea from 'antd/es/input/TextArea';
 
 type EditModalProps = {
     id: number | undefined;
@@ -26,12 +29,12 @@ type EditModalProps = {
 
 export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditModalProps) {
     const editDormitoryMutation = useEditDormitoryMutation();
-
     // Fetch dormitory details
     const { data: detailDormitory } = useDormitoryById({
         id: id as number,
         enabled: Boolean(id),
     });
+    console.log("detailDormitory", detailDormitory);
     // provinces
     const [provinceOptions, setProvinceOptions] = useState<{ name: string; id: number }[]>([]);
     const { data: provincesData } = useProvinces();
@@ -60,6 +63,8 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
         }
     }, [wardsData]);
 
+    const [longitude, setLongitude] = useState<number | undefined>(undefined);
+    const [latitude, setLatitude] = useState<number | undefined>(undefined);
     const form = useForm<EditDormitoryType>({
         resolver: zodResolver(editDormitorySchema),
         defaultValues: {
@@ -74,8 +79,15 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             description: "",
             content: "",
             status: 1,
+            longitude: undefined,
+            latitude: undefined,
         },
     });
+    useEffect(() => {
+        form.setValue('longitude', longitude);
+        form.setValue('latitude', latitude);
+    }
+        , [longitude, latitude, form]);
     // Update form when detail data is loaded
     useEffect(() => {
         if (detailDormitory) {
@@ -90,12 +102,14 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             form.setValue('description', detailDormitory.description || '');
             form.setValue('content', detailDormitory.content || '');
             form.setValue('status', detailDormitory.status);
-
+            form.setValue('longitude', detailDormitory.longitude ?? undefined);
+            form.setValue('latitude', detailDormitory.latitude ?? undefined);
             // Set selected province and district for cascading dropdowns
             setSelectedProvinceId(detailDormitory.provinceId);
             setSelectedDistrictId(detailDormitory.districtId);
         }
     }, [detailDormitory, form, open]);
+
 
     // Update districtId and wardId when province or district changes
     const handleProvinceChange = (value: string) => {
@@ -138,22 +152,9 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
     const reset = () => {
         form.reset();
     };
-    useEffect(() => {
-        if (open && id) {
-            form.reset(); // Reset form trước khi tải dữ liệu mới
-            setSelectedProvinceId(undefined);
-            setSelectedDistrictId(undefined);
-            setDistrictOptions([]);
-            setWardOptions([]);
-        }
-    }, [open, id, form]);
+   
     return (
-        <Dialog open={open} onOpenChange={(isOpen) => {
-            if (!isOpen) {
-                reset(); // Reset form khi đóng modal
-            }
-            setOpen(isOpen);
-        }}>
+        <Dialog onOpenChange={setOpen} open={open} >
             <DialogContent
                 className="sm:max-w-[800px] max-h-screen overflow-auto"
                 onCloseAutoFocus={() => {
@@ -391,12 +392,118 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name="longitude"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                                            <Label htmlFor="address"> Nhập kinh đô</Label>
+                                            <div className="col-span-3 w-full space-y-2">
+                                                <Input
+                                                    id="longitude"
+                                                    type="number"
+                                                    placeholder="Nhập  Nhập kinh đô"
+                                                    className="w-full"
+                                                    {...field}
+                                                />
+                                                <FormMessage />
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="latitude"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                                            <Label htmlFor="address"> Nhập vĩ độ</Label>
+                                            <div className="col-span-3 w-full space-y-2">
+                                                <Input
+                                                    id="latitude"
+                                                    type="number"
+                                                    placeholder="Nhập  Nhập vĩ độ"
+                                                    className="w-full"
+                                                    {...field}
+                                                />
+                                                <FormMessage />
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="mt-6">
+
+                                <MapPicker
+                                    setLongitude={setLongitude}
+                                    setLatitude={setLatitude}
+                                />
+
+                            </div>
+
+                        </div>
+                        <div className="mt-6">
+                            <FormField
+                                control={form.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <div className="grid grid-cols-8 items-start justify-items-start gap-4">
+                                            <Label htmlFor="description" className="col-span-1">Mô tả ngắn</Label>
+                                            <div className="col-span-7 w-full space-y-2">
+                                                <TextArea
+                                                    id="description"
+                                                    placeholder="Nhập mô tả ngắn về ký túc xá"
+                                                    className="w-full min-h-24"
+                                                    {...field}
+                                                />
+                                                <FormMessage />
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="content"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <div className="grid grid-cols-8 items-start justify-items-start gap-4">
+                                            <Label htmlFor="content" className="col-span-1">Nội dung</Label>
+                                            <div className="col-span-7 w-full space-y-2">
+                                                <SunEditor
+                                                    setContents={field.value || ''} // Gắn giá trị từ react-hook-form
+                                                    onChange={(value) => field.onChange(value)} // Cập nhật giá trị vào react-hook-form
+                                                    placeholder="Nhập nội dung..."
+                                                    setOptions={{
+                                                        height: "300",
+                                                        buttonList: [
+                                                            ['undo', 'redo'],
+                                                            ['bold', 'italic', 'underline', 'strike'],
+                                                            ['list', 'align', 'fontSize', 'fontColor'],
+                                                            ['link', 'image', 'video'],
+                                                        ],
+                                                    }}
+                                                />
+                                                <FormMessage />
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+
+
                         </div>
                         <div className="mt-6">
                             <Button type="submit" className="mr-4">
                                 Lưu thay đổi
                             </Button>
-                            <Button type="reset" variant="outline">
+                            <Button type="reset" variant="outline"
+                                onClick={() => setOpen(false)}
+
+                            >
                                 Hủy bỏ
                             </Button>
                         </div>

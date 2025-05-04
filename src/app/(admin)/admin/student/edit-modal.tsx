@@ -26,7 +26,6 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
     const editStudentMutation = useEditStudentMutation();
     //get student
     const { data: detailStudent } = useDetailStudent(
-
         {
             studentId: id as number,
             enabled: Boolean(id),
@@ -90,7 +89,7 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             form.setValue('academicYear', detailStudent.academicYear);
             form.setValue('provinceId', detailStudent.provinceId ?? 0);
         }
-    }, [detailStudent, form,open]);
+    }, [detailStudent, form, open]);
 
     const onSubmit = async (values: EditStudentType) => {
         if (editStudentMutation.isPending) return;

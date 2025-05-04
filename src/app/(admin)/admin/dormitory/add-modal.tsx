@@ -19,7 +19,7 @@ import { useWards } from '@/services/hooks/useWard';
 import { useCreateDormitoryMutation } from '@/services/hooks/useDomitory';
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
-import MapPicker from './[id]/map-picker';
+import MapPicker from './map-picker';
 
 
 type AddModalProps = {
@@ -62,8 +62,6 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
 
   const [longitude, setLongitude] = useState<number | undefined>(undefined);
   const [latitude, setLatitude] = useState<number | undefined>(undefined);
-  console.log("longitude", longitude);
-  console.log("latitude", latitude);
 
   const form = useForm<CreateDormitoryType>({
     resolver: zodResolver(createDormitorySchema),
@@ -420,7 +418,7 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
                   )}
                 />
               </div>
-              <div>
+              <div className="mt-6">
 
                 <MapPicker
                   setLongitude={setLongitude}
