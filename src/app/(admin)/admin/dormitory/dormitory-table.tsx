@@ -1,6 +1,6 @@
 'use client';
 import { Button } from 'antd';
-import { MoreVertical, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 import {
@@ -180,17 +180,24 @@ export default function DataTable() {
                   {dormitoryColumns.map((col) => (
                     <TableCell
                       key={col.key}
-                      className='p-3 text-center min-w-32 '
+                      className='p-3 text-center min-w-32'
+                      style={{ whiteSpace: 'nowrap' }}
                     >
-                      {col.key === 'status' && 
+                      {col.key === 'status' &&
                         statusColors[item[col.key] as keyof typeof statusColors] ? (
                         <span
-                          className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full ${
-                            statusColors[item[col.key] as keyof typeof statusColors]
-                          }`}
+                          className={`inline-block text-center px-3 py-1 text-white rounded-full ${statusColors[item[col.key] as keyof typeof statusColors]
+                            }`}
                         >
                           {statusLabels[item[col.key] as keyof typeof statusLabels]}
                         </span>
+                      ) : col.key === 'name' ? (
+                        <a
+                          href={`/admin/dormitory/${item.id}`}
+                          className='text-blue-600 font-semibold hover:underline hover:text-blue-800 transition-colors duration-200'
+                        >
+                          {item[col.key as keyof DormitoryPaginationType]}
+                        </a>
                       ) : (
                         <span className='text-center'>
                           {col.key === 'index' ? index + 1 : item[col.key as keyof DormitoryPaginationType]}
@@ -198,8 +205,6 @@ export default function DataTable() {
                       )}
                     </TableCell>
                   ))}
-
-                  {/* Actions column - fixed on the right */}
                   <TableCell
                     className='p-3 text-center sticky right-0 bg-white z-10 border-l'
                     style={{ minWidth: '180px' }}
@@ -216,9 +221,7 @@ export default function DataTable() {
                     >
                       <Trash2 size={16} />
                     </Button>
-                    <Button style={{ border: 'none' }}>
-                      <MoreVertical size={16} />
-                    </Button>
+
                   </TableCell>
                 </TableRow>
               ))}

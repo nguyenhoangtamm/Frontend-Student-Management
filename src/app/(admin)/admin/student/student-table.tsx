@@ -1,6 +1,6 @@
 'use client';
 import { Button } from 'antd';
-import { MoreVertical, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { MdEdit } from 'react-icons/md';
 import {
@@ -187,21 +187,28 @@ export default function DataTable() {
                   {studentColumns.map((col) => (
                     <TableCell
                       key={col.key}
-                      className='p-3 text-center min-w-32 '
+                      className='p-3 text-center'
+                      style={{ whiteSpace: 'nowrap' }}
                     >
                       {col.label === 'Status' &&
                         col.key !== 'index' &&
                         statusColors[item[col.key] as keyof typeof statusColors] ? (
                         <span
-                          className={`inline-block w-24 text-center px-3 py-1 text-white rounded-full   ${statusColors[
+                          className={`inline-block text-center px-3 py-1 text-white rounded-full ${statusColors[
                             item[col.key] as keyof typeof statusColors
-                          ]
-                            }`}
+                          ]}`}
                         >
                           {item[col.key]}
                         </span>
+                      ) : col.key === 'fullName' ? (
+                        <a
+                          href={`/admin/student/${item.id}`}
+                          className='text-blue-500 hover:underline'
+                        >
+                          {item[col.key]}
+                        </a>
                       ) : (
-                        <span className=' text-center'>
+                        <span className='text-center'>
                           {col.key === 'index' ? index + 1 : item[col.key]}
                         </span>
                       )}
@@ -224,9 +231,6 @@ export default function DataTable() {
                       onClick={() => handleDelete(item.id)}
                     >
                       <Trash2 size={16} />
-                    </Button>
-                    <Button style={{ border: 'none' }}>
-                      <MoreVertical size={16} />
                     </Button>
                   </TableCell>
                 </TableRow>

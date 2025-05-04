@@ -69,9 +69,9 @@ export default function Page() {
   return (
     <div className='flex flex-col gap-6 container '>
       <h1 className='text-2xl font-bold'>Student Management: Students</h1>
-      <h4 className='text-gray-600'>Students OverView</h4>
+      {/* <h4 className='text-gray-600'>Students OverView</h4> */}
 
-      <StatsCards stats={stats} />
+      {/* <StatsCards stats={stats} /> */}
       <hr />
       <h4 className='text-gray-600'>Students data</h4>
 

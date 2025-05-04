@@ -1,10 +1,12 @@
 // components/Navbar.tsx
+import { useDashboard } from "@/services/hooks/useStudent";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaSearch, FaBell, FaUserCircle } from "react-icons/fa";
 
-const Navbar = () => {
+export default function Navbar() {
+  const { data } = useDashboard();
   const [search, setSearch] = useState("");
   const handleSearch = (e: any) => {
     setSearch(e.target.value);
@@ -24,15 +26,14 @@ const Navbar = () => {
         />
       </div>
       <Link href={""} className="flex items-center space-x-4 ">
-        <FaBell className="text-gray-500 cursor-pointer" />
 
         <div className="flex items-center space-x-2">
           <FaUserCircle className="text-gray-500" />
-          <span className="font-medium">Ông A Đê Min</span>
+          <span className="font-medium">{data?.fullName}</span>
         </div>
       </Link>
     </div>
   );
-};
+}
 
-export default Navbar;
+
