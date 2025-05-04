@@ -124,6 +124,8 @@ export const createDormitorySchema = z.object({
   description: z.string().optional(),
   content: z.string().optional(),
   status: z.number().nonnegative('Trạng thái là bắt buộc'),
+  longitude: z.number().optional(),
+  latitude: z.number().optional(),
 });
 export type CreateDormitoryType = z.infer<typeof createDormitorySchema>;
 
@@ -159,3 +161,19 @@ export const detailDormitory = z.object({
   latitude: z.number().optional().nullable(),
 });
 export type DetailDormitoryType = z.infer<typeof detailDormitory>;
+
+export const dormitoryLocation = z.object({
+  id: z.number(),
+  name: z.string(),
+  address: z.string(),
+  wardId: z.number(),
+  districtId: z.number(),
+  provinceId: z.number(),
+  ownerName: z.string(),
+  phoneNumber: z.string(),
+  description: z.string().optional(),
+  fullAddress: z.string().optional().nullable(),
+  longitude: z.string().optional().nullable(),
+  latitude: z.string().optional().nullable(),
+});
+export type DormitoryLocationType = z.infer<typeof dormitoryLocation>;

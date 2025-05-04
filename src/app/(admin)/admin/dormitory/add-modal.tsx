@@ -17,8 +17,9 @@ import TextArea from 'antd/es/input/TextArea';
 import { useDistricts } from '@/services/hooks/useDistrict';
 import { useWards } from '@/services/hooks/useWard';
 import { useCreateDormitoryMutation } from '@/services/hooks/useDomitory';
-
-// Create a mutation hook for dormitory creation
+import SunEditor from 'suneditor-react';
+import 'suneditor/dist/css/suneditor.min.css';
+import MapPicker from './[id]/map-picker';
 
 
 type AddModalProps = {
@@ -26,6 +27,7 @@ type AddModalProps = {
 };
 
 export default function AddModal({ onSubmitSuccess }: AddModalProps) {
+
   const [open, setOpen] = useState(false);
   const createDormitoryMutation = useCreateDormitoryMutation();
 
@@ -58,22 +60,34 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
     }
   }, [wardsData]);
 
+  const [longitude, setLongitude] = useState<number | undefined>(undefined);
+  const [latitude, setLatitude] = useState<number | undefined>(undefined);
+  console.log("longitude", longitude);
+  console.log("latitude", latitude);
+
   const form = useForm<CreateDormitoryType>({
     resolver: zodResolver(createDormitorySchema),
     defaultValues: {
       name: "",
       address: "",
-      wardId: 0,
-      districtId: 0,
-      provinceId: 0,
+      wardId: undefined,
+      districtId: undefined,
+      provinceId: undefined,
       ownerName: "",
       phoneNumber: "",
       description: "",
       content: "",
       status: 1, // Default to Active
+      longitude: undefined,
+      latitude: undefined,
     },
   });
 
+  useEffect(() => {
+    form.setValue('longitude', longitude);
+    form.setValue('latitude', latitude);
+  }
+    , [longitude, latitude, form]);
   // Update districtId and wardId when province or district changes
   const handleProvinceChange = (value: string) => {
     const provinceId = parseInt(value);
@@ -197,7 +211,7 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
                         <div className="col-span-3 w-full space-y-2">
                           <Input
                             id="phoneNumber"
-                            type="text"
+                            type="number"
                             placeholder="Nhập số điện thoại"
                             className="w-full"
                             {...field}
@@ -363,6 +377,55 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="longitude"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                        <Label htmlFor="address"> Nhập kinh đô</Label>
+                        <div className="col-span-3 w-full space-y-2">
+                          <Input
+                            id="longitude"
+                            type="number"
+                            placeholder="Nhập  Nhập kinh đô"
+                            className="w-full"
+                            {...field}
+                          />
+                          <FormMessage />
+                        </div>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="latitude"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                        <Label htmlFor="address"> Nhập vĩ độ</Label>
+                        <div className="col-span-3 w-full space-y-2">
+                          <Input
+                            id="latitude"
+                            type="number"
+                            placeholder="Nhập  Nhập vĩ độ"
+                            className="w-full"
+                            {...field}
+                          />
+                          <FormMessage />
+                        </div>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+
+                <MapPicker
+                  setLongitude={setLongitude}
+                  setLatitude={setLatitude}
+                />
               </div>
               <div className="mt-6">
                 <FormField
@@ -393,11 +456,19 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
                       <div className="grid grid-cols-8 items-start justify-items-start gap-4">
                         <Label htmlFor="content" className="col-span-1">Nội dung</Label>
                         <div className="col-span-7 w-full space-y-2">
-                          <TextArea
-                            id="content"
-                            placeholder="Nhập nội dung chi tiết về ký túc xá"
-                            className="w-full min-h-24"
-                            {...field}
+                          <SunEditor
+                            setContents={field.value || ''} // Gắn giá trị từ react-hook-form
+                            onChange={(value) => field.onChange(value)} // Cập nhật giá trị vào react-hook-form
+                            placeholder="Nhập nội dung..."
+                            setOptions={{
+                              height: "300",
+                              buttonList: [
+                                ['undo', 'redo'],
+                                ['bold', 'italic', 'underline', 'strike'],
+                                ['list', 'align', 'fontSize', 'fontColor'],
+                                ['link', 'image', 'video'],
+                              ],
+                            }}
                           />
                           <FormMessage />
                         </div>
