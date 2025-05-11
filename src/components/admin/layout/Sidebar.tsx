@@ -24,7 +24,7 @@ const sidebarItems = [
   {
     icon: <FaUserGraduate />,
     title: "Student",
-    badge: 19,
+    badge: undefined,
     link: "/admin/student",
   },
   {
@@ -36,7 +36,7 @@ const sidebarItems = [
   {
     icon: <FaChartBar />,
     title: "Thống Kê & Báo cáo",
-    badge: 10,
+    badge: undefined,
     link: "/admin/statistic",
   },
   {
