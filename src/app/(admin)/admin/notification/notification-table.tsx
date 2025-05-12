@@ -199,26 +199,33 @@ export default function DataTable() {
                       style={{ whiteSpace: 'nowrap' }}
                     >
                       {col.key === 'type' ? (
-                      <span
-                        className={`inline-block text-center px-3 py-1 text-white rounded-full ${
-                        notificationTypesColors.find((type) => type.id === item[col.key as keyof NotificationType])?.color
-                        }`}
-                      >
-                        {notificationTypes.find((type) => type.id === item[col.key as keyof NotificationType])?.name}
-                      </span>
-                      ) : col.key === 'send' ? (
-                      <span
-                        className={`inline-block text-center px-3 py-1 text-white rounded-full ${
-                        sendStatusColors.find((status) => status.id === (item[col.key as keyof NotificationType] ? 1 : 0))?.color
-                        }`}
-                      >
-                        {item[col.key as keyof NotificationType] ? 'Đã gửi' : 'Chưa gửi'}
-                      </span>
-                      ) : (
-                      <span className='text-center'>
-                        {col.key === 'index' ? index + 1 : item[col.key as keyof NotificationType]}
-                      </span>
-                      )}
+                        <span
+                          className={`inline-block text-center px-3 py-1 text-white rounded-full ${notificationTypesColors.find((type) => type.id === item[col.key as keyof NotificationType])?.color
+                            }`}
+                        >
+                          {notificationTypes.find((type) => type.id === item[col.key as keyof NotificationType])?.name}
+                        </span>
+                      ) :
+                        col.key === 'title' ? (
+                          <a
+                            href={`/admin/notification/${item.id}`}
+                            className='text-blue-600 font-semibold hover:underline hover:text-blue-800 transition-colors duration-200'
+                          >
+                            {item[col.key as keyof NotificationType]}
+                          </a>
+                        )
+                          : col.key === 'send' ? (
+                            <span
+                              className={`inline-block text-center px-3 py-1 text-white rounded-full ${sendStatusColors.find((status) => status.id === (item[col.key as keyof NotificationType] ? 1 : 0))?.color
+                                }`}
+                            >
+                              {item[col.key as keyof NotificationType] ? 'Đã gửi' : 'Chưa gửi'}
+                            </span>
+                          ) : (
+                            <span className='text-center'>
+                              {col.key === 'index' ? index + 1 : item[col.key as keyof NotificationType]}
+                            </span>
+                          )}
                     </TableCell>
                   ))}
                   <TableCell

@@ -31,7 +31,7 @@ export default function NotificationIcon({
           {notifications.map((notification, index) => (
             <Dropdown.Item
               key={index}
-              href={`/notification/${notification.slug}`}
+              href={`/notification/${notification.id}`}
             >
               {notification.title}
             </Dropdown.Item>
