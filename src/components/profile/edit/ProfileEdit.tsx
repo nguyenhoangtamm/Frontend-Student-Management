@@ -1,234 +1,222 @@
 'use client';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ContractSchema, ContractType, SaveContractType } from '@/schemaValidations/contract.schema';
+import { useListDormitoriesName } from '@/services/hooks/useDomitory';
+import { useContract, useSaveContractMutation } from '@/services/hooks/useStudent';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import InputSelector from './InputSelector';
-import { useDormitory } from '@/services/hooks/useDomitory';
-import { InputGroup } from 'react-bootstrap';
-import { DatePicker, Space } from 'antd';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Button } from '@/components/ui/button';
-import { ContractType } from '@/schemaValidations/contract.schema';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 
-const EmptyData = {
-  room: '',
-  price: '',
-  status: 'Active' as 'pending' | 'confirmed' | 'Active',
-  contractStart: '',
-  contractEnd: '',
-  dormitory: {
-    id: 0,
-    name: '',
-    ownerName: '',
-    fullAddress: '',
-    address: '',
-    ward: '',
-    district: '',
-    province: '',
 
-    phoneNumber: '',
-    services: [
-      {
-        name: 'electricity',
-        price: 0,
-        unit: 'đồng',
-      },
-      {
-        name: 'water',
-        price: 0,
-        unit: 'đồng',
-      },
-      {
-        name: 'serviceFee',
-        price: 0,
-        unit: 'đồng',
-      },
-      {
-        name: 'wifi',
-        price: 0,
-        unit: 'đồng',
-      },
-    ],
-  },
-};
-export default function ProfileEdit({ data }: { data?: ContractType }) {
+export default function ProfileEdit() {
   const router = useRouter();
   // State chứa dữ liệu chỉnh sửa
-  const [formData, setFormData] = useState(data || EmptyData);
-  const [showInput, setShowInput] = useState(false);
+  const saveContractMutation = useSaveContractMutation();
 
-  // Giả lập lưu dữ liệu
-  const handleSave = () => {
-    // router.push('/profile'); // Điều hướng về trang chính
-  };
+  // const [showInput, setShowInput] = useState(false);
+  const { data: dataFetch, isFetching, error } = useContract();
 
-  const handleMoreService = () => {
-    setShowInput(!showInput);
-  };
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => {
-      const keys = name.split('.');
-      const updatedData = { ...prevData };
-      let current = updatedData;
-      for (let i = 0; i < keys.length - 1; i++) {
-        current = current[keys[i]];
+  const form = useForm<ContractType>({
+    resolver: zodResolver(ContractSchema),
+    defaultValues: {
+      status: 1,
+      room: '',
+      price: '',
+      dormitoryId: 0,
+    },
+  });
+
+  useEffect(() => {
+    if (dataFetch) {
+      form.setValue('status', dataFetch.status);
+      form.setValue('room', dataFetch.room);
+      form.setValue('price', dataFetch.price);
+      form.setValue('dormitoryId', dataFetch.dormitoryId);
+
+    }
+  }, [dataFetch, form]);
+
+  // dormitory
+  const [dormitoryOptions, setDormitoryOptions] = useState<{ name: string; id: number }[]>([]);
+  const { data: dormitorysData } = useListDormitoriesName();
+  useEffect(() => {
+    if (dormitorysData) {
+      setDormitoryOptions(dormitorysData);
+    }
+  }, [dormitorysData]);
+
+
+  const onSubmit = async (values: SaveContractType) => {
+    if (saveContractMutation.isPending) return;
+    try {
+      await saveContractMutation.mutateAsync(values);
+      toast.success('Cập nhật ký túc xá thành công!', {
+        description: "Thông báo",
+      });
+      reset();
+      router.push('/profile');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message, {
+          description: "Thông báo",
+        });
       }
-      current[keys[keys.length - 1]] = value;
-      return updatedData;
-    });
+    }
   };
+
+  const reset = () => {
+    form.reset();
+  };
+  if (error) {
+    toast.error(error.message, {
+      description: "Thông báo",
+    });
+  }
+  if (isFetching) {
+    return (
+      <div className='container mt-4'>
+        <div className='card p-4 shadow-sm'>
+          <h5 className='fw-bold text-primary'>Chỉnh sửa thông tin ngoại trú</h5>
+          <hr />
+          <div className='text-center'>
+            <p>Đang tải dữ liệu...</p>
+          </div>
+        </div>
+      </div>
+    );
+
+  }
+
   return (
     <div className='container mt-4'>
-      <div className='card p-4 shadow-sm'>
-        <h5 className='fw-bold text-primary'>Chỉnh sửa thông tin ngoại trú</h5>
-        <hr />
-        <div className='row mt-3 mb-3'>
-          <div className='col-md-6'>
-            <label className='form-label'>Trạng thái</label>
-            <select
-              className='form-select'
-              name='status'
-              value={formData?.status}
-              onChange={handleChange}
-            >
-              <option value=''>Ở nhà</option>
-              <option value='confirmed'>Ký túc xá</option>
-              <option value='Active'>Ở trọ</option>
-            </select>
-          </div>
-        </div>
-        <h6 className='fw-bold text-secondary'>Thông tin nhà trọ</h6>
-        <div className='row mt-3'>
-          <div className='col-md-6'>
-            <label className='form-label'>Chủ trọ</label>
-            <input
-              type='text'
-              className='form-control'
-              name='dormitory.ownerName'
-              value={formData?.dormitory.ownerName}
-              placeholder='Nhập tên chủ trọ'
-              onChange={handleChange}
-            />
-          </div>
-          <div className='col-md-6'>
-            <label className='form-label'>Số điện thoại</label>
-            <input
-              type='tel'
-              className='form-control'
-              name='dormitory.phoneNumber'
-              value={formData?.dormitory.phoneNumber}
-              placeholder='Nhập số điện thoại'
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-md-6'>
-            <label className='form-label'>Tỉnh/ Thành phố</label>
-            <input
-              type='text'
-              className='form-control'
-              name='dormitory.province'
-              value={formData?.dormitory.province}
-              placeholder='Nhập tỉnh/thành phố'
-              onChange={handleChange}
-            />
-          </div>
-          <div className='col-md-6'>
-            <label className='form-label'>Thành phố/ huyện</label>
-            <input
-              type='text'
-              className='form-control'
-              name='dormitory.district'
-              value={formData?.dormitory.district}
-              placeholder='Nhập thành phố'
-              onChange={handleChange}
-            />
-          </div>
-        </div>
 
-        <div className='row'>
-          <div className='col-md-6'>
-            <label className='form-label'>Xã/ Phường</label>
-            <input
-              type='text'
-              className='form-control'
-              name='dormitory.ward'
-              value={formData?.dormitory.ward}
-              placeholder='Nhập xã/phường'
-              onChange={handleChange}
-            />
-          </div>
-          <div className='col-md-6'>
-            <label className='form-label'>Địa chỉ</label>
-            <input
-              type='text'
-              className='form-control'
-              name='dormitory.address'
-              value={formData?.dormitory.address}
-              placeholder='Nhập địa chỉ'
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className='mb-3 mt-3'>
-          <label className='form-label'>Địa chỉ</label>
-          <input
-            type='text'
-            className='form-control'
-            name='dormitory.fullAddress'
-            value={formData?.dormitory.fullAddress}
-            placeholder='Nhập địa chỉ'
-            onChange={handleChange}
-          />
-        </div>
-        <h6 className='fw-bold text-secondary mt-4'>Thông tin hợp đồng</h6>
-        <div className='row mt-3'>
-          <div className='col-md-6'>
-            <label className='form-label'>Phòng</label>
-            <input
-              type='text'
-              className='form-control'
-              name='room'
-              value={formData?.room}
-              placeholder='Nhập số phòng'
-              onChange={handleChange}
-            />
-          </div>
-          <div className='col-md-6'>
-            <label className='form-label'>Trạng Thái</label>
-            <br />
-            <input
-              type='text'
-              className='form-control'
-              name='status'
-              value={formData?.status}
-              placeholder='Trạng thái'
-              onChange={handleChange}
-            />
-          </div>
-        </div>
 
-        <h6 className='fw-bold text-secondary mt-4'>Chi phí sinh hoạt</h6>
-        <div className='row mt-3'>
-          <div className='col-md-6'>
-            <label className='form-label'>Phí ngoại trú</label>
-            <input
-              type='number'
-              className='form-control'
-              name='price'
-              value={formData?.price}
-              placeholder='Nhập phí ngoại trú'
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        {showInput && (
+      <Form {...form}>
+        <form
+          id="edit-dormitory-form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          onReset={reset}
+          className='p-4'
+        >
+          <div className='grid gap-6'>
+
+            <div className='card p-4 shadow-sm'>
+              <h5 className='fw-bold text-primary'>Chỉnh sửa thông tin ngoại trú</h5>
+              <hr />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label className='form-label'>Trạng thái</Label>
+                    <Select
+                      value={field.value?.toString()}
+                      onValueChange={(value) => {
+                        const parsed = parseInt(value);
+                        if (!isNaN(parsed)) {
+                          field.onChange(parsed);
+                        }
+                      }}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Chọn trạng thái" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="1">Ký túc xá</SelectItem>
+                        <SelectItem value="2">Ngoại trú</SelectItem>
+                        <SelectItem value="3">Ở nhà</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+
+              />
+              {form.watch('status') == 2 && (
+
+                <>
+                  <h6 className='fw-bold text-secondary'>Nhà trọ</h6>
+                  <FormField
+                    control={form.control}
+                    name="dormitoryId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label className='form-label'>Chọn nhà trọ</Label>
+                        <Select
+                          value={field.value?.toString()}
+                          onValueChange={(value) => {
+                            const parsed = parseInt(value);
+                            if (!isNaN(parsed)) {
+                              field.onChange(parsed);
+                            }
+                          }}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Chọn nhà trọ" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {dormitoryOptions.map((opt) => (
+                              <SelectItem key={opt.id} value={opt.id.toString()}>
+                                {opt.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <h6 className='fw-bold text-secondary mt-4'>Thông tin hợp đồng</h6>
+                  <FormField
+                    control={form.control}
+                    name="room"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label className='form-label'>Phòng</Label>
+                        <FormControl>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Nhập số phòng"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="price"
+                    render={({ field }) => (
+                      <FormItem>
+                        <Label className='form-label'>Phí ngoại trú</Label>
+                        <FormControl>
+                          <input
+                            type="number"
+                            className="form-control"
+                            placeholder="Nhập phí ngoại trú"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
+
+              {/* {showInput && (
           <div className='row mt-3'>
             {formData?.dormitory.services.map((service, index) => (
               <div className='col-md-6' key={index}>
@@ -255,20 +243,34 @@ export default function ProfileEdit({ data }: { data?: ContractType }) {
           >
             {showInput ? 'Ẩn chi tiết' : 'Thêm chi tiết'}
           </button>
-        </div>
+        </div> */}
 
-        <div className='text-end mt-4'>
-          <button
-            className='btn btn-outline-secondary me-2'
-            onClick={() => router.back()}
-          >
-            Hủy
-          </button>
-          <button className='btn btn-primary' onClick={handleSave}>
-            Lưu thay đổi
-          </button>
-        </div>
-      </div>
-    </div>
+            </div>
+
+          </div>
+          <div className="mt-6">
+            <Button type="submit" className="mr-4">
+              Lưu thay đổi
+            </Button>
+            <Button type="reset" variant="outline"
+              className="bg-white text-gray-900 border-gray-300 hover:bg-gray-50"
+              onClick={reset}
+
+            >
+              Đặt lại
+            </Button>
+          </div>
+        </form>
+      </Form>
+
+
+
+
+
+
+
+
+
+    </div >
   );
 }

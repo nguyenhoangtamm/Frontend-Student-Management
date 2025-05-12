@@ -179,3 +179,5 @@ export const dormitoryLocation = z.object({
   latitude: z.string().optional().nullable(),
 });
 export type DormitoryLocationType = z.infer<typeof dormitoryLocation>;
+
+

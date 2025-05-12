@@ -3,6 +3,7 @@ import {
   createDormitoryApi,
   deleteDormitoryApi,
   editDormitoryApi,
+  fetchAllDormitory,
   fetchDormitoriesPaging,
   fetchDormitoryBySlug,
   fetchListDormitories,
@@ -140,3 +141,12 @@ export const useDormitoryById = ({
     enabled,
   });
 };
+
+export const useGetAllDormitory = () => {
+  return useQuery({
+    queryKey: ['Dormitories'],
+    queryFn: async () => fetchAllDormitory(),
+    staleTime: 1000 * 60 * 5, // Cache 5 phút
+  });
+};
+  

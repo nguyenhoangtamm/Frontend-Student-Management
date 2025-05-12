@@ -16,7 +16,6 @@ const studentPage = z.object({
   majorId: z.number().nullable(),
   residenceStatus: z.number().nullable(),
   academicYear: z.string().nullable(),
-  
 });
 
 const studentsPagingSchema = z.object({
@@ -113,3 +112,4 @@ export const detailStudent = z.object({
   residenceStatus: z.number(),
   fullAddress: z.string().optional().nullable(),
 });
+

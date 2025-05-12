@@ -1,6 +1,8 @@
 "use client";
 
+import { useAuth } from "@/services/hooks/useAuth";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 interface UserProfileProps {
@@ -8,6 +10,14 @@ interface UserProfileProps {
     userImage?: string;
 }
 export default function UserProfile({ name, userImage }: UserProfileProps) {
+    const { logout, error } = useAuth();
+    const router = useRouter();
+    const handleLout = async () => {
+        await logout();
+        if (!error) {
+            router.push('/login');
+        }
+    };
     return (
         <Dropdown align="end">
             <Dropdown.Toggle
@@ -45,7 +55,7 @@ export default function UserProfile({ name, userImage }: UserProfileProps) {
             <Dropdown.Menu>
                 <Dropdown.Item href="/profile">Hồ sơ</Dropdown.Item>
                 <Dropdown.Item href="/settings">Đổi mật khẩu</Dropdown.Item>
-                <Dropdown.Item href="#/logout">Đăng xuất</Dropdown.Item>
+                <Dropdown.Item onClick={handleLout}>Đăng xuất</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );

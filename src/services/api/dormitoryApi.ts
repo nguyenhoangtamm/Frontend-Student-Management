@@ -34,7 +34,7 @@ export const fetchDormitoryBySlug = async (slug: string) => {
   return result.data;
 };
 export const fetchListDormitories = async () => {
-  const response = await apiClient.get('/dormitory/list-name');
+  const response = await apiClient.get('/dormitories/get-all');
   const data = response.data.data;
 
   const result = DormitoriesName.safeParse(data);
@@ -122,6 +122,16 @@ export const getDormitoryById = async (id: number) => {
   const response = await apiClient.get(`/dormitories/get-by-id/${id}`);
   const data = response.data.data;
   const result = detailDormitory.safeParse(data);
+  if (!result.success) {
+    console.error('Lỗi validate dữ liệu:', result.error.format());
+    throw new Error('Dữ liệu không hợp lệ');
+  }
+  return result.data;
+};
+export const fetchAllDormitory = async () => {
+  const response = await apiClient.get('/dormitories/get-all');
+  const data = response.data.data;
+  const result = DormitoriesName.safeParse(data);
   if (!result.success) {
     console.error('Lỗi validate dữ liệu:', result.error.format());
     throw new Error('Dữ liệu không hợp lệ');

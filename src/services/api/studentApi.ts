@@ -4,7 +4,7 @@ import {
 } from '@/schemaValidations/dashboard.schema';
 import apiClient from './apiClient';
 import { StudentProfileBody } from '@/schemaValidations/profile.schema';
-import { ContractSchema } from '@/schemaValidations/contract.schema';
+import { ContractSchema, SaveContractType } from '@/schemaValidations/contract.schema';
 import { CreateStudentType, detailStudent } from '@/schemaValidations/student.schema';
 
 export async function fetchDashboard() {
@@ -61,12 +61,19 @@ export const fetchContract = async () => {
   const response = await apiClient.get(`/students/contract`);
   const data = response.data.data;
   const result = ContractSchema.safeParse(data);
+
   if (!result.success) {
-    console.error('Lỗi validate dữ liệu:', result.error.format());
-    throw new Error('Dữ liệu không hợp lệ');
+    console.error('Lỗi validate dữ liệu:', JSON.stringify(result.error.format(), null, 2));
+    throw new Error(`Dữ liệu không hợp lệ: ${JSON.stringify(result.error.format(), null, 2)}`);
   }
   return result.data;
 };
+
+export const saveContract = async (formData: SaveContractType) => {
+  const response = await apiClient.post(`/students/save-contract`, formData);
+  const data = response.data.data;
+  return data;
+}
 
 export const createStudent = async (studentData: CreateStudentType) => {
   const response = await apiClient.post(`/students/create`, studentData);

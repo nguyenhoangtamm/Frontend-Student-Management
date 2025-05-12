@@ -8,11 +8,13 @@ import {
   fetchHeader,
   fetchProfile,
   fetchStudentById,
+  saveContract,
 } from '../api/studentApi';
 import {
   CreateStudentType,
   EditStudentType,
 } from '@/schemaValidations/student.schema';
+import { SaveContractType } from '@/schemaValidations/contract.schema';
 
 export function useHeader() {
   return useQuery({
@@ -50,6 +52,19 @@ export const useContract = () => {
     queryKey: ['contract'],
     queryFn: async () => fetchContract(),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
+  });
+};
+
+export const useSaveContractMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (contractData: SaveContractType) =>
+      saveContract(contractData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['contract'],
+      });
+    },
   });
 };
 
