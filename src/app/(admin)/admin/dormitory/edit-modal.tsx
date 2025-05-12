@@ -30,11 +30,11 @@ type EditModalProps = {
 export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditModalProps) {
     const editDormitoryMutation = useEditDormitoryMutation();
     // Fetch dormitory details
-    const { data: detailDormitory } = useDormitoryById({
+    const { data: detailDormitory, isFetching, error } = useDormitoryById({
         id: id as number,
         enabled: Boolean(id),
     });
-    console.log("detailDormitory", detailDormitory);
+
     // provinces
     const [provinceOptions, setProvinceOptions] = useState<{ name: string; id: number }[]>([]);
     const { data: provincesData } = useProvinces();
@@ -79,8 +79,8 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             description: "",
             content: "",
             status: 1,
-            longitude: undefined,
-            latitude: undefined,
+            longitude: 0,
+            latitude: 0,
         },
     });
     useEffect(() => {
@@ -152,7 +152,23 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
     const reset = () => {
         form.reset();
     };
-   
+    if (error) {
+        toast.error(error.message, {
+            description: "Thông báo",
+        });
+    }
+    if (isFetching) {
+        return (
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent className="sm:max-w-[800px] max-h-screen overflow-auto">
+                    <DialogHeader>
+                        <DialogTitle>Chỉnh sửa ký túc xá</DialogTitle>
+                        <DialogDescription>Đang tải dữ liệu...</DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+        );
+    }
     return (
         <Dialog onOpenChange={setOpen} open={open} >
             <DialogContent

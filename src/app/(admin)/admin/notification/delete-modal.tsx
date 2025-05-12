@@ -1,12 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { useDeleteDormitoryMutation } from '@/services/hooks/useDomitory';
+import { useDeleteNotificationMutation } from '@/services/hooks/useNotification';
 import React from 'react';
 
-// interface dataDelete {
-//     id: number;
-//     name: string;
-// }
 interface EventModalProps {
     id: number;
     isOpen: boolean;
@@ -15,12 +11,10 @@ interface EventModalProps {
 
 }
 export default function DeleteModal({ id, isOpen, setOpen, onSubmitSuccess }: EventModalProps) {
-    const deleteDormitoryMutation = useDeleteDormitoryMutation();
-
-
+    const deleteNotificationMutation = useDeleteNotificationMutation();
 
     const handleDelete = async () => {
-        await deleteDormitoryMutation.mutateAsync(id); // Chờ mutation hoàn tất
+        await deleteNotificationMutation.mutateAsync(id); // Chờ mutation hoàn tất
         setOpen(false);
         onSubmitSuccess();
 
@@ -35,22 +29,9 @@ export default function DeleteModal({ id, isOpen, setOpen, onSubmitSuccess }: Ev
         >
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Xóa nhà trọ</DialogTitle>
-                    <DialogDescription>Bạn có chắc chắn muốn xóa nhà trọ này không?</DialogDescription>
+                    <DialogTitle>Xóa thông báo</DialogTitle>
+                    <DialogDescription>Bạn có chắc chắn muốn xóa thông báo này không?</DialogDescription>
                 </DialogHeader>
-
-                {/* 
-                <div>
-
-                    <div>
-                        <span>Id: </span>
-                        {data.id}
-                    </div>
-                    <div>
-                        <span>Name: </span>
-                        {data.name}
-                    </div>
-                </div> */}
 
                 <DialogFooter>
                     <Button onClick={handleCancel} className="btn-cancel">

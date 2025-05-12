@@ -8,7 +8,7 @@ const TopDormitory = () => {
     data: data,
     isLoading,
     error,
-  } = useDormitoriesPaging({ page:1, perPage: 2, sortBy: 'students', sortOrder: 'desc' });
+  } = useDormitoriesPaging({ page:1, perPage: 20, sortBy: 'students', sortOrder: 'desc' });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   console.log(data);
