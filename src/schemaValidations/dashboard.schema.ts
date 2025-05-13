@@ -23,7 +23,7 @@ export const DashboardBody = z.object({
             slug: z.string(),
             content: z.string(),
             date: z.string(),
-            type: z.string(),
+            type: z.number(),
         })
     ),
 });
