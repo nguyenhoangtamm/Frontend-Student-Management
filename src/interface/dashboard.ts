@@ -1,9 +1,9 @@
 export interface UserInfoProps {
   code: string;
-  full_name: string;
+  fullName: string;
   gender: string;
   email: string;
-  date_of_birth: string;
+  dateOfBirth: string;
   birthplace: string;
   faculty: string;
 }

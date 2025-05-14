@@ -6,10 +6,10 @@ import Image from "next/image";
 import Avatar from "@images/dashboard/avatar.png";
 import { FaUser } from "react-icons/fa6";
 import { Card, CardContent } from "@/components/ui/card";
-import { UserInfoProps } from "@/interface/dashboard";
+import { DashboardBodyType } from "@/schemaValidations/dashboard.schema";
 
 interface UserInfoComponentProps {
-  data: UserInfoProps;
+  data: DashboardBodyType;
   className?: string;
 }
 
@@ -92,7 +92,7 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
           zIndex: 1100,
         }}
       >
-        <FaUser/>
+        <FaUser />
         {/* {isOpen ? <FaUser/> : "Mở"} */}
       </Button>
     </>

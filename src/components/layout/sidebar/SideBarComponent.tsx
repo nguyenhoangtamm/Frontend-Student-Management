@@ -52,11 +52,11 @@ const items: MenuItem[] = [
     children: [
       {
         key: '5',
-        label: <Link href='https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=91415'>Quy định pháp luật</Link>,
+        label: <Link href='https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=91415' target="_blank" rel="noopener noreferrer">Quy định pháp luật</Link>,
       },
       {
         key: '6',
-        label: <Link href='https://www.dthu.edu.vn/dView.aspx?id=2&idmn=2'>Quy định nhà trường</Link>,
+        label: <Link href='https://www.dthu.edu.vn/dView.aspx?id=2&idmn=2' target="_blank" rel="noopener noreferrer">Quy định nhà trường</Link>,
       },
     ],
   },

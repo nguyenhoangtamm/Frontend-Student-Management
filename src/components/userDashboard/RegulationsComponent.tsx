@@ -4,13 +4,13 @@ import univlaw from "@images/dashboard/univlaw.jpg";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function RegulationsComponent () {
+export default function RegulationsComponent() {
   return (
     <div className="card m-1" style={{ flex: 1, padding: "10px" }}>
       <h1>Quy định</h1>
       <div className="row">
         <div className="col-md-6">
-          <Link href="#">
+          <Link href="https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=91415" target="_blank" rel="noopener noreferrer">
             <div
               className="card d-flex justify-content-center align-items-center"
               style={{ marginBottom: "10px", padding: "10px" }}
@@ -21,7 +21,7 @@ export default function RegulationsComponent () {
           </Link>
         </div>
         <div className="col-md-6">
-          <Link href="#">
+          <Link href="https://www.dthu.edu.vn/dView.aspx?id=2&idmn=2" target="_blank" rel="noopener noreferrer">
             <div
               className="card d-flex justify-content-center align-items-center"
               style={{ marginBottom: "10px", padding: "10px" }}

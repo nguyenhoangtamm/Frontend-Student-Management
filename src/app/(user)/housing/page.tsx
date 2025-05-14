@@ -2,9 +2,6 @@
 import React from 'react';
 import HousingListItem from '@/components/housing/housingListItem';
 import RightListItem from '@/components/housing/rightListItem';
-import PropertyFilter from '@/components/housing/PropertyFilter';
-import SearchBar from '@/components/admin/ui/SearchBar';
-import { Clock, DollarSign, Home, MapPin } from 'lucide-react';
 import { FaSearch } from 'react-icons/fa';
 
 const HousingPage = () => {
@@ -22,8 +19,6 @@ const HousingPage = () => {
       name: 'The Estella',
     },
   ];
-
-
   return (
     <div>
       {/* <PropertyFilter /> */}
