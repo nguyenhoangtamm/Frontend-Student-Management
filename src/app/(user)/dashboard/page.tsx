@@ -9,7 +9,7 @@ import EventItem from "@/components/userDashboard/EventItem";
 import { DashboardBodyType } from "@/schemaValidations/dashboard.schema";
 export default function HomePage() {
     const { data: dataSend, isLoading, error } = useDashboard();
-    
+
     if (isLoading) return (
         <DashBoardSkeleton />
 
@@ -28,11 +28,16 @@ export default function HomePage() {
                             <div className='row card-body'>
                                 <div className='col-md-6 text-left'>
                                     <p>
-                                        Hình thức chỗ ở: <strong>Ở trọ</strong>
+                                        Hình thức chỗ ở: <strong>{dataSend?.offCampusInfo.name}</strong>
                                     </p>
-                                    <p className='card-text'>
-                                        Địa chỉ thường trú: <strong>23/p3/caolanh/dongthans</strong>
-                                    </p>
+                                    {
+                                        dataSend?.offCampusInfo.address && (
+                                            <p className='card-text'>
+                                                Địa chỉ: <strong>{dataSend?.offCampusInfo.address}</strong>
+                                            </p>
+                                        )
+                                    }
+
                                     {dataSend?.offCampusInfo.room && (
                                         <p className='card-text'>
                                             Phòng: <strong>{dataSend?.offCampusInfo.room}</strong>
@@ -40,12 +45,23 @@ export default function HomePage() {
                                     )}
                                 </div>
                                 <div className='col-md-6 text-left'>
-                                    <p className='card-text'>
-                                        Trạng thái: <strong className='text-success'>{dataSend?.offCampusInfo.status}</strong>
-                                    </p>
-                                    <p className='card-text'>
-                                        Cập nhật lần cuối: <strong>{dataSend?.offCampusInfo.updatedAt ? new Date(dataSend.offCampusInfo.updatedAt).toLocaleDateString('vi-VN') : 'N/A'}</strong>
-                                    </p>
+                                    {
+                                        dataSend?.offCampusInfo.status && (
+                                            <p className='card-text'>
+                                                Trạng thái: <strong className={dataSend?.offCampusInfo.status === 'Active' ? 'text-success' : 'text-danger'}>{dataSend?.offCampusInfo.status}</strong>
+                                            </p>
+                                        )
+                                    }
+                                    {
+                                        dataSend?.offCampusInfo.updatedAt && (
+                                            <p className='card-text'>
+                                                Cập nhật lần cuối: <strong>{dataSend?.offCampusInfo.updatedAt ? new Date(dataSend.offCampusInfo.updatedAt).toLocaleDateString('vi-VN') : 'N/A'}</strong>
+                                            </p>
+                                        )
+                                    }
+
+
+                                    <p className='card-text'></p>
                                     <Link href='/profile' className='btn btn-link'>
                                         Xem chi tiết
                                     </Link>
