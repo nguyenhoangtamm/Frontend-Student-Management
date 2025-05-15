@@ -126,6 +126,8 @@ export const createDormitorySchema = z.object({
   status: z.number().nonnegative('Trạng thái là bắt buộc'),
   longitude: z.number().optional(),
   latitude: z.number().optional(),
+  minPrice: z.number().optional(),
+  maxPrice: z.number().optional(),
 });
 export type CreateDormitoryType = z.infer<typeof createDormitorySchema>;
 
@@ -143,6 +145,8 @@ export const editDormitorySchema = z.object({
   status: z.number().nonnegative('Trạng thái là bắt buộc'),
   longitude: z.number().optional(),
   latitude: z.number().optional(),
+  minPrice: z.number().optional(),
+  maxPrice: z.number().optional(),
 });
 export type EditDormitoryType = z.infer<typeof editDormitorySchema>;
 
@@ -161,6 +165,8 @@ export const detailDormitory = z.object({
   fullAddress: z.string().optional().nullable(),
   longitude: z.number().optional().nullable(),
   latitude: z.number().optional().nullable(),
+  minPrice: z.number().optional(),
+  maxPrice: z.number().optional(),
 });
 export type DetailDormitoryType = z.infer<typeof detailDormitory>;
 
@@ -179,5 +185,3 @@ export const dormitoryLocation = z.object({
   latitude: z.string().optional().nullable(),
 });
 export type DormitoryLocationType = z.infer<typeof dormitoryLocation>;
-
-

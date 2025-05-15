@@ -68,16 +68,18 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
     defaultValues: {
       name: "",
       address: "",
-      wardId: undefined,
-      districtId: undefined,
-      provinceId: undefined,
+      wardId: 0,
+      districtId: 0,
+      provinceId: 0,
       ownerName: "",
       phoneNumber: "",
       description: "",
       content: "",
       status: 1, // Default to Active
-      longitude: undefined,
-      latitude: undefined,
+      longitude: 0,
+      latitude: 0,
+      maxPrice: 0,
+      minPrice: 0,
     },
   });
 
@@ -410,6 +412,50 @@ export default function AddModal({ onSubmitSuccess }: AddModalProps) {
                             placeholder="Nhập  Nhập vĩ độ"
                             className="w-full"
                             {...field}
+                          />
+                          <FormMessage />
+                        </div>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="minPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                        <Label htmlFor="minPrice">Giá thấp nhất</Label>
+                        <div className="col-span-3 w-full space-y-2">
+                          <Input
+                            id="minPrice"
+                            type="number"
+                            placeholder="Nhập giá thấp nhất"
+                            className="w-full"
+                            value={field.value || ''} // Đảm bảo giá trị không undefined
+                            onChange={(e) => field.onChange(Number(e.target.value))} // Chuyển đổi sang số
+                          />
+                          <FormMessage />
+                        </div>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="maxPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                        <Label htmlFor="maxPrice">Giá cao nhất</Label>
+                        <div className="col-span-3 w-full space-y-2">
+                          <Input
+                            id="maxPrice"
+                            type="number"
+                            placeholder="Nhập giá cao nhất"
+                            className="w-full"
+                            value={field.value || ''} // Đảm bảo giá trị không undefined
+                            onChange={(e) => field.onChange(Number(e.target.value))} // Chuyển đổi sang số
                           />
                           <FormMessage />
                         </div>

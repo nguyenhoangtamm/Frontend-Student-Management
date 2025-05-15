@@ -28,6 +28,9 @@ const dormitoryColumns = [
   { key: 'ownerName', label: 'Chủ sở hữu' },
   { key: 'phoneNumber', label: 'Số điện thoại' },
   { key: 'status', label: 'Trạng thái' },
+  { key: 'minPrice', label: 'Giá thấp nhất' },
+  { key: 'maxPrice', label: 'Giá cao nhất' },
+
 ];
 
 const statusColors = {
