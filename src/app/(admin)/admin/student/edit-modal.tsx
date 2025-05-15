@@ -15,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useMajor } from '@/services/hooks/useMajor';
 import { useDetailStudent, useEditStudentMutation } from '@/services/hooks/useStudent';
+import { useDistricts } from '@/services/hooks/useDistrict';
+import { useWards } from '@/services/hooks/useWard';
 
 type EditModalProps = {
     id: number | undefined;
@@ -23,7 +25,9 @@ type EditModalProps = {
     onSubmitSuccess: () => void;
 };
 export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditModalProps) {
-    const editStudentMutation = useEditStudentMutation();
+    const [isProvinceInitialized, setIsProvinceInitialized] = useState(false);
+    const [isDistrictInitialized, setIsDistrictInitialized] = useState(false);
+
     //get student
     const { data: detailStudent } = useDetailStudent(
         {
@@ -32,14 +36,39 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
         }
     );
 
-    //province
+
+    // provinces
     const [provinceOptions, setProvinceOptions] = useState<{ name: string; id: number }[]>([]);
-    const { data } = useProvinces();
+    const { data: provincesData } = useProvinces();
     useEffect(() => {
-        if (data) {
-            setProvinceOptions(data);
+        if (provincesData) {
+            setProvinceOptions(provincesData);
         }
-    }, [data]);
+    }, [provincesData]);
+    // districts
+    const [selectedProvinceId, setSelectedProvinceId] = useState<number | undefined>(undefined);
+    const [districtOptions, setDistrictOptions] = useState<{ name: string; id: number }[]>([]);
+    const { data: districtsData } = useDistricts({ provinceId: selectedProvinceId ?? 0, enabled: Boolean(selectedProvinceId) });
+    useEffect(() => {
+        if (districtsData) {
+            setDistrictOptions(districtsData);
+        }
+    }, [districtsData]);
+
+    // wards
+    const [selectedDistrictId, setSelectedDistrictId] = useState<number | undefined>(undefined);
+    const [wardOptions, setWardOptions] = useState<{ name: string; id: number }[]>([]);
+    const { data: wardsData } = useWards({ districtId: selectedDistrictId ?? 0, enabled: Boolean(selectedDistrictId) });
+    useEffect(() => {
+        if (wardsData) {
+            setWardOptions(wardsData);
+        }
+    }, [wardsData]);
+
+
+    const editStudentMutation = useEditStudentMutation();
+
+
     // class
     const [classOptions, setClassOptions] = useState<{ name: string; id: number }[]>([]);
     const { data: classData } = useStudentClass();
@@ -71,7 +100,10 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             classId: undefined,
             majorId: undefined,
             academicYear: "",
-            provinceId: undefined,
+            address: "",
+            wardId: 0,
+            districtId: 0,
+            provinceId: 0,
         },
     });
 
@@ -87,10 +119,43 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             form.setValue('classId', detailStudent.classId);
             form.setValue('majorId', detailStudent.majorId);
             form.setValue('academicYear', detailStudent.academicYear);
+            form.setValue('address', detailStudent.address);
+            form.setValue('wardId', detailStudent.wardId ?? 0);
+            form.setValue('districtId', detailStudent.districtId ?? 0);
             form.setValue('provinceId', detailStudent.provinceId ?? 0);
+            setSelectedProvinceId(detailStudent.provinceId ?? undefined);
+            setSelectedDistrictId(detailStudent.districtId ?? undefined);
         }
     }, [detailStudent, form, open]);
 
+    // Update districtId and wardId when province or district changes
+    const handleProvinceChange = (value: string) => {
+        if (!isProvinceInitialized) {
+            console.log('vong day');
+            setIsProvinceInitialized(true);
+            return; // Bỏ qua lần đầu tiên khi giá trị được thiết lập từ API
+        }
+        const provinceId = parseInt(value);
+        form.setValue('provinceId', provinceId);
+        form.setValue('districtId', 0);
+        form.setValue('wardId', 0);
+        setSelectedProvinceId(provinceId);
+        setDistrictOptions([]);
+        setWardOptions([]);
+    };
+
+    const handleDistrictChange = (value: string) => {
+        if (!isDistrictInitialized) {
+            console.log('vong day1');
+            setIsDistrictInitialized(true);
+            return; // Bỏ qua lần đầu tiên khi giá trị được thiết lập từ API
+        }
+        const districtId = parseInt(value);
+        form.setValue('districtId', districtId);
+        form.setValue('wardId', 0);
+        setSelectedDistrictId(districtId);
+        setWardOptions([]);
+    };
     const onSubmit = async (values: EditStudentType) => {
         if (editStudentMutation.isPending) return;
         try {
@@ -99,7 +164,8 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
 
             reset();
             setOpen(false);
-
+            setIsProvinceInitialized(false);
+            setIsDistrictInitialized(false);
             onSubmitSuccess(); // Làm mới bảng ProjectTable
 
 
@@ -115,8 +181,13 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
         //   setError: form.setError,
         // });
     }
-
-
+    console.log('form', form.getValues());
+    const handleClose = () => {
+        setOpen(false);
+        setIsDistrictInitialized(false);
+        setIsProvinceInitialized(false);
+        reset();
+    };
     const reset = () => {
         form.reset();
     };
@@ -126,9 +197,7 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
 
                 <DialogContent
                     className="sm:max-w-[800px] max-h-screen overflow-auto"
-                    onCloseAutoFocus={() => {
-                        reset();
-                    }}
+                    onCloseAutoFocus={handleClose}
                 >
                     <DialogHeader>
                         <DialogTitle>Thêm sinh viên</DialogTitle>
@@ -286,20 +355,15 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
                                     render={({ field }) => (
                                         <FormItem>
                                             <div className="grid grid-cols-4 items-center justify-items-start gap-4">
-                                                <Label htmlFor="birthplace">Tỉnh</Label>
+                                                <Label htmlFor="provinceId">Tỉnh/Thành phố</Label>
                                                 <div className="col-span-3 w-full space-y-2">
                                                     <Select
                                                         value={field.value?.toString()}
-                                                        onValueChange={(value) => {
-                                                            const parsed = parseInt(value);
-                                                            if (!isNaN(parsed)) {
-                                                                field.onChange(parsed);
-                                                            }
-                                                        }}
+                                                        onValueChange={handleProvinceChange}
                                                     >
                                                         <FormControl>
                                                             <SelectTrigger>
-                                                                <SelectValue placeholder="Chọn tỉnh" />
+                                                                <SelectValue placeholder="Chọn tỉnh/thành phố" />
                                                             </SelectTrigger>
                                                         </FormControl>
                                                         <SelectContent>
@@ -310,6 +374,97 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
                                                             ))}
                                                         </SelectContent>
                                                     </Select>
+                                                    <FormMessage />
+                                                </div>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="districtId"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                                                <Label htmlFor="districtId">Quận/Huyện</Label>
+                                                <div className="col-span-3 w-full space-y-2">
+                                                    <Select
+                                                        value={field.value?.toString()}
+                                                        onValueChange={handleDistrictChange}
+                                                        disabled={!selectedProvinceId}
+                                                    >
+                                                        <FormControl>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Chọn quận/huyện" />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            {districtOptions.map((opt, index) => (
+                                                                <SelectItem key={index} value={opt.id.toString()}>
+                                                                    {opt.name}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </div>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="wardId"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                                                <Label htmlFor="wardId">Phường/Xã</Label>
+                                                <div className="col-span-3 w-full space-y-2">
+                                                    <Select
+                                                        value={field.value?.toString()}
+                                                        onValueChange={(value) => {
+                                                            const parsed = parseInt(value);
+                                                            if (!isNaN(parsed)) {
+                                                                field.onChange(parsed);
+                                                            }
+                                                        }}
+                                                        disabled={!selectedDistrictId}
+                                                    >
+                                                        <FormControl>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Chọn phường/xã" />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            {wardOptions.map((opt, index) => (
+                                                                <SelectItem key={index} value={opt.id.toString()}>
+                                                                    {opt.name}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </div>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="address"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <div className="grid grid-cols-4 items-center justify-items-start gap-4">
+                                                <Label htmlFor="address">Địa chỉ chi tiết</Label>
+                                                <div className="col-span-3 
+                    w-full space-y-2">
+                                                    <Input
+                                                        id="address"
+                                                        type="text"
+                                                        placeholder="Nhập địa chỉ chi tiết"
+                                                        className="w-full"
+                                                        {...field}
+                                                    />
                                                     <FormMessage />
                                                 </div>
                                             </div>
@@ -415,7 +570,7 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
                     <DialogFooter>
                         <div className='mt-8 flex justify-end gap-4'>
                             <Button
-                                onClick={() => setOpen(false)}
+                                onClick={handleClose}
                                 variant='outline'
                                 className='px-6'
                             >

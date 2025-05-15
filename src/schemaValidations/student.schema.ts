@@ -14,6 +14,7 @@ const studentPage = z.object({
   wardId: z.number().nullable(),
   classId: z.number().nullable(),
   majorId: z.number().nullable(),
+  fullAddress: z.string().nullable(),
   residenceStatus: z.number().nullable(),
   academicYear: z.string().nullable(),
 });
@@ -68,7 +69,10 @@ export const createStudentSchema = z.object({
   classId: z.number().nonnegative('ID lớp phải là số không âm'),
   majorId: z.number().optional(),
   academicYear: z.string().min(1).optional(),
-  provinceId: z.number().nonnegative('ID tỉnh phải là số không âm'),
+  address: z.string().max(255).nonempty('Địa chỉ là bắt buộc'),
+  wardId: z.number().nonnegative('ID phường/xã phải là số không âm'),
+  districtId: z.number().nonnegative('ID quận/huyện phải là số không âm'),
+  provinceId: z.number().nonnegative('ID tỉnh/thành phố phải là số không âm'),
 });
 export type CreateStudentType = z.infer<typeof createStudentSchema>;
 
@@ -90,7 +94,10 @@ export const editStudentSchema = z.object({
   classId: z.number().nonnegative('ID lớp phải là số không âm'),
   majorId: z.number().optional(),
   academicYear: z.string().min(1).optional(),
-  provinceId: z.number().nonnegative('ID tỉnh phải là số không âm'),
+  address: z.string().max(255).nonempty('Địa chỉ là bắt buộc'),
+  wardId: z.number().nonnegative('ID phường/xã phải là số không âm'),
+  districtId: z.number().nonnegative('ID quận/huyện phải là số không âm'),
+  provinceId: z.number().nonnegative('ID tỉnh/thành phố phải là số không âm'),
 });
 
 export type EditStudentType = z.infer<typeof editStudentSchema>;
@@ -106,10 +113,10 @@ export const detailStudent = z.object({
   classId: z.number(),
   majorId: z.number().optional(),
   academicYear: z.string().optional(),
-  provinceId: z.number().optional().nullable(),
+  address: z.string(),
+  wardId: z.number().optional().nullable(),
   districtId: z.number().optional().nullable(),
-  wardId: z.number().nullable(),
+  provinceId: z.number().optional().nullable(),
   residenceStatus: z.number(),
   fullAddress: z.string().optional().nullable(),
 });
-

@@ -18,6 +18,8 @@ import DeleteModal from './delete-modal';
 import EditModal from './edit-modal';
 import AddModal from './add-modal';
 import { FaSearch } from 'react-icons/fa';
+import { useStudentClass } from '@/services/hooks/useStudentClass';
+import { useMajor } from '@/services/hooks/useMajor';
 
 const statusColors = {
   Active: 'bg-green-500',
@@ -36,6 +38,25 @@ export default function DataTable() {
   const [tableData, setTableData] = useState<Student[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   // const observer = useRef<IntersectionObserver | null>(null);
+
+  // class
+  const [classOptions, setClassOptions] = useState<{ name: string; id: number }[]>([]);
+  const { data: classData } = useStudentClass();
+  useEffect(() => {
+    if (classData) {
+      setClassOptions(classData);
+    }
+
+  }, [classData]);
+  // major
+  const [majorOptions, setMajorOptions] = useState<{ name: string; id: number }[]>([]);
+  const { data: majorData } = useMajor();
+  useEffect(() => {
+    if (majorData) {
+      setMajorOptions(majorData);
+    }
+  }, [majorData]);
+
 
   const handleEdit = (id: number) => {
     setDeleteId(id);
@@ -207,11 +228,22 @@ export default function DataTable() {
                         >
                           {item[col.key]}
                         </a>
-                      ) : (
+                      ) : col.key === 'classId' ? (
                         <span className='text-center'>
-                          {col.key === 'index' ? index + 1 : item[col.key]}
+                          {classOptions.find((option) => option.id === item[col.key as keyof typeof item])?.name}
                         </span>
-                      )}
+                      ) : col.key === 'majorId' ? (
+                        <span className='text-center'>
+                          {majorOptions.find((option) => option.id === item[col.key as keyof typeof item])?.name}
+                        </span>
+                      )
+
+
+                        : (
+                          <span className='text-center'>
+                            {col.key === 'index' ? index + 1 : item[col.key]}
+                          </span>
+                        )}
                     </TableCell>
                   ))}
 

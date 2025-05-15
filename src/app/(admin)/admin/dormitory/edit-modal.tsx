@@ -28,6 +28,9 @@ type EditModalProps = {
 }
 
 export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditModalProps) {
+    const [isProvinceInitialized, setIsProvinceInitialized] = useState(false);
+    const [isDistrictInitialized, setIsDistrictInitialized] = useState(false);
+
     const editDormitoryMutation = useEditDormitoryMutation();
     // Fetch dormitory details
     const { data: detailDormitory, isFetching, error } = useDormitoryById({
@@ -71,9 +74,9 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             id: undefined,
             name: "",
             address: "",
-            wardId: 0,
-            districtId: 0,
-            provinceId: 0,
+            wardId: undefined,
+            districtId: undefined,
+            provinceId: undefined,
             ownerName: "",
             phoneNumber: "",
             description: "",
@@ -114,9 +117,12 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
         }
     }, [detailDormitory, form, open]);
 
-
     // Update districtId and wardId when province or district changes
     const handleProvinceChange = (value: string) => {
+        if (!isProvinceInitialized) {
+            setIsProvinceInitialized(true);
+            return; // Bỏ qua lần đầu tiên khi giá trị được thiết lập từ API
+        }
         const provinceId = parseInt(value);
         form.setValue('provinceId', provinceId);
         form.setValue('districtId', 0);
@@ -127,6 +133,10 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
     };
 
     const handleDistrictChange = (value: string) => {
+        if (!isDistrictInitialized) {
+            setIsDistrictInitialized(true);
+            return; // Bỏ qua lần đầu tiên khi giá trị được thiết lập từ API
+        }
         const districtId = parseInt(value);
         form.setValue('districtId', districtId);
         form.setValue('wardId', 0);
@@ -143,6 +153,8 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
             });
             reset();
             setOpen(false);
+            setIsDistrictInitialized(false);
+            setIsProvinceInitialized(false);
             onSubmitSuccess();
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -151,6 +163,12 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
                 });
             }
         }
+    };
+    const handleClose = () => {
+        setOpen(false);
+        setIsDistrictInitialized(false);
+        setIsProvinceInitialized(false);
+        reset();
     };
 
     const reset = () => {
@@ -177,9 +195,7 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
         <Dialog onOpenChange={setOpen} open={open} >
             <DialogContent
                 className="sm:max-w-[800px] max-h-screen overflow-auto"
-                onCloseAutoFocus={() => {
-                    reset();
-                }}
+                onCloseAutoFocus={handleClose}
             >
                 <DialogHeader>
                     <DialogTitle>Chỉnh sửa ký túc xá</DialogTitle>
@@ -565,7 +581,7 @@ export default function EditModal({ id, open, setOpen, onSubmitSuccess }: EditMo
                                 Lưu thay đổi
                             </Button>
                             <Button type="reset" variant="outline"
-                                onClick={() => setOpen(false)}
+                                onClick={handleClose}
 
                             >
                                 Hủy bỏ
