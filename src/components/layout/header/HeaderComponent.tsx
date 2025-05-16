@@ -39,11 +39,11 @@ export default function Header() {
                 </Navbar.Brand>
                 <div className="d-flex align-items-center">
                     <NotificationIcon
-                        notifications={dataSend.notifications}
+                        notifications={dataSend?.notifications ?? []}
                     />
                     <UserProfile
-                        name={dataSend.fullName}
-                        userImage={dataSend.avatar}
+                        name={dataSend?.fullName ?? ""}
+                        userImage={dataSend?.avatar}
                     />
                 </div>
             </Container>

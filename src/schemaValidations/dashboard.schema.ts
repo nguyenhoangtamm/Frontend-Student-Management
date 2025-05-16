@@ -37,6 +37,7 @@ export const LayoutBody = z.object({
             id: z.number(),
             title: z.string(),
             slug: z.string(),
+            isRead: z.boolean(),
         })
     ),
 });

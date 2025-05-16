@@ -6,6 +6,7 @@ import {
   fetchListNotifications,
   getNotificationById,
   getNotificationByPagination,
+  readNotificationApi,
   sendNotificationApi,
 } from '../api/notificationApi';
 import {
@@ -112,6 +113,18 @@ export const useSendNotificationMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => sendNotificationApi(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['Notifications'],
+      });
+    },
+  });
+};
+// read
+export const useReadNotificationMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: number) => readNotificationApi(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['Notifications'],

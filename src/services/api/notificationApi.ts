@@ -83,3 +83,9 @@ export const getNotificationByPagination = async ({
     }
     return result.data ?? [];
 }
+// Read Notification API
+export const readNotificationApi = async (id: number) => {
+    const response = await apiClient.post(`/notifications/read/${id}`);
+    const result = response.data.data;
+    return result;
+}

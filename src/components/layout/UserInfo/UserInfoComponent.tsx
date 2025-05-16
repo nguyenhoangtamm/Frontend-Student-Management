@@ -46,7 +46,7 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
           >
             <Image src={Avatar} alt="User" width={50} height={50} />
           </div>
-          <h5 className="fw-bold">{data.full_name}</h5>
+          <h5 className="fw-bold">{data.fullName}</h5>
           <div className="d-flex justify-content-center align-items-center">
             <span>{data.email}</span>
           </div>
@@ -60,7 +60,7 @@ const UserInfoComponent: React.FC<UserInfoComponentProps> = ({
             Giới Tính: <span className="fw-bold">{data.gender}</span>
           </p>
           <p>
-            Ngày Sinh: <span className="fw-bold">{data.date_of_birth}</span>
+            Ngày Sinh: <span className="fw-bold">{data.dateOfBirth}</span>
           </p>
           <p>
             Nơi Sinh: <span className="fw-bold">{data.birthplace}</span>
