@@ -22,7 +22,7 @@ export default function PropertyPage({ slug }: { slug: string }) {
       <div className='row mt-3'>
         <div className='col-md-8'>
           <ListingGallery
-            images={Array.isArray(house.image) ? house.image : []}
+            images={house.imageUrl ? house.imageUrl.toString() : ''}
           />
           <Status status={house.status} studentNumber={house.students}  />
           <ListingDescription description={house.description} content={house.content} />

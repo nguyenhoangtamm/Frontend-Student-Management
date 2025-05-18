@@ -35,6 +35,7 @@ export const Dormitory = z
     longitude: z.string(),
     latitude: z.string(),
     status: z.string(),
+    imageUrl: z.string().optional().nullable(),
   })
   .transform((obj) => ({
     id: obj.id,
@@ -57,6 +58,7 @@ export const Dormitory = z
     longitude: obj.longitude,
     latitude: obj.latitude,
     status: obj.status,
+    imageUrl: obj.imageUrl,
   }));
 
 const DormitoryPagination = z.object({
@@ -78,6 +80,7 @@ const DormitoryPagination = z.object({
   longitude: z.string(),
   latitude: z.string(),
   status: z.number(),
+  imageUrl: z.string().optional().nullable(),
 });
 
 const LinksPaginationSchema = z.object({

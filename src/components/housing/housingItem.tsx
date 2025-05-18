@@ -20,14 +20,15 @@ export default function HousingItem(housing: {
       <Image
         width={150}
         height={150}
-        src={mapsearch}
+        src={housing.housing.imageUrl ? `/dormitory/${housing.housing.imageUrl}` : mapsearch}
+
         className='card-img-left'
         alt='Property Image'
       />
       <div className='card-body d-flex justify-content-between'>
         <div className='card-text m-4'>
           <Link
-            href={'/house/' +slug }
+            href={'/house/' + slug}
             className='m-2 card-title font-weight-bold'
             style={{ textDecoration: 'none', fontSize: '1.5rem', fontWeight: 'bold' }}
           >
