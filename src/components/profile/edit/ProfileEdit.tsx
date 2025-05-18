@@ -54,6 +54,7 @@ export default function ProfileEdit() {
   const onSubmit = async (values: SaveContractType) => {
     if (saveContractMutation.isPending) return;
     try {
+      
       await saveContractMutation.mutateAsync(values);
       toast.success('Cập nhật ký túc xá thành công!', {
         description: "Thông báo",
@@ -189,6 +190,7 @@ export default function ProfileEdit() {
                             className="form-control"
                             placeholder="Nhập số phòng"
                             {...field}
+                            value={field.value ?? ''}
                           />
                         </FormControl>
                         <FormMessage />
@@ -207,6 +209,8 @@ export default function ProfileEdit() {
                             className="form-control"
                             placeholder="Nhập phí ngoại trú"
                             {...field}
+                            value={field.value ?? ''} // Đảm bảo là chuỗi
+                            onChange={e => field.onChange(e.target.value)} // Luôn truyền chuỗi
                           />
                         </FormControl>
                         <FormMessage />

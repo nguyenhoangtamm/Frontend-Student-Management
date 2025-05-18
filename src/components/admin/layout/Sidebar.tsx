@@ -37,19 +37,19 @@ const sidebarItems = [
     icon: <FaChartBar />,
     title: "Thống Kê & Báo cáo",
     badge: undefined,
-    link: "/admin/statistic",
+    link: "/admin",
   },
   {
     icon: <FaExclamationTriangle />,
     title: "Báo cáo vi phạm",
     badge: undefined,
-    link: "/admin/reports",
+    link: "/admin",
   },
   {
     icon: <FaClipboardCheck />,
     title: "Đăng ký kiểm duyệt",
     badge: undefined,
-    link: "/admin/approval",
+    link: "/admin",
   },
   {
     icon: <FaBell />,
@@ -92,7 +92,9 @@ const Sidebar = () => {
           icon={item.icon}
           title={item.title}
           badge={item.badge}
+          
           classname={
+            
             active === index
               ? "flex items-center gap-3 p-3 rounded-lg bg-admin-theme text-white cursor-pointer "
               : ""

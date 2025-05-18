@@ -1,62 +1,66 @@
-import { offCampus } from '@/interface/offCampusInterface';
+import { StudentProfileBodyType } from '@/schemaValidations/profile.schema';
 import React from 'react';
 
-export default function ResidenceStatus({
-  offCampus,
-  residenceStatus,
-}: {
-  offCampus: offCampus | undefined;
-  residenceStatus: number;
-}) {
-  if (residenceStatus == 1) {
+export default function ResidenceStatus({ student }: { student: StudentProfileBodyType }) {
+  if (student.residenceStatus == 1) {
     return (
       <div className='m-1 col-md-3' style={{ padding: '10px' }}>
         Bạn đang ở ký túc xá
       </div>
     );
   }
-  if (residenceStatus == 2) {
+  // if (student.residenceStatus == 2) {
+  //   return (
+  //     <div className='m-1 col-md-3' style={{ padding: '10px' }}>
+  //       Bạn đang ở nhà trọ
+  //     </div>
+  //   );
+  // }
+  if (student.residenceStatus == 3) {
     return (
       <div className='m-1 col-md-3' style={{ padding: '10px' }}>
-        Bạn đang ở nhà trọ
+        Bạn đang ở nhà riêng
       </div>
     );
   }
   return (
     <>
-      {offCampus ? (
+      {student.offCampus ? (
         <>
+          <div className='m-1 col-md-3' style={{ padding: '10px' }}>
+            Bạn đang ở nhà trọ
+          </div>
           <div className='m-1 col-md-9' style={{ flex: 2, padding: '10px' }}>
             <div className='row'>
-                <h5>Thông tin nơi ở</h5>
-                <hr />
+              <h5>Thông tin nơi ở</h5>
+              <hr />
               <div className='col-md-6'>
                 <p>
                   <strong>Tên nhà trọ:</strong>{' '}
-                  <span >{offCampus?.name}</span>
+                  <span >{student.offCampus?.name}</span>
                 </p>
                 <p>
                   <strong>Chủ trọ:</strong>{' '}
-                  <span >{offCampus?.ownerName}</span>
+                  <span >{student.offCampus?.ownerName}</span>
                 </p>
                 <p>
                   <strong>Số điện thoại:</strong>{' '}
-                  <span >{offCampus?.phoneNumber}</span>
+                  <span >{student.offCampus?.phoneNumber}</span>
                 </p>
               </div>
               <div className='col-md-6'>
                 <p>
                   <strong>Địa chỉ:</strong>{' '}
-                  <span >{offCampus?.address}</span>
+                  <span >{student.offCampus?.address}</span>
                 </p>
                 <p>
                   <strong>Phòng:</strong>{' '}
-                  <span >{offCampus?.room}</span>
+                  <span >{student.offCampus?.room}</span>
                 </p>
                 <p>
                   <strong>Trạng thái:</strong>{' '}
                   <span >
-                    {offCampus?.contractStatus}
+                    {student.offCampus?.contractStatus}
                   </span>
                 </p>
               </div>
@@ -64,15 +68,15 @@ export default function ResidenceStatus({
 
             <hr />
             <div className='row'>
-            <h5>Chi phí sinh hoạt</h5>
-            <hr />
-            <div>
+              <h5>Chi phí sinh hoạt</h5>
+              <hr />
+              <div>
                 <p>
-                    <strong>Giá phòng:</strong>{' '}
-                    <span >{offCampus?.price} VNĐ/tháng</span>
+                  <strong>Giá phòng:</strong>{' '}
+                  <span >{student.offCampus?.price} VNĐ/tháng</span>
                 </p>
-            </div>
-              {offCampus?.services?.map((service, index) => (
+              </div>
+              {student.offCampus?.services?.map((service: { name: string; price: number; unit: string }, index: number) => (
                 <div className='col-md-6' key={index}>
                   <p>
                     <strong>{service.name}:</strong>{' '}
@@ -84,7 +88,7 @@ export default function ResidenceStatus({
               ))}
             </div>
 
-          
+
           </div>
         </>
       ) : (

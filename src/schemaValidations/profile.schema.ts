@@ -17,7 +17,7 @@ export const StudentProfileBody = z.object({
   birthPlace: z.string(),
   email: z.string().email(),
   major: z.string(),
-  residenceStatus: z.string(),
+  residenceStatus: z.number(),
   offCampus: z.object({
     name: z.string(),
     address: z.string(),
@@ -33,7 +33,7 @@ export const StudentProfileBody = z.object({
         unit: z.string(),
       }),
     ),
-  }),
+  }).nullable(),
 });
 
 export type StudentProfileBodyType = z.TypeOf<typeof StudentProfileBody>;

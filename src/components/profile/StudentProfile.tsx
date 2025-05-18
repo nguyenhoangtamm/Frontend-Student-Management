@@ -1,9 +1,9 @@
 import ProfileCard from "./ProfileCard";
 import ProfileDetails from "./ProfileDetails";
 import OffCampusInfo from "./OffCampusInfo";
-import { Student } from "@/interface/studentInterface";
+import { StudentProfileBodyType } from "@/schemaValidations/profile.schema";
 
-export default function StudentProfile({ data }: { data: Student }) {
+export default function StudentProfile({ data }: { data: StudentProfileBodyType }) {
   const personalInfo = {
     name: data.name,
     phone: data.phone,
@@ -23,7 +23,7 @@ export default function StudentProfile({ data }: { data: Student }) {
     status: data.status,
     educationType: data.educationType
   };
- 
+
   return (
     <div className="container mt-4">
       <div className="card p-3">
@@ -35,11 +35,14 @@ export default function StudentProfile({ data }: { data: Student }) {
             <ProfileDetails student={personalInfo} title="Thông tin cá nhân" />
           </div>
           <div className="col-md-9">
-            <ProfileDetails student={academicInfo} title="Thông tin học vấn"/>
+            <ProfileDetails student={academicInfo} title="Thông tin học vấn" />
           </div>
         </div>
         <div className="row">
-          <OffCampusInfo offCampus={data.offCampus} residenceStatus={data.residenceStatus} />
+
+          <OffCampusInfo student={data} />
+
+
         </div>
       </div>
     </div>
