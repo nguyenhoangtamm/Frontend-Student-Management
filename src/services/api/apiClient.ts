@@ -2,7 +2,7 @@ import axios from 'axios';
 import { deleteCookie, getCookieValue } from '../helper/Cookie';
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
   withCredentials: true, // Cho phép gửi cookies nếu backend yêu cầu
   headers: {
     'Content-Type': 'application/json',
@@ -12,7 +12,7 @@ const apiClient = axios.create({
 // Thêm interceptor để tự động gửi Bearer Token
 apiClient.interceptors.request.use(
   async (config) => {
-    const token = await getCookieValue('auth_token');
+    const token = await getCookieValue('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

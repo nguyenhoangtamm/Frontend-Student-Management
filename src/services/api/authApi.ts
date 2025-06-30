@@ -1,21 +1,41 @@
-import { LoginBodyType } from "@/schemaValidations/auth.schema";
-import apiClient from "./apiClient";
+import http from "@/lib/http";
+import { LoginBodyType, LoginResType } from "@/schemaValidations/auth.schema";
 
-export const login = async (body:LoginBodyType) => {
-  try {
-    const response = await apiClient.post("/auth/login", { 'code':body.username,'password': body.password }, { withCredentials: true });
-    return response.data;
-  } catch (error) {
-    console.error("Login failed:", error);
-    throw error;
-  }
+const authApiRequest = {
+    SLogin: (body: LoginBodyType) =>
+        http.post<LoginResType>("/auth/login", body, {
+            baseUrl: "http://localhost:8000/api",
+        }),
+    login: (body: LoginBodyType) =>
+        http.post<LoginResType>("/api/auth/login", body, { baseURL: "" }),
+    logoutFromNextServerToServer: ({
+        accessToken,
+        refreshToken,
+    }: {
+        accessToken: string;
+        refreshToken: string;
+    }) =>
+        http.post(
+            "/auth/logout",
+            {
+                refreshToken,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        ),
+    logout: (
+        body: {
+            refreshToken: string;
+        },
+        signal?: AbortSignal | undefined
+    ) =>
+        http.post("/api/auth/logout", body, {
+            baseURL: "",
+            signal,
+        }),
 };
 
-export const logout = async () => {
-  try {
-    await apiClient.post("/auth/logout", { withCredentials: true });
-  } catch (error) {
-    console.error("Logout failed:", error);
-    throw error;
-  }
-};
+export default authApiRequest;

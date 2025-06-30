@@ -3,18 +3,20 @@
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import defaultbg from '@bg/defaultbg.png';
 import { Button } from '../ui/button';
-import { useAuth } from '@/services/hooks/useAuth';
+import { useLoginMutation } from '@/services/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/configs/routes';
 import { LoginBody, LoginBodyType } from '@/schemaValidations/auth.schema';
+import { handleErrorApi } from '@/lib/apiUtils';
 
 export default function LoginComponent() {
-  const { login, loading, error } = useAuth();
+  const loginMutation = useLoginMutation();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
@@ -25,18 +27,23 @@ export default function LoginComponent() {
   });
 
   async function handleLogin(values: LoginBodyType) {
- 
+    if (loginMutation.isPending) return;
     try {
-      const isAdmin = await login(values);
-      toast.success('Đăng nhập thành công!');
-
-      if (isAdmin) {
-        router.push(routes.admin.owerview);
-      } else {
-        router.push(routes.user.dashboard);
-      }
-    } catch (err) {
-      toast.error('Đăng nhập thất bại!');
+      setIsLoading(true);
+      const result = await loginMutation.mutateAsync(values);
+      toast.success("Đăng nhập thành công!", {
+        description: result?.message || "Chào mừng bạn quay trở lại!",
+      });
+      router.push(routes.user.dashboard);
+    } catch (error: any) {
+      toast.error("Đăng nhập thất bại!", {
+        description: error.message || "Vui lòng kiểm tra lại thông tin đăng nhập",
+      });
+      setIsLoading(false);
+      handleErrorApi({
+        error,
+        setError: form.setError,
+      });
     }
   }
 
@@ -84,10 +91,13 @@ export default function LoginComponent() {
           </div>
 
           {/* Nút đăng nhập */}
-          <Button type='submit' className='btn btn-primary w-full'>
-            {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+          <Button type='submit' className='btn btn-primary w-full'
+            disabled={isLoading}
+
+          >
+            {isLoading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+
           </Button>
-          {error && <p className='text-red-500 mt-2'>Đăng nhập thất bại!</p>}
         </form>
       </div>
     </div>

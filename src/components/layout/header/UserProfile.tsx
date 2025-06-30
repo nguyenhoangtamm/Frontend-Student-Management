@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/services/hooks/useAuth";
+import { useLogoutMutation } from "@/services/hooks/useAuth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -10,11 +10,11 @@ interface UserProfileProps {
     userImage?: string;
 }
 export default function UserProfile({ name, userImage }: UserProfileProps) {
-    const { logout, error } = useAuth();
+    const logoutMutation = useLogoutMutation();
     const router = useRouter();
-    const handleLout = async () => {
-        await logout();
-        if (!error) {
+    const handleLogout = async () => {
+        await logoutMutation.mutateAsync();
+        if (!logoutMutation.isError) {
             router.push('/login');
         }
     };
@@ -55,7 +55,7 @@ export default function UserProfile({ name, userImage }: UserProfileProps) {
             <Dropdown.Menu>
                 <Dropdown.Item href="/profile">Hồ sơ</Dropdown.Item>
                 <Dropdown.Item href="/settings">Đổi mật khẩu</Dropdown.Item>
-                <Dropdown.Item onClick={handleLout}>Đăng xuất</Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );

@@ -11,8 +11,8 @@ import { Button, Divider, Menu, Switch } from 'antd';
 import type { GetProp, MenuProps } from 'antd';
 import { Home, MenuIcon } from 'lucide-react';
 import Link from 'antd/es/typography/Link';
-import { useAuth } from '@/services/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { useLogoutMutation } from '@/services/hooks/useAuth';
 
 type MenuTheme = GetProp<MenuProps, 'theme'>;
 
@@ -68,12 +68,12 @@ const items: MenuItem[] = [
 ];
 
 const SideBarComponent: React.FC = () => {
-  const { logout, error } = useAuth();
+  const logoutMutation = useLogoutMutation();
   const router = useRouter();
 
-  const handleLout = async () => {
-    await logout();
-    if (!error) {
+  const handleLogout = async () => {
+    await logoutMutation.mutateAsync();
+    if (!logoutMutation.isError) {
       router.push('/login');
     }
   };
@@ -117,7 +117,7 @@ const SideBarComponent: React.FC = () => {
           items={items}
           onClick={(item) => {
             if (item.key === '7') {
-              handleLout();
+              handleLogout();
             }
           }}
         ></Menu>
