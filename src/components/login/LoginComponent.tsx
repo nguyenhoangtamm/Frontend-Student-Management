@@ -34,7 +34,11 @@ export default function LoginComponent() {
       toast.success("Đăng nhập thành công!", {
         description: result?.message || "Chào mừng bạn quay trở lại!",
       });
-      router.push(routes.user.dashboard);
+      if (result?.data.user.isAdmin === true) {
+        router.push(routes.admin.overview);
+      } else {
+        router.push(routes.user.dashboard);
+      }
     } catch (error: any) {
       toast.error("Đăng nhập thất bại!", {
         description: error.message || "Vui lòng kiểm tra lại thông tin đăng nhập",

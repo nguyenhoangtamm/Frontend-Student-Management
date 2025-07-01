@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { redirect, usePathname, useRouter } from "next/navigation";
-import { useAuth } from "@/services/hooks/useAuth";
+import {useLogoutMutation } from "@/services/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 
 const sidebarItems = [
@@ -60,11 +60,11 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
-  const { logout, error } = useAuth();
+  const logoutMutation = useLogoutMutation();
   const router = useRouter();
-  const handleLout = async () => {
-    await logout();
-    if (!error) {
+ const handleLogout = async () => {
+    await logoutMutation.mutateAsync();
+    if (!logoutMutation.isError) {
       router.push('/login');
     }
   };
@@ -103,7 +103,7 @@ const Sidebar = () => {
         />
       ))}
       <Button
-        onClick={handleLout}
+        onClick={handleLogout}
         className="mt-auto flex items-center gap-3 p-3 text-gray-500 cursor-pointer hover:text-red-500 no-underline text-base font-medium"
         variant="ghost"
         size="sm"

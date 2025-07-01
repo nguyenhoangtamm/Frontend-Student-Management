@@ -16,7 +16,7 @@ export const routes = {
     users: '/manage/users',
   },
   admin: {
-    owerview: '/admin',
+    overview: '/admin',
     dashboard: 'admin/dashboard',
   },
   auth: {
