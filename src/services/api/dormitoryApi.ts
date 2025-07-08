@@ -1,12 +1,12 @@
 import {
   detailDormitory,
+  Dormitory,
   EditDormitoryType,
 } from './../../schemaValidations/dormitory.schema';
 import {
   CreateDormitoryType,
   DormitoriesName,
   DormitoriesPaginationSchema,
-  Dormitory,
   DormitoryReviews,
 } from '@/schemaValidations/dormitory.schema';
 import apiClient from './apiClient';
@@ -16,7 +16,7 @@ export const fetchDormitory = async () => {
   const data = response.data.data;
   const result = DormitoriesPaginationSchema.safeParse(data);
   if (!result.success) {
-    console.error('Lỗi validate dữ liệu:', result.error.format());
+    console.error('Lỗi validate dữ liệu:', result.error);
     throw new Error('Dữ liệu không hợp lệ');
   }
   return result.data ?? [];
@@ -27,7 +27,7 @@ export const fetchDormitoryBySlug = async (slug: string) => {
   const data = response.data.data;
   const result = Dormitory.safeParse(data);
   if (!result.success) {
-    console.error('Lỗi validate dữ liệu:', result.error.format());
+console.log('Lỗi validate dữ liệu:', result.error.format());
     throw new Error('Dữ liệu không hợp lệ');
   }
 
@@ -55,6 +55,7 @@ export const fetchDormitoriesPaging = async ({
   price,
   sortBy,
   sortOrder,
+  sortByMostPeople,
 }: {
   page: number;
   perPage: number;
@@ -66,6 +67,7 @@ export const fetchDormitoriesPaging = async ({
   price?: number;
   sortBy?: string;
   sortOrder?: string;
+  sortByMostPeople?: number;
 }) => {
   const params = new URLSearchParams({
     pageNumber: page.toString(),
@@ -78,6 +80,9 @@ export const fetchDormitoriesPaging = async ({
     ...(price !== undefined && { price: price.toString() }),
     ...(sortBy && { sortBy }),
     ...(sortOrder && { sortOrder }),
+    ...(sortByMostPeople !== undefined && {
+      sortByMostPeople: sortByMostPeople.toString(),
+    }),
   });
 
   const response = await apiClient.get(

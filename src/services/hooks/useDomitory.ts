@@ -41,6 +41,7 @@ export const useDormitoriesPaging = ({
   price,
   sortBy,
   sortOrder,
+  sortByMostPeople
 }: {
   page: number;
   perPage: number;
@@ -52,6 +53,7 @@ export const useDormitoriesPaging = ({
   price?: number;
   sortBy?: string;
   sortOrder?: string;
+  sortByMostPeople?: number;
 }) => {
   return useQuery({
     queryKey: [
@@ -79,6 +81,7 @@ export const useDormitoriesPaging = ({
         price,
         sortBy,
         sortOrder,
+        sortByMostPeople
       }),
     staleTime: 1000 * 60 * 5, // Cache 5 phút
   });

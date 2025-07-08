@@ -61,6 +61,7 @@ export default function ProfileEdit() {
       });
       reset();
       router.push('/profile');
+      router.refresh();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message, {
